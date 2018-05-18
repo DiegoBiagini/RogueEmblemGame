@@ -1,5 +1,6 @@
 # RogueEmblemGame
-Elaborato del corso di programmazione A.A. 2017/2018
+Elaborato del corso di programmazione A.A. 2017/2018, tenuto dal prof. Marco Bertini.
+Sviluppato in C++ con l'ausilio della libreria SFML.
 
 RogueEmblem è un gioco che combina elementi tipici dei giochi RogueLite con quelli di un  gioco di strategia a turni con meccanismo "permadeath"( un personaggio sconfitto in battaglia è considerato morto per il resto del gioco).
 
