@@ -18,18 +18,23 @@
 class GameManager{
 public:
 
-	//Default constructor, will call and handle the startup of the engine
-	GameManager();
-	~GameManager();
+	//Singleton method to get an instance, on the first call it will create the object
+	static GameManager& getInstance();
 
-	//Handles all aspects of the game loop
-	void gameLoop();
+	//Deleted copy and assignment
+	GameManager& operator=(const GameManager& rhs) = delete;
+	GameManager(const GameManager& other) = delete;
 
 	//Sends a message over the queue
 	void sendMsg(Message& message);
 
+	//Starts the whole game
+	bool startGame();
 
 private:
+	//Default constructor, will call and handle the startup of the engine
+	GameManager();
+	~GameManager();
 
 	//Various subsystems
 	RenderSystem ptrRenderS;
@@ -39,6 +44,9 @@ private:
 
 	//Queue used to communicate between all subsystems
 	std::list<std::shared_ptr<Message>> messageQueue;
+
+	//Handles all aspects of the game loop
+	void gameLoop();
 
 	//First part of the game loop, reads input from the user
 	void handleInput();

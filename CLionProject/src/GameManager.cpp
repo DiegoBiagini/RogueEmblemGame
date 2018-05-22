@@ -4,6 +4,12 @@
 
 #include "GameManager.h"
 
+GameManager &GameManager::getInstance() {
+	static GameManager instance;
+	return instance;
+}
+
+
 GameManager::GameManager() {
 
 }
@@ -35,3 +41,14 @@ void GameManager::handleResourceRequests() {
 void GameManager::renderAndPlaySounds() {
 
 }
+
+bool GameManager::startGame() {
+	//Call startup methods of every system
+	//Handle its possible errors
+
+	//Initiate the game loop
+	gameLoop();
+
+	return true;
+}
+

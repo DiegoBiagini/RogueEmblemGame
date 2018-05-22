@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
+#include "GameManager.h"
 
 int main() {
-    
-    return 0;
+	return GameManager::getInstance().startGame();
 }
