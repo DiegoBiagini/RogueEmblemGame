@@ -3,6 +3,7 @@
 //
 
 #include "SoundSystem.h"
+#include "../GameManager.h"
 
 void SoundSystem::handleMsg(Message &msg) {
 

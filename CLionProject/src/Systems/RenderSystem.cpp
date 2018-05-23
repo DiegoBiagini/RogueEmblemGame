@@ -3,6 +3,7 @@
 //
 
 #include "RenderSystem.h"
+#include "../GameManager.h"
 
 RenderSystem::RenderSystem() {
 
@@ -28,6 +29,6 @@ void RenderSystem::updateScreen() {
 
 }
 
-sf::RenderWindow &RenderSystem::getWindow() const {
+sf::RenderWindow &RenderSystem::getWindow() {
 	return window;
 }

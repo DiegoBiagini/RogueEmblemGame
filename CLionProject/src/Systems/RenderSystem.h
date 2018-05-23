@@ -29,7 +29,7 @@ public:
 	void updateScreen();
 
 	//Returns a reference to the main window
-	sf::RenderWindow& getWindow() const;
+	sf::RenderWindow& getWindow();
 
 
 	//Draws a texture to the background, in a position and with a size dictated by a rect

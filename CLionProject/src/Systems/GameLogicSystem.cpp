@@ -3,6 +3,7 @@
 //
 
 #include "GameLogicSystem.h"
+#include "../GameManager.h"
 
 void GameLogicSystem::handleMsg(Message &msg) {
 
