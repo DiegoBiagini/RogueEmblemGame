@@ -10,7 +10,7 @@ void GameLogicSystem::handleMsg(Message &msg) {
 }
 
 
-bool GameLogicSystem::startup() {
+void GameLogicSystem::startup() {
 }
 
 void GameLogicSystem::shutdown() {

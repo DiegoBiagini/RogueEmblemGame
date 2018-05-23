@@ -9,8 +9,7 @@ void SoundSystem::handleMsg(Message &msg) {
 
 }
 
-bool SoundSystem::startup() {
-	return false;
+void SoundSystem::startup() {
 }
 
 void SoundSystem::shutdown() {

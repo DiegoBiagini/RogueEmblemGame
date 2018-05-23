@@ -16,7 +16,7 @@ public:
 	//Inherited methods from System
 	void handleMsg(Message &msg) override;
 
-	bool startup() override;
+	void startup() override;
 
 	void shutdown() override;
 

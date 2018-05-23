@@ -17,8 +17,7 @@ void RenderSystem::handleMsg(Message &msg) {
 
 }
 
-bool RenderSystem::startup() {
-	return false;
+void RenderSystem::startup() {
 }
 
 void RenderSystem::shutdown() {

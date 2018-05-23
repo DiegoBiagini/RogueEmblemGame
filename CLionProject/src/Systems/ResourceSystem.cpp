@@ -13,9 +13,8 @@ void ResourceSystem::handleMsg(Message &msg) {
 
 }
 
-bool ResourceSystem::startup() {
+void ResourceSystem::startup() {
 	resourceMap.clear();
-	return true;
 }
 
 void ResourceSystem::shutdown() {

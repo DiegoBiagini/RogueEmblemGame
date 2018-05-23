@@ -16,7 +16,7 @@ public:
 	virtual void handleMsg(Message& msg) = 0;
 
 	//Starts up the subsystem
-	virtual bool startup() = 0;
+	virtual void startup() = 0;
 
 	//Closes the subsystem
 	virtual void shutdown() = 0;

@@ -26,24 +26,24 @@ public:
 	GameManager(const GameManager& other) = delete;
 
 	//Sends a message over the queue
-	void sendMsg(Message& message);
+	void sendMsg(Message message);
 
-	//Starts the whole game
+	//Starts the whole game,handles startup of every subsystem
 	bool startGame();
 
 private:
-	//Default constructor, will call and handle the startup of the engine
-	GameManager();
-	~GameManager();
+	//Default constructor
+	GameManager() = default;
+	~GameManager() = default;
 
 	//Various subsystems
-	RenderSystem ptrRenderS;
-	ResourceSystem ptrResourceS;
-	SoundSystem ptrSoundS;
-	GameLogicSystem ptrGameLogicS;
+	RenderSystem renderSystem;
+	ResourceSystem resourceSystem;
+	SoundSystem soundSystem;
+	GameLogicSystem gameLogicSystem;
 
 	//Queue used to communicate between all subsystems
-	std::list<std::shared_ptr<Message>> messageQueue;
+	std::list<Message> messageQueue;
 
 	//Handles all aspects of the game loop
 	void gameLoop();
