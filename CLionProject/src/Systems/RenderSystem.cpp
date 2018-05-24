@@ -5,29 +5,37 @@
 #include "RenderSystem.h"
 #include "../GameManager.h"
 
-RenderSystem::RenderSystem() {
 
-}
-
-RenderSystem::~RenderSystem() {
-
-}
 
 void RenderSystem::handleMsg(Message &msg) {
 
 }
 
 void RenderSystem::startup() {
+	//Create window
+	//Read these from a config file perhaps
+	window.create(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "RogueEmblem");
+
+	//If window couldn't be opened, i.e. it's still closed, throw exception
+	if(!window.isOpen())
+		throw std::runtime_error("Couldn't open window");
+	
+	//Set framerate limit
+	window.setFramerateLimit(MAX_FRAMERATE);
+
+	window.display();
 }
 
 void RenderSystem::shutdown() {
-
-}
-
-void RenderSystem::updateScreen() {
-
+	window.close();
 }
 
 sf::RenderWindow &RenderSystem::getWindow() {
 	return window;
 }
+
+void RenderSystem::clearScreen(sf::Color color) {
+	window.clear(color);
+}
+
+

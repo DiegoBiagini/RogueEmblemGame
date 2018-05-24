@@ -16,7 +16,7 @@
 class ResourceSystem : public System {
 public:
 	//Default constructor
-	ResourceSystem();
+	ResourceSystem() = default;
 
 	//Inherited methods from System
 	void handleMsg(Message &msg) override;

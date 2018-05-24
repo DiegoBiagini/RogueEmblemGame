@@ -36,6 +36,22 @@ private:
 	GameManager() = default;
 	~GameManager() = default;
 
+	//Handles all aspects of the game loop
+	void gameLoop();
+
+	//First part of the game loop, reads input from the user
+	void handleInput();
+
+	//Second part of the game loop, checks game state, applies game logic(collisions too)
+	//Uses a time step to ensure it's up to date if the frame rate is lower than usual
+	void update();
+
+	//Optional part of the game loop, loads required resources and makes them available to other systems
+	void handleResourceRequests();
+
+	//Third part of the loop, takes care of displaying everything in the right way and playing sounds
+	void renderAndPlaySounds();
+
 	//Various subsystems
 	RenderSystem renderSystem;
 	ResourceSystem resourceSystem;
@@ -45,21 +61,10 @@ private:
 	//Queue used to communicate between all subsystems
 	std::list<Message> messageQueue;
 
-	//Handles all aspects of the game loop
-	void gameLoop();
+	//Whether the game is running or not
+	bool running;
 
-	//First part of the game loop, reads input from the user
-	void handleInput();
 
-	//Second part of the game loop, checks game state, applies game logic(collisions too)
-	//Uses a time step to ensure it's up to date if the frame rate is lower than usual
-	void update(double timeStep);
-
-	//Optional part of the game loop, loads required resources and makes them available to other systems
-	void handleResourceRequests();
-
-	//Third part of the loop, takes care of displaying everything in the right way and playing sounds
-	void renderAndPlaySounds();
 
 };
 

@@ -5,18 +5,17 @@
 #ifndef ROGUEEMBLEMGAME_RENDERSYSTEM_H
 #define ROGUEEMBLEMGAME_RENDERSYSTEM_H
 
-
-#include "System.h"
 #include <SFML/Graphics.hpp>
+#include "System.h"
+#include "../constants.h"
+#include "../Resources/Texture.h"
 
 //Class that will handle rendering
 class RenderSystem : public System{
 public:
 	//Constructor
-	RenderSystem();
-
-	//Destructor
-	~RenderSystem();
+	RenderSystem() = default;
+	~RenderSystem() = default;
 
 	//Inherited methods from System
 	void handleMsg(Message &msg) override;
@@ -25,12 +24,11 @@ public:
 
 	void shutdown() override;
 
-	//Updates the screen
-	void updateScreen();
-
 	//Returns a reference to the main window
 	sf::RenderWindow& getWindow();
 
+	//Clears the screen with a color(default white)
+	void clearScreen(sf::Color color = {255,255,255,255});
 
 	//Draws a texture to the background, in a position and with a size dictated by a rect
 	//void drawBackground(Texture& texture, sf::IntRect& dstRect);

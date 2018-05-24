@@ -5,9 +5,7 @@
 #include "ResourceSystem.h"
 #include "../GameManager.h"
 
-ResourceSystem::ResourceSystem() {
 
-}
 
 void ResourceSystem::handleMsg(Message &msg) {
 
