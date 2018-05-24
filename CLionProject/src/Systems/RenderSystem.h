@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "System.h"
-#include "../constants.h"
+#include "../Utils/constants.h"
 #include "../Resources/Texture.h"
 
 //Class that will handle rendering

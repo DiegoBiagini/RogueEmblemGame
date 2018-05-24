@@ -5,7 +5,7 @@
 #ifndef ROGUEEMBLEMGAME_SYSTEM_H
 #define ROGUEEMBLEMGAME_SYSTEM_H
 
-#include "../Message.h"
+#include "Message.h"
 
 //Abstract class that will be the base of the various subsystems
 class System {

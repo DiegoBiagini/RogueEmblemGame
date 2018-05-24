@@ -7,7 +7,7 @@
 
 #include <list>
 #include <memory>
-#include "Message.h"
+#include "Systems/Message.h"
 #include "Systems/ResourceSystem.h"
 #include "Systems/RenderSystem.h"
 #include "Systems/GameLogicSystem.h"

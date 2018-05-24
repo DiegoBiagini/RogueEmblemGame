@@ -19,7 +19,7 @@ void RenderSystem::startup() {
 	//If window couldn't be opened, i.e. it's still closed, throw exception
 	if(!window.isOpen())
 		throw std::runtime_error("Couldn't open window");
-	
+
 	//Set framerate limit
 	window.setFramerateLimit(MAX_FRAMERATE);
 
