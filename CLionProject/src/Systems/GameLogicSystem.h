@@ -16,7 +16,7 @@ public:
 	GameLogicSystem() = default;
 
 	//Inherited methods from system
-	void handleMsg(Message &msg) override;
+	void handleMsg(std::shared_ptr<Message> message) override;
 
 	void startup() override;
 
@@ -29,7 +29,7 @@ public:
 private:
 
 	//The game state
-	//std::unique_ptr GameState currentState;
+	//std::shared_ptr GameState currentState;
 };
 
 

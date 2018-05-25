@@ -5,7 +5,7 @@
 #include "SoundSystem.h"
 #include "../GameManager.h"
 
-void SoundSystem::handleMsg(Message &msg) {
+void SoundSystem::handleMsg(std::shared_ptr<Message> message) {
 
 }
 

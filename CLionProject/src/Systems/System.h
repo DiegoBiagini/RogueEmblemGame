@@ -5,7 +5,9 @@
 #ifndef ROGUEEMBLEMGAME_SYSTEM_H
 #define ROGUEEMBLEMGAME_SYSTEM_H
 
+#include <memory>
 #include "Message.h"
+
 
 //Abstract class that will be the base of the various subsystems
 class System {
@@ -13,7 +15,7 @@ public:
 	System() = default;
 
 	//Handles messages that will be sent through a queue
-	virtual void handleMsg(Message& msg) = 0;
+	virtual void handleMsg(std::shared_ptr<Message> message) = 0;
 
 	//Starts up the subsystem
 	virtual void startup() = 0;

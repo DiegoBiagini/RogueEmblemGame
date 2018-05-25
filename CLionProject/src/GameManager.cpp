@@ -19,7 +19,7 @@ void GameManager::gameLoop() {
 
 	while(running){
 		//Check for inputs
-		handleInput();
+		inputHelper.dispatchEvents(renderSystem.getWindow());
 
 		//Update game state
 		update();
@@ -30,27 +30,23 @@ void GameManager::gameLoop() {
 		//Use those resources
 		renderAndPlaySounds();
 
+		//Handle messages sent to the gameManager
+		handleManagerMessages();
+
+		//Print all the messages that were received in this loop
+		for(auto& msg : messageQueue)
+			std::cout << msg->content << std::endl;
+
+		//Clear the messages
+		messageQueue.clear();
+
 	}
 }
 
-void GameManager::sendMsg(Message message) {
-	messageQueue.push_back(message);
+void GameManager::sendMsg(std::shared_ptr<Message> message) {
+	messageQueue.push_back(std::move(message));
 }
 
-void GameManager::handleInput() {
-	sf::Window& mainWindow = renderSystem.getWindow();
-	sf::Event ev;
-	while(mainWindow.pollEvent(ev)){
-		switch(ev.type) {
-			//Close the window
-		    case sf::Event::Closed:
-		        running = false;
-		        break;
-		    default:
-		        break;
-		}
-	}
-}
 
 void GameManager::update() {
 	for(auto& element : messageQueue)
@@ -61,8 +57,8 @@ void GameManager::update() {
 }
 
 void GameManager::handleResourceRequests() {
-	for(auto& el : messageQueue)
-		resourceSystem.handleMsg(el);
+	for(auto& element : messageQueue)
+		resourceSystem.handleMsg(element);
 }
 
 void GameManager::renderAndPlaySounds() {
@@ -78,6 +74,23 @@ void GameManager::renderAndPlaySounds() {
 
 }
 
+void GameManager::handleManagerMessages() {
+	for (auto &msg : messageQueue) {
+		//Checks if the message is actually for him
+		auto *actualMsg = dynamic_cast<ManagerMessage *>(msg.get());
+
+		if (actualMsg == nullptr) return;
+
+		switch (actualMsg->type) {
+			//If it's a quit message, stop game loop
+			case ManagerMessage::MANAGER_QUIT:
+				running = false;
+				break;
+			default:
+				break;
+		}
+	}
+}
 bool GameManager::startGame() {
 	//Call startup methods of every system
 	//Handle its possible errors

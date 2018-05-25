@@ -1,6 +1,6 @@
 set(SOURCE_FILES GameManager.cpp
         Systems/SoundSystem.cpp Systems/RenderSystem.cpp Systems/ResourceSystem.cpp Systems/GameLogicSystem.cpp
-        Resources/Texture.cpp)
+        Resources/Texture.cpp Utils/InputHelper.cpp Utils/InputHelper.h Utils/utilityFunctions.cpp Utils/utilityFunctions.h)
 
 
 add_executable(RogueEmblemGame main.cpp)

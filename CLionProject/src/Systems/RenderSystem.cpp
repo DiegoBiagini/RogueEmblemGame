@@ -7,7 +7,7 @@
 
 
 
-void RenderSystem::handleMsg(Message &msg) {
+void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 
 }
 

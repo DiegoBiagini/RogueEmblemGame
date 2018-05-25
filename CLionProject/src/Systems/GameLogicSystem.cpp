@@ -5,7 +5,7 @@
 #include "GameLogicSystem.h"
 #include "../GameManager.h"
 
-void GameLogicSystem::handleMsg(Message &msg) {
+void GameLogicSystem::handleMsg(std::shared_ptr<Message> message) {
 
 }
 

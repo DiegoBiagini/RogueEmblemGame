@@ -7,7 +7,7 @@
 
 
 
-void ResourceSystem::handleMsg(Message &msg) {
+void ResourceSystem::handleMsg(std::shared_ptr<Message> message) {
 
 }
 
@@ -29,14 +29,8 @@ Resource* ResourceSystem::getResourceById(int id) const {
 	try {
 		return resourceMap.at(id).get();
 	}catch (std::out_of_range& exc){
-		auto* errorMessage = new Message;
 
-		std::stringstream errorString;
-		errorString << "Error getting resource with id: " <<  id;
-		errorMessage->content = errorString.str();
-
-		GameManager::getInstance().sendMsg(*errorMessage);
-
+		std::cerr << "Error getting resource with id: " <<  id << std::endl;
 		return nullptr;
 	}
 
@@ -48,14 +42,7 @@ void ResourceSystem::freeResourceById(int id) {
 		resourceMap.erase(id);
 
 	}catch (std::out_of_range& exc){
-		auto* errorMessage = new Message;
-
-		std::stringstream errorString("Error freeing resource with id: ");
-		errorString << id;
-		errorMessage->content = errorString.str();
-
-		GameManager::getInstance().sendMsg(*errorMessage);
-
+		std::cerr << "Error freeing resource with id: " <<  id << std::endl;
 	}
 
 }

@@ -14,7 +14,7 @@ public:
 	SoundSystem() = default;
 
 	//Inherited methods from System
-	void handleMsg(Message &msg) override;
+	void handleMsg(std::shared_ptr<Message> message) override;
 
 	void startup() override;
 

@@ -7,11 +7,11 @@
 
 #include <list>
 #include <memory>
-#include "Systems/Message.h"
 #include "Systems/ResourceSystem.h"
 #include "Systems/RenderSystem.h"
 #include "Systems/GameLogicSystem.h"
 #include "Systems/SoundSystem.h"
+#include "Utils/InputHelper.h"
 
 
 //The main manager class
@@ -26,7 +26,7 @@ public:
 	GameManager(const GameManager& other) = delete;
 
 	//Sends a message over the queue
-	void sendMsg(Message message);
+	void sendMsg(std::shared_ptr<Message> message);
 
 	//Starts the whole game,handles startup of every subsystem
 	bool startGame();
@@ -39,11 +39,8 @@ private:
 	//Handles all aspects of the game loop
 	void gameLoop();
 
-	//First part of the game loop, reads input from the user
-	void handleInput();
-
-	//Second part of the game loop, checks game state, applies game logic(collisions too)
-	//Uses a time step to ensure it's up to date if the frame rate is lower than usual
+	//After reading inputs from the user
+	//Second part of the game loop, checks game state, applies game logic
 	void update();
 
 	//Optional part of the game loop, loads required resources and makes them available to other systems
@@ -52,6 +49,9 @@ private:
 	//Third part of the loop, takes care of displaying everything in the right way and playing sounds
 	void renderAndPlaySounds();
 
+	//Handles the messages sent to the GameManager, like the closing of the game
+	void handleManagerMessages();
+
 	//Various subsystems
 	RenderSystem renderSystem;
 	ResourceSystem resourceSystem;
@@ -59,10 +59,13 @@ private:
 	GameLogicSystem gameLogicSystem;
 
 	//Queue used to communicate between all subsystems
-	std::list<Message> messageQueue;
+	std::list<std::shared_ptr<Message>> messageQueue;
 
 	//Whether the game is running or not
 	bool running;
+
+	//Helper class that will listen to events
+	InputHelper inputHelper;
 
 
 
