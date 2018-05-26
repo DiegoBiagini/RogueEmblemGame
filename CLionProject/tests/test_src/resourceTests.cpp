@@ -21,5 +21,5 @@ TEST(TextureTest, nonexistingFileLoaded) {
 	texture.load(path);
 
 	ASSERT_EQ(texture.isValidResource(), false);
-
 }
+

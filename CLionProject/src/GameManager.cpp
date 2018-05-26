@@ -126,3 +126,22 @@ bool GameManager::startGame() {
 	return true;
 }
 
+int GameManager::sendLoadTextureRequest(std::string &path) {
+	int id = 0;
+	//First check if the resource was already loaded
+	if( (id = resourceSystem.getIdByPath(path) )== 0){
+		//It isn't loaded so send the message and notify the ResourceSystem that a request will take place
+		id = resourceSystem.enqueueRequest();
+		std::shared_ptr<ResourceMessage> msg {new ResourceMessage};
+
+		//Set it as a load texture request with the correct path
+		msg->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+		msg->path = path;
+		std::stringstream msgString {"Loading texture at:"};
+		msgString << path;
+
+		sendMsg(std::move(msg));
+	}
+	return id;
+}
+

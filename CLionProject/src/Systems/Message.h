@@ -42,4 +42,16 @@ struct ManagerMessage : public Message {
 	Type type;
 };
 
+//A message that will be sent to the Resource System
+struct ResourceMessage : public Message{
+	enum Type {
+		RESOURCE_LOAD_TEXTURE, 			//To load a texture
+		RESOURCE_LOAD_SOUND_EFFECT,		//To load a sound effect
+		RESOURCE_LOAD_MUSIC,			//To load a music
+	};
+	Type type;
+
+	std::string path; 					//Path of the resource
+	
+};
 #endif //ROGUEEMBLEMGAME_MESSAGE_H
