@@ -31,8 +31,10 @@ public:
 	//Starts the whole game,handles startup of every subsystem
 	bool startGame();
 
-	//To simplify some message sending
+	//Returns a pointer to a resource given an id dispatching it to the resource system
+	Resource* getResourceById(int id);
 
+	//To simplify some message sending
 	//Sends a requests to the ResourceSystem that tells it to load a texture, returns the id of the texture that will
 	//be loaded
 	int sendLoadTextureRequest(std::string& path);

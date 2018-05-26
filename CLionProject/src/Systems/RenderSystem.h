@@ -33,9 +33,15 @@ public:
 	//Draws a texture to the background, in a position and with a size dictated by a rect
 	//void drawBackground(Texture& texture, sf::IntRect& dstRect);
 
+	//Applies view and displays changes
+	void display();
+
 private:
 	//The main window
 	sf::RenderWindow window;
+
+	//The view that represents the part of the screen that will be displayed
+	sf::View screenView;
 
 };
 

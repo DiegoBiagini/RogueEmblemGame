@@ -72,6 +72,8 @@ void GameManager::renderAndPlaySounds() {
 	for (auto& element : messageQueue)
 		soundSystem.handleMsg(element);
 
+	renderSystem.display();
+
 }
 
 void GameManager::handleManagerMessages() {
@@ -83,7 +85,7 @@ void GameManager::handleManagerMessages() {
 
 		switch (actualMsg->type) {
 			//If it's a quit message, stop game loop
-			case ManagerMessage::Type::MANAGER_QUIT:
+			case ManagerMessage::Type::QUIT:
 				running = false;
 				break;
 
@@ -135,7 +137,7 @@ int GameManager::sendLoadTextureRequest(std::string &path) {
 		std::shared_ptr<ResourceMessage> msg {new ResourceMessage};
 
 		//Set it as a load texture request with the correct path
-		msg->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+		msg->type = ResourceMessage::Type::LOAD_TEXTURE;
 		msg->path = path;
 		std::stringstream msgString {"Loading texture at:"};
 		msgString << path;
@@ -143,5 +145,9 @@ int GameManager::sendLoadTextureRequest(std::string &path) {
 		sendMsg(std::move(msg));
 	}
 	return id;
+}
+
+Resource *GameManager::getResourceById(int id) {
+	return resourceSystem.getResourceById(id);
 }
 

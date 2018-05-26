@@ -6,7 +6,9 @@
 #define ROGUEEMBLEMGAME_MESSAGE_H
 
 #include <iostream>
+#include <SFML/Graphics/Rect.hpp>
 #include "../Utils/VirtualKey.h"
+#include "../Utils/constants.h"
 
 //Struct that will carry a message for the various subsystems
 struct Message{
@@ -22,7 +24,7 @@ struct Message{
 struct GameLogicMessage : public Message {
 
 	enum class Type {
-		GAME_KEY
+		KEY
 	};
 
 	Type type;
@@ -36,22 +38,43 @@ struct GameLogicMessage : public Message {
 // i.e. the window was closed, minimized, out of focused
 struct ManagerMessage : public Message {
 	enum class Type {
-		MANAGER_QUIT
+		QUIT
 	};
 
 	Type type;
 };
 
 //A message that will be sent to the Resource System
-struct ResourceMessage : public Message{
-	enum Type {
-		RESOURCE_LOAD_TEXTURE, 			//To load a texture
-		RESOURCE_LOAD_SOUND_EFFECT,		//To load a sound effect
-		RESOURCE_LOAD_MUSIC,			//To load a music
+//It will tell it to load a texture,sound effect, music, etc
+struct ResourceMessage : public Message {
+	enum class Type {
+		LOAD_TEXTURE, 			//To load a texture
+		LOAD_SOUND_EFFECT,		//To load a sound effect
+		LOAD_MUSIC				//To load a music
 	};
 	Type type;
 
-	std::string path; 					//Path of the resource
+	//Path of the resource
+	std::string path{""};
 	
+};
+
+//A message that will be sent to the Render system
+//It will tell it to render a texture or to move the camera/view
+struct RenderMessage : public Message {
+	enum class Type{
+		RENDER_TEXTURE,
+		MOVE_VIEW
+	};
+	Type type;
+
+
+	//How much the view should be scaled
+	float viewScale {1};
+	//Center of the view or position at which to render object
+	sf::Vector2i position {INITIAL_WIDTH/2, INITIAL_HEIGHT/2};
+
+	//For first type, id of the texture to render
+	int id {0};
 };
 #endif //ROGUEEMBLEMGAME_MESSAGE_H

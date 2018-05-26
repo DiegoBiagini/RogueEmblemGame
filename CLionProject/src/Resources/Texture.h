@@ -25,7 +25,6 @@ public:
 	virtual void render(sf::RenderWindow& window, int x, int y);
 	virtual void render(sf::RenderWindow& window, int x, int y,int w, int h);
 
-
 	//Returns true if texture is empty
 	bool isValidResource() override;
 

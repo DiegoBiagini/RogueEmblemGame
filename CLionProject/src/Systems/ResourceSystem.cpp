@@ -11,17 +11,16 @@ void ResourceSystem::handleMsg(std::shared_ptr<Message> message) {
 	if(actualMsg == nullptr)	return;
 
 	switch(actualMsg->type) {
-		case ResourceMessage::RESOURCE_LOAD_TEXTURE:
+		case ResourceMessage::Type::LOAD_TEXTURE:
 			loadTexture(actualMsg->path);
 			break;
 
-		case ResourceMessage::RESOURCE_LOAD_SOUND_EFFECT:
+		case ResourceMessage::Type::LOAD_SOUND_EFFECT:
 			break;
 
-		case ResourceMessage::RESOURCE_LOAD_MUSIC:
+		case ResourceMessage::Type::LOAD_MUSIC:
 			break;
-		default:
-			break;
+
 	}
 	//Regardless of success scales it down
 	queuedRequests--;
