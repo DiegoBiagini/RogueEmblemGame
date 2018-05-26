@@ -9,7 +9,7 @@
 #include "VirtualKey.h"
 
 namespace utility{
-	//Returns a string with a readable value of the VirtualKey enum
+	//Returns a string with a readable value of the VirtualKey enum class
 	std::string getStringFromVKey(const VirtualKey &vkPressed);
 
 }

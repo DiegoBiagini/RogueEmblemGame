@@ -6,7 +6,7 @@
 #define ROGUEEMBLEMGAME_VIRTUALKEY_H
 
 //A virtual key press, each one of them will be bound to an actual key by the input system
-enum VirtualKey{
+enum class VirtualKey{
 	//The four directions
 			UP,
 	DOWN,

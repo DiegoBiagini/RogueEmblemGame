@@ -5,7 +5,7 @@
 #include "Texture.h"
 
 Texture::Texture(int id, std::string path) :
-		Resource(id,path)
+		Resource{id,path}
 {
 
 	tWidth = 0;
@@ -45,7 +45,7 @@ void Texture::render(sf::RenderWindow& window, int x, int y, int w, int h) {
 	//Set size at which it will be rendered
 	sf::IntRect srcRect {0, 0, tWidth, tHeight};
 
-	sf::Sprite sprite(texture,srcRect);
+	sf::Sprite sprite{texture,srcRect};
 	sprite.setPosition(dstRect.left, dstRect.top);
 	window.draw(sprite);
 

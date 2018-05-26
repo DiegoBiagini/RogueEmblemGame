@@ -83,11 +83,10 @@ void GameManager::handleManagerMessages() {
 
 		switch (actualMsg->type) {
 			//If it's a quit message, stop game loop
-			case ManagerMessage::MANAGER_QUIT:
+			case ManagerMessage::Type::MANAGER_QUIT:
 				running = false;
 				break;
-			default:
-				break;
+
 		}
 	}
 }

@@ -8,19 +8,19 @@ namespace utility {
 
 	std::string getStringFromVKey(const VirtualKey &vkPressed) {
 		switch (vkPressed) {
-			case UP:
+			case VirtualKey::UP:
 				return "UP";
-			case DOWN:
+			case VirtualKey::DOWN:
 				return "DOWN";
-			case LEFT:
+			case VirtualKey::LEFT:
 				return "LEFT";
-			case RIGHT:
+			case VirtualKey::RIGHT:
 				return "RIGHT";
-			case CONFIRM:
+			case VirtualKey::CONFIRM:
 				return "CONFIRM";
-			case BACK:
+			case VirtualKey::BACK:
 				return "BACK";
-			case PAUSE:
+			case VirtualKey::PAUSE:
 				return "PAUSE";
 			default:
 				return "";

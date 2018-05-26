@@ -11,7 +11,7 @@
 class Resource {
 public:
 
-	Resource(int id, std::string& path) : id(id), path(path){}
+	Resource(int id, std::string& path) : id{id}, path{path}{}
 
 	virtual ~Resource() = default;
 

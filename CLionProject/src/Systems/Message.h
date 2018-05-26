@@ -21,21 +21,21 @@ struct Message{
 // most likely will be sent from the input and will contain a virtual key that was pressed/released
 struct GameLogicMessage : public Message {
 
-	enum Type {
+	enum class Type {
 		GAME_KEY
 	};
 
 	Type type;
 
 	//Key that was pressed/released
-	VirtualKey key;
-	bool pressed;
+	VirtualKey key {VirtualKey::NOACTION};
+	bool pressed {false};
 };
 
 //A message sent to the GameManager notifying that something outside the game happened,
 // i.e. the window was closed, minimized, out of focused
 struct ManagerMessage : public Message {
-	enum Type {
+	enum class Type {
 		MANAGER_QUIT
 	};
 

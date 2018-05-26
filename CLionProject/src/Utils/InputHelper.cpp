@@ -35,35 +35,35 @@ void InputHelper::dispatchEvents(sf::RenderWindow& window) {
 VirtualKey InputHelper::getVirtualKey(sf::Keyboard::Key actualKey) const {
 	switch (actualKey){
 		case sf::Keyboard::Up:
-			return UP;
+			return VirtualKey::UP;
 
 		case sf::Keyboard::Down:
-			return DOWN;
+			return VirtualKey::DOWN;
 
 		case sf::Keyboard::Left:
-			return LEFT;
+			return VirtualKey::LEFT;
 
 		case sf::Keyboard::Right:
-			return RIGHT;
+			return VirtualKey::RIGHT;
 
 		case sf::Keyboard::Z:
-			return BACK;
+			return VirtualKey::BACK;
 
 		case sf::Keyboard::X:
-			return CONFIRM;
+			return VirtualKey::CONFIRM;
 
 		case sf::Keyboard::P:
-			return PAUSE;
+			return VirtualKey::PAUSE;
 
 		default:
-			return NOACTION;
+			return VirtualKey::NOACTION;
 	}
 }
 
 void InputHelper::sendQuitMessage() {
 
-	std::shared_ptr<ManagerMessage> message(new ManagerMessage);
-	message->type = ManagerMessage::MANAGER_QUIT;
+	std::shared_ptr<ManagerMessage> message{new ManagerMessage};
+	message->type = ManagerMessage::Type::MANAGER_QUIT;
 	message->content = "The game was closed";
 
 	GameManager::getInstance().sendMsg(std::move(message));
@@ -77,9 +77,9 @@ void InputHelper::sendKeyMessage(sf::Event event) {
 	//Check for actual key presses
 	if(vkPressed != VirtualKey::NOACTION) {
 		//Send message to game logic system
-		std::shared_ptr<GameLogicMessage> message(new GameLogicMessage);
+		std::shared_ptr<GameLogicMessage> message{new GameLogicMessage};
 		message->key = vkPressed;
-		message->type = GameLogicMessage::GAME_KEY;
+		message->type = GameLogicMessage::Type::GAME_KEY;
 
 		std::stringstream msgString;
 

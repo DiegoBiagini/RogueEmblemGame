@@ -5,8 +5,8 @@
 #ifndef ROGUEEMBLEMGAME_GAMEMANAGER_H
 #define ROGUEEMBLEMGAME_GAMEMANAGER_H
 
-#include <list>
 #include <memory>
+#include <deque>
 #include "Systems/ResourceSystem.h"
 #include "Systems/RenderSystem.h"
 #include "Systems/GameLogicSystem.h"
@@ -59,7 +59,7 @@ private:
 	GameLogicSystem gameLogicSystem;
 
 	//Queue used to communicate between all subsystems
-	std::list<std::shared_ptr<Message>> messageQueue;
+	std::deque<std::shared_ptr<Message>> messageQueue;
 
 	//Whether the game is running or not
 	bool running;
