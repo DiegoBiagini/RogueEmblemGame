@@ -27,6 +27,7 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 			//Update view
 			screenView.setSize(INITIAL_WIDTH * actualMsg->viewScale, INITIAL_HEIGHT * actualMsg->viewScale);
 			screenView.setCenter(sf::Vector2f(actualMsg->position));
+			window.setView(screenView);
 			break;
 		}
 	}
@@ -62,7 +63,6 @@ void RenderSystem::clearScreen(sf::Color color) {
 }
 
 void RenderSystem::display() {
-	window.setView(screenView);
 	window.display();
 }
 

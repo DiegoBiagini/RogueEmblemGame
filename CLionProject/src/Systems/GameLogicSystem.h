@@ -7,6 +7,7 @@
 
 
 #include "System.h"
+#include "../States/GameState.h"
 
 //Will handle the changes in game state
 class GameLogicSystem : public System {
@@ -29,7 +30,7 @@ public:
 private:
 
 	//The game state
-	//std::shared_ptr GameState currentState;
+	std::unique_ptr<GameState> currentState;
 };
 
 
