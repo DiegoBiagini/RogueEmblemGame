@@ -12,4 +12,7 @@ const int MAX_FRAMERATE = 60;
 const int INITIAL_WIDTH = 1280;
 const int INITIAL_HEIGHT = 720;
 
+//Size of a tile texture
+const int TILE_SIZE = 128;
+
 #endif //ROGUEEMBLEMGAME_CONSTANTS_H
