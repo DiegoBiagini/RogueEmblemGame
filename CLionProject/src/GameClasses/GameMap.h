@@ -11,8 +11,7 @@
 #include "../Utils/constants.h"
 #include "Tile.h"
 #include "../Utils/Observer.h"
-
-class GameObject;
+#include "GameObject.h"
 
 //Class that represents the whole game map
 //It will observe some GameObjects

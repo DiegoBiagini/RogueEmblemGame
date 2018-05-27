@@ -7,8 +7,8 @@
 
 #include <SFML/Graphics/Rect.hpp>
 #include "../Utils/Subject.h"
-#include "GameMap.h"
 
+class GameMap;
 
 //Abstract class that represents a game object on the map
 class GameObject : public Subject{
@@ -23,21 +23,14 @@ public:
 	virtual void update() = 0;
 
 	//Position getters
-	int getPosX() const {
-		return posX;
-	}
+	int getPosX() const;
 
-	int getPosY() const {
-		return posY;
-	}
+	int getPosY() const;
+
 	//Setters
-	void setPosX(int posX){
-		this->posX = posX;
-	}
+	void setPosX(int posX);
 
-	void setPosY(int posY){
-		this->posY = posY;
-	}
+	void setPosY(int posY);
 
 protected:
 	//Coordinates of the object on the map

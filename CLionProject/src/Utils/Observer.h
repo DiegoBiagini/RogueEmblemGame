@@ -9,9 +9,6 @@ class Subject;
 
 class Observer {
 public:
-	Observer() = default;
-
-	virtual ~Observer();
-	virtual void updateObserver(Subject* subject);
+	virtual void updateObserver(Subject* subject) = 0;
 };
 #endif //ROGUEEMBLEMGAME_OBSERVER_H

@@ -8,6 +8,8 @@
 
 #include "System.h"
 #include "../States/GameState.h"
+#include "../States/EnterLevelState.h"
+
 
 //Will handle the changes in game state
 class GameLogicSystem : public System {

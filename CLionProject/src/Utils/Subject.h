@@ -9,7 +9,6 @@
 #include <algorithm>
 #include "Observer.h"
 
-
 class Subject {
 public:
 	virtual ~Subject();
