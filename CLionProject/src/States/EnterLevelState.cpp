@@ -14,6 +14,17 @@ void EnterLevelState::enterState() {
 	map.createMap();
 
 	camera = {0, 0, INITIAL_WIDTH, INITIAL_HEIGHT};
+
+	//Create player, put it in map
+	std::shared_ptr<GameCharacter> char1{new PlayerControlledCharacter};
+	char1->setup();
+
+	map.setObjectInCell(char1);
+	char1->attach(&map);
+
+	//Add it to the object list
+	objectList.push_back(char1);
+
 }
 
 void EnterLevelState::render() {

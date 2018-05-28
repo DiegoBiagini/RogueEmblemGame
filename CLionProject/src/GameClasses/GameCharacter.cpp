@@ -21,13 +21,12 @@ void GameCharacter::render(sf::IntRect camera, GameMap &map) {
 		int centerTileX = posX * map.getTileSize() + map.getTileSize() / 2;
 		int centerTileY = posY * map.getTileSize() + map.getTileSize() / 2;
 
-		//Get the actual coordinates of the upleft corner of the image
+		//Get the actual coordinates of the up left corner of the image
 		int xCoordinate = centerTileX - imgWidth / 2;
 		int yCoordinate = centerTileY - imgHeight / 2;
 
 		//Check if it is inside the camera
 		sf::IntRect charRect{xCoordinate, yCoordinate, imgWidth, imgHeight};
-
 		if (camera.intersects(charRect))
 			GameManager::getInstance().sendRenderTextureRequest(mediaId, xCoordinate, yCoordinate);
 	}
