@@ -8,10 +8,13 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <sstream>
 #include "../Utils/constants.h"
 #include "Tile.h"
 #include "../Utils/Observer.h"
 #include "GameObject.h"
+
+using namespace std;
 
 //Class that represents the whole game map
 //It will observe some GameObjects
@@ -59,17 +62,25 @@ private:
 	int tileHeight;
 
 	//Actual pixel size of the whole map
-	int mapWidth;
-	int mapHeight;
+	int pixelWidth;
+	int pixelHeight;
 
 	//Size of a single tile
-	int tileSize;
+	int singleTileSize;
 
 	//Vector of all tiles, in each tile there could be a gameObject and a pointer to it will be stored
-	std::vector<std::vector<std::pair<Tile,std::shared_ptr<GameObject>>>> mapMatrix;
+	vector<vector<pair<Tile, shared_ptr<GameObject>>>> mapMatrix;
+
+	array<int, Tile::Type::NTILES> tileTextureIds;
 
 	//Sets a cell to a certain tile
 	void setTile(Tile tile, int x, int y);
+
+	//Returns true if the passed coordinates are associated with an on screen tile
+	bool isTileInsideCamera(const sf::IntRect &cameraRectangle, int i, int j) const;
+
+	//Will load all the textures relative to the tiles and store their ids in an array
+	void loadTileTextures();
 
 };
 

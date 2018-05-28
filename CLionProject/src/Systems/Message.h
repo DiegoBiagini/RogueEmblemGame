@@ -77,4 +77,9 @@ struct RenderMessage : public Message {
 	//For first type, id of the texture to render
 	int id {0};
 };
+
+//A message that will be sent to the Sound system
+struct SoundMessage : public Message {
+
+};
 #endif //ROGUEEMBLEMGAME_MESSAGE_H

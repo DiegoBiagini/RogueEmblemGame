@@ -26,6 +26,7 @@ void GameLogicSystem::handleMsg(std::shared_ptr<Message> message) {
 void GameLogicSystem::startup() {
 	//Go to the first state
 	currentState.reset(new EnterLevelState(1));
+	currentState->enterState();
 }
 
 void GameLogicSystem::shutdown() {

@@ -3,7 +3,7 @@
 //
 
 #include "GameMap.h"
-#include "GameObject.h"
+#include "../GameManager.h"
 
 Tile GameMap::getTileAt(int x, int y) {
 	if(isValidCell(x,y))
@@ -22,19 +22,21 @@ int GameMap::getTileHeight() const {
 }
 
 int GameMap::getMapWidth() const {
-	return mapWidth;
+	return pixelWidth;
 }
 
 int GameMap::getMapHeight() const {
-	return mapHeight;
+	return pixelHeight;
 }
 
 int GameMap::getTileSize() const {
-	return tileSize;
+	return singleTileSize;
 }
 
-GameMap::GameMap() : tileSize(TILE_SIZE) {
+GameMap::GameMap() : singleTileSize(TILE_SIZE) {
 }
+
+
 
 void GameMap::initMap(int tileWidth, int tileHeight) {
 
@@ -42,8 +44,8 @@ void GameMap::initMap(int tileWidth, int tileHeight) {
 	this->tileHeight = tileHeight;
 
 	//Calculate whole map width and height in pixels
-	mapWidth = tileSize * tileWidth;
-	mapHeight = tileSize * tileHeight;
+	pixelWidth = singleTileSize * tileWidth;
+	pixelHeight = singleTileSize * tileHeight;
 
 	//Clear the matrix
 	mapMatrix.clear();
@@ -56,6 +58,8 @@ void GameMap::initMap(int tileWidth, int tileHeight) {
 			column.push_back(std::make_pair<Tile, std::shared_ptr<GameObject>>(Tile(Tile::Type::FLOOR), nullptr));
 		}
 	}
+
+	loadTileTextures();
 
 }
 
@@ -95,6 +99,30 @@ void GameMap::setTile(Tile tile, int x, int y) {
 
 void GameMap::render(sf::IntRect cameraRectangle) {
 
+	int i = 0;
+	for (auto &column : mapMatrix) {
+		int j = 0;
+		for (auto &element : column) {
+			//Get tile
+			Tile currentTile = element.first;
+
+			//Don't overload with requests, send only if it's within rendering range
+			if (isTileInsideCamera(cameraRectangle, i, j)) {
+				//Send msg regarding how to render
+
+				//The portion of the screen where it will be rendered
+				int posX = singleTileSize * i;
+				int posY = singleTileSize * j;
+
+				GameManager::getInstance().sendRenderTextureRequest(tileTextureIds.at(currentTile.getType()), posX,
+																	posY);
+			}
+			j++;
+		}
+
+		i++;
+	}
+
 }
 
 void GameMap::updateObserver(Subject *subject) {
@@ -133,3 +161,29 @@ void GameMap::setObjectInCell(std::shared_ptr<GameObject> obj) {
 	}
 }
 
+bool GameMap::isTileInsideCamera(const sf::IntRect &cameraRectangle, int i, int j) const {
+
+	int xPosition = singleTileSize * i;
+	int yPosition = singleTileSize * j;
+
+	if (xPosition < cameraRectangle.left + cameraRectangle.width &&    //Right
+		yPosition < cameraRectangle.top + cameraRectangle.height &&        //Down
+		xPosition + singleTileSize > cameraRectangle.left &&                //Left
+		yPosition + singleTileSize > cameraRectangle.top)                //Up
+		return true;
+}
+
+void GameMap::loadTileTextures() {
+
+	std::vector<std::pair<std::string, Tile::Type >> pathVector;
+
+	//Add paths relative to the tile type
+	pathVector.emplace_back(std::make_pair("wall.png", Tile::Type::WALL));
+	pathVector.emplace_back(std::make_pair("floor.png", Tile::Type::FLOOR));
+
+	//Send all messages to load textures
+	for (auto &pathPair : pathVector) {
+		tileTextureIds.at(pathPair.second) = GameManager::getInstance().sendLoadTextureRequest(pathPair.first);
+	}
+
+}

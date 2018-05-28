@@ -33,9 +33,7 @@ void GameManager::gameLoop() {
 		//Handle messages sent to the gameManager
 		handleManagerMessages();
 
-		//Print all the messages that were received in this loop
-		for(auto& msg : messageQueue)
-			std::cout << msg->content << std::endl;
+		printMessagesInQueue();
 
 		//Clear the messages
 		messageQueue.clear();
@@ -139,8 +137,9 @@ int GameManager::sendLoadTextureRequest(std::string &path) {
 		//Set it as a load texture request with the correct path
 		msg->type = ResourceMessage::Type::LOAD_TEXTURE;
 		msg->path = path;
-		std::stringstream msgString {"Loading texture at:"};
-		msgString << path;
+		std::stringstream msgString;
+		msgString << "Loading texture at:" << path;
+		msg->content = msgString.str();
 
 		sendMsg(std::move(msg));
 	}
@@ -151,3 +150,33 @@ Resource *GameManager::getResourceById(int id) {
 	return resourceSystem.getResourceById(id);
 }
 
+void GameManager::sendRenderTextureRequest(int id, int posX, int posY) {
+	std::shared_ptr<RenderMessage> msg{new RenderMessage};
+
+	msg->type = RenderMessage::Type::RENDER_TEXTURE;
+
+	std::stringstream msgString;
+	msgString << "Rendering texture with id :" << id << " at X:" << posX << ",Y:" << posY << std::endl;
+	msg->content = msgString.str();
+
+	msg->id = id;
+
+	msg->position = {posX, posY};
+
+	sendMsg(std::move(msg));
+}
+
+void GameManager::printMessagesInQueue() const {
+	//For debugging purpose: print all messages
+	for (auto &element : messageQueue) {
+
+
+		if ((dynamic_cast<RenderMessage *>(element.get()) != nullptr && DEBUG_RENDER) ||
+			(dynamic_cast<ResourceMessage *>(element.get()) != nullptr && DEBUG_RESOURCE) ||
+			(dynamic_cast<GameLogicMessage *>(element.get()) != nullptr && DEBUG_GAMELOGIC) ||
+			(dynamic_cast<SoundMessage *>(element.get()) != nullptr && DEBUG_SOUND) ||
+			(dynamic_cast<ManagerMessage *>(element.get()) != nullptr && DEBUG_MANAGER))
+
+			std::cout << element->content << std::endl;
+	}
+}

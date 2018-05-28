@@ -12,7 +12,7 @@ class Tile {
 
 public:
 	//NTILES will serve as an indicator of no tile too
-	enum class Type {
+	enum Type {
 		FLOOR, WALL, NTILES
 	};
 

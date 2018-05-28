@@ -12,6 +12,8 @@ std::unique_ptr<GameState> EnterLevelState::handleInput(VirtualKey key, bool pre
 void EnterLevelState::enterState() {
 	map.initMap(20,20);
 	map.createMap();
+
+	camera = {0, 0, INITIAL_WIDTH, INITIAL_HEIGHT};
 }
 
 void EnterLevelState::render() {

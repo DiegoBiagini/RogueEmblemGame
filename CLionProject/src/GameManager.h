@@ -13,6 +13,14 @@
 #include "Systems/SoundSystem.h"
 #include "Utils/InputHelper.h"
 
+//Defines for debugging purposes
+
+#define DEBUG_RENDER    false
+#define DEBUG_RESOURCE    true
+#define DEBUG_GAMELOGIC true
+#define DEBUG_SOUND    true
+#define DEBUG_MANAGER    true
+
 
 //The main manager class
 class GameManager{
@@ -39,6 +47,9 @@ public:
 	//be loaded
 	int sendLoadTextureRequest(std::string& path);
 
+	//Sends request to render a texture with its original dimensions
+	void sendRenderTextureRequest(int id, int posX, int posY);
+
 private:
 	//Default constructor
 	GameManager() = default;
@@ -59,6 +70,9 @@ private:
 
 	//Handles the messages sent to the GameManager, like the closing of the game
 	void handleManagerMessages();
+
+	//Prints all the messages in the queue, according to some directives
+	void printMessagesInQueue() const;
 
 	//Various subsystems
 	RenderSystem renderSystem;
