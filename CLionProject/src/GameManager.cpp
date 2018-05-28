@@ -180,3 +180,31 @@ void GameManager::printMessagesInQueue() const {
 			std::cout << element->content << std::endl;
 	}
 }
+
+int GameManager::sendLoadAnimationRequest(std::string &path, int nImages, int singleImageWidth, int singleImageHeight,
+										  int imagesInRow) {
+	int id = 0;
+	//First check if the resource was already loaded
+	if ((id = resourceSystem.getIdByPath(path)) == 0) {
+		//It isn't loaded so send the message and notify the ResourceSystem that a request will take place
+		id = resourceSystem.enqueueRequest();
+
+		//Animation parameters
+		std::shared_ptr<ResourceMessage> msg{new ResourceMessage};
+		msg->imagesInRow = imagesInRow;
+		msg->frameHeight = singleImageHeight;
+		msg->frameWidth = singleImageWidth;
+		msg->nImages = nImages;
+		msg->path = path;
+		msg->type = ResourceMessage::Type::LOAD_ANIMATION;
+
+		std::stringstream msgString;
+		msgString << "Loading animation at:" << path;
+		msg->content = msgString.str();
+
+		sendMsg(std::move(msg));
+	}
+	return id;
+
+
+}

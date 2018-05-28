@@ -3,6 +3,7 @@
 //
 
 #include "ResourceSystem.h"
+#include "../Resources/Animation.h"
 
 void ResourceSystem::handleMsg(std::shared_ptr<Message> message) {
 	//Check if message is for him, according to the type of message tries to load a certain resource
@@ -21,6 +22,10 @@ void ResourceSystem::handleMsg(std::shared_ptr<Message> message) {
 		case ResourceMessage::Type::LOAD_MUSIC:
 			break;
 
+		case ResourceMessage::Type::LOAD_ANIMATION:
+			loadAnimation(actualMsg->path, actualMsg->nImages, actualMsg->frameWidth, actualMsg->frameHeight,
+						  actualMsg->imagesInRow, ANIMATION_SPEED);
+			break;
 	}
 	//Regardless of success scales it down
 	queuedRequests--;
@@ -45,6 +50,21 @@ void ResourceSystem::loadTexture(std::string &path) {
 	else
 		//Add it to the map
 		resourceMap[progressiveId - queuedRequests] = std::move(loadedTexture);
+}
+
+void ResourceSystem::loadAnimation(std::string &path, int nImages, int singleImageWidth, int singleImageHeight,
+								   int imagesInRow, int advanceFrame) {
+	//Load animation, if it's valid add it to the hashmap and increase the progressive number
+	std::unique_ptr<Animation> loadedAnimation{new Animation(progressiveId, path)};
+
+	//Initialize it with passed values
+	loadedAnimation->setupAnimation(nImages, singleImageWidth, singleImageHeight, imagesInRow, advanceFrame);
+	if (!loadedAnimation->isValidResource()) {
+		//Error could't load animation
+		std::cerr << "Error loading resource at:" << path << std::endl;
+	} else
+		resourceMap[progressiveId - queuedRequests] = std::move(loadedAnimation);
+
 }
 
 Resource* ResourceSystem::getResourceById(int id) const {

@@ -49,6 +49,7 @@ struct ManagerMessage : public Message {
 struct ResourceMessage : public Message {
 	enum class Type {
 		LOAD_TEXTURE, 			//To load a texture
+		LOAD_ANIMATION,            //To load an animation
 		LOAD_SOUND_EFFECT,		//To load a sound effect
 		LOAD_MUSIC				//To load a music
 	};
@@ -56,6 +57,12 @@ struct ResourceMessage : public Message {
 
 	//Path of the resource
 	std::string path{""};
+
+	//Attributes needed to load an animation correctly
+	int frameWidth{0};
+	int frameHeight{0};
+	int nImages{0};
+	int imagesInRow{0};
 	
 };
 

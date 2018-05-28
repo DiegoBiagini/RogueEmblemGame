@@ -22,6 +22,8 @@ void PlayerControlledCharacter::setup() {
 	posX = 1;
 	posY = 1;
 
-	std::string resourcePath{"player.png"};
-	mediaId = GameManager::getInstance().sendLoadTextureRequest(resourcePath);
+	std::string resourcePath{"playerSheet.png"};
+	//Send message with accurate information about the animation
+
+	mediaId = GameManager::getInstance().sendLoadAnimationRequest(resourcePath, 8, TILE_SIZE, TILE_SIZE, 4);
 }

@@ -44,6 +44,9 @@ private:
 	//Methods that load any kind of resource
 	void loadTexture(std::string& path);
 
+	void loadAnimation(std::string &path, int nImages, int singleImageWidth, int singleImageHeight, int imagesInRow,
+					   int advanceFrame);
+
 	//The last id that was assigned
 	//All Ids will be bigger than 1
 	int progressiveId {1};

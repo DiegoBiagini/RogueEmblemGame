@@ -15,4 +15,7 @@ const int INITIAL_HEIGHT = 720;
 //Size of a tile texture
 const int TILE_SIZE = 128;
 
+//How fast the animation will advance frames
+const int ANIMATION_SPEED = 100;
+
 #endif //ROGUEEMBLEMGAME_CONSTANTS_H

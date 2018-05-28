@@ -47,8 +47,11 @@ public:
 	//be loaded
 	int sendLoadTextureRequest(std::string& path);
 
+	int sendLoadAnimationRequest(std::string &path, int nImages, int singleImageWidth, int singleImageHeight,
+								 int imagesInRow);
 	//Sends request to render a texture with its original dimensions
 	void sendRenderTextureRequest(int id, int posX, int posY);
+
 
 private:
 	//Default constructor
