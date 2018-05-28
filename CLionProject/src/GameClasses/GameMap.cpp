@@ -166,11 +166,9 @@ bool GameMap::isTileInsideCamera(const sf::IntRect &cameraRectangle, int i, int 
 	int xPosition = singleTileSize * i;
 	int yPosition = singleTileSize * j;
 
-	if (xPosition < cameraRectangle.left + cameraRectangle.width &&    //Right
-		yPosition < cameraRectangle.top + cameraRectangle.height &&        //Down
-		xPosition + singleTileSize > cameraRectangle.left &&                //Left
-		yPosition + singleTileSize > cameraRectangle.top)                //Up
-		return true;
+	sf::IntRect tileRect{xPosition, yPosition, singleTileSize, singleTileSize};
+
+	return cameraRectangle.intersects(tileRect);
 }
 
 void GameMap::loadTileTextures() {

@@ -15,11 +15,11 @@
 
 //Defines for debugging purposes
 
-#define DEBUG_RENDER    false
+#define DEBUG_RENDER        false
 #define DEBUG_RESOURCE    true
-#define DEBUG_GAMELOGIC true
-#define DEBUG_SOUND    true
-#define DEBUG_MANAGER    true
+#define DEBUG_GAMELOGIC    true
+#define DEBUG_SOUND        true
+#define DEBUG_MANAGER        true
 
 
 //The main manager class
