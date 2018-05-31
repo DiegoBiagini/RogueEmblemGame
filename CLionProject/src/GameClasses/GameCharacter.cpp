@@ -153,5 +153,7 @@ std::pair<int, int> GameCharacter::getPosition() const {
 void GameCharacter::move(int x, int y) {
 	posX = x;
 	posY = y;
+
+	notify();
 }
 

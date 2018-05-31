@@ -25,7 +25,7 @@ TEST_F(ResourceSystemTest, LoadNonExistingImage) {
 	std::string fakePath("fakeee.fk");
 	std::shared_ptr<ResourceMessage> msg {new ResourceMessage};
 
-	msg->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+	msg->type = ResourceMessage::Type::LOAD_TEXTURE;
 	msg->path = fakePath;
 
 
@@ -48,13 +48,13 @@ TEST_F(ResourceSystemTest, Load2Images) {
 	std::string path2("test2.png");
 
 	std::shared_ptr<ResourceMessage> msg1 {new ResourceMessage};
-	msg1->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+	msg1->type = ResourceMessage::Type::LOAD_TEXTURE;
 	msg1->path = path1;
 
 	resourceSystem.handleMsg(std::move(msg1));
 
 	std::shared_ptr<ResourceMessage> msg2 {new ResourceMessage};
-	msg2->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+	msg2->type = ResourceMessage::Type::LOAD_TEXTURE;
 	msg2->path = path2;
 
 	resourceSystem.handleMsg(std::move(msg2));
@@ -76,7 +76,7 @@ TEST_F(ResourceSystemTest, LoadAndFreeResource) {
 	std::string path("test.png");
 	std::shared_ptr<ResourceMessage> msg {new ResourceMessage};
 
-	msg->type = ResourceMessage::Type::RESOURCE_LOAD_TEXTURE;
+	msg->type = ResourceMessage::Type::LOAD_TEXTURE;
 	msg->path = path;
 
 	resourceSystem.handleMsg(std::move(msg));

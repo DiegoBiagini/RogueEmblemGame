@@ -62,7 +62,7 @@ VirtualKey InputHelper::getVirtualKey(sf::Keyboard::Key actualKey) const {
 
 void InputHelper::sendQuitMessage() {
 
-	std::shared_ptr<ManagerMessage> message{new ManagerMessage};
+	std::unique_ptr<ManagerMessage> message{new ManagerMessage};
 	message->type = ManagerMessage::Type::QUIT;
 	message->content = "The game was closed";
 
@@ -77,7 +77,7 @@ void InputHelper::sendKeyMessage(sf::Event event) {
 	//Check for actual key presses
 	if(vkPressed != VirtualKey::NOACTION) {
 		//Send message to game logic system
-		std::shared_ptr<GameLogicMessage> message{new GameLogicMessage};
+		std::unique_ptr<GameLogicMessage> message{new GameLogicMessage};
 		message->key = vkPressed;
 		message->type = GameLogicMessage::Type::KEY;
 
