@@ -8,6 +8,7 @@
 #include <list>
 #include <SFML/Graphics/Rect.hpp>
 #include <memory>
+
 #include "GameState.h"
 #include "../GameClasses/GameMap.h"
 
@@ -16,7 +17,9 @@
 //regarding the state of the game
 class OnMapState : public GameState {
 public:
-	OnMapState(int currentLevel) : currentLevel(currentLevel){};
+	explicit OnMapState(int currentLevel) : currentLevel(currentLevel) {};
+
+
 
 protected:
 
@@ -26,11 +29,19 @@ protected:
 	//Main map
 	GameMap map;
 
+	//Which cell of the map is selected
+	std::pair<int, int> selectedTile;
+
 	//The rectangle that tells us what is in the view
 	sf::IntRect camera;
 
 	//Current level of the game
 	int currentLevel;
+
+	//Centers camera on a tile or a coordinate
+	void centerCameraOn(std::pair<int, int> centerTile);
+
+	void centerCameraOn(int x, int y);
 };
 
 

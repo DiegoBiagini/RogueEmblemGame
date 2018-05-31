@@ -24,8 +24,9 @@ public:
 	std::unique_ptr<GameState> update() override;
 
 protected:
-	//Which tile is selected
-	std::pair<int,int> selectedTile;
+
+	//Id of the resource that highlights a tile
+	int selectedTileId;
 
 };
 

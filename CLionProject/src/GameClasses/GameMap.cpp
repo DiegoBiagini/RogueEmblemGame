@@ -73,6 +73,9 @@ bool GameMap::isValidCell(int x, int y) const {
 	return x >= 0 && x < tileWidth && y >= 0 && y < tileHeight;
 }
 
+bool GameMap::isValidCell(std::pair<int, int> pos) const {
+	return isValidCell(pos.first, pos.second);
+}
 
 void GameMap::createMap() {
 	//For now just put walls all around the map
@@ -184,4 +187,34 @@ void GameMap::loadTileTextures() {
 		tileTextureIds.at(pathPair.second) = GameManager::getInstance().sendLoadTextureRequest(pathPair.first);
 	}
 
+}
+
+sf::Vector2i GameMap::getCenterOfCameraOnTile(std::pair<int, int> tile, int cameraWidth, int cameraHeight) {
+	int centerX = 0;
+	int centerY = 0;
+
+	if (isValidCell(tile)) {
+		centerX = tile.first * singleTileSize + singleTileSize / 2;
+		centerY = tile.second * singleTileSize + singleTileSize / 2;
+
+		//If it went out of frame reposition it
+		//Left
+		if (centerX - cameraWidth / 2 < 0)
+			centerX = cameraWidth / 2;
+
+		//Up
+		if (centerY - cameraHeight / 2 < 0)
+			centerY = cameraHeight / 2;
+
+		//Right
+		if (centerX + cameraWidth / 2 > pixelWidth)
+			centerX = pixelWidth - cameraWidth / 2;
+
+		//Down
+		if (centerY + cameraHeight / 2 > pixelHeight)
+			centerY = pixelHeight - cameraHeight / 2;
+
+	}
+
+	return {centerX, centerY};
 }

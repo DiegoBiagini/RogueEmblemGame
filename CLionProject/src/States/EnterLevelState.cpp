@@ -25,6 +25,9 @@ void EnterLevelState::enterState() {
 	//Add it to the object list
 	objectList.push_back(char1);
 
+	selectedTile.first = char1->getPosX();
+	selectedTile.second = char1->getPosY();
+
 }
 
 void EnterLevelState::render() {
