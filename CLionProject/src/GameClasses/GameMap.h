@@ -34,7 +34,10 @@ public:
 
 	int getTileSize() const;
 
-	GameObject* getObjectAt(int x, int y);
+	GameObject *getObjectAt(int x, int y) const;
+
+	GameObject *getObjectAt(std::pair<int, int> pos) const;
+
 	Tile getTileAt(int x, int y);
 
 	//Set the dimensions of the map and initialize it

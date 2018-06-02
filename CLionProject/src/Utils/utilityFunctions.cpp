@@ -26,4 +26,19 @@ namespace utility {
 				return "";
 		}
 	}
+
+	std::string getStringFromTile(const Tile::Type &tile) {
+		switch (tile) {
+
+			case Tile::FLOOR:
+				return "Floor";
+				break;
+			case Tile::WALL:
+				return "Wall";
+				break;
+			case Tile::NTILES:
+				return "";
+				break;
+		}
+	}
 }

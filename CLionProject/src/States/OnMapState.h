@@ -11,6 +11,8 @@
 
 #include "GameState.h"
 #include "../GameClasses/GameMap.h"
+#include "../GameClasses/PlayerControlledCharacter.h"
+#include "../Utils/HUDHelper.h"
 
 
 //State that will be the base class to all the main state in the actual game, contains many useful attributes
@@ -26,6 +28,9 @@ protected:
 	//List that will contain all gameObjects
 	std::list<std::shared_ptr<GameObject>> objectList;
 
+	//List that will contain the playing characters
+	std::list<std::shared_ptr<PlayerControlledCharacter>> players;
+
 	//Main map
 	GameMap map;
 
@@ -34,6 +39,9 @@ protected:
 
 	//The rectangle that tells us what is in the view
 	sf::IntRect camera;
+
+	//Class that will contain many functions to draw the HUD
+	HUDHelper hudHelper;
 
 	//Current level of the game
 	int currentLevel;

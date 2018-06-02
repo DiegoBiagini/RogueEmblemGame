@@ -43,6 +43,8 @@ private:
 	//The view that represents the part of the screen that will be displayed
 	sf::View screenView;
 
+	//The font in which text will be rendered
+	sf::Font mainFont;
 };
 
 

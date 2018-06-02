@@ -25,9 +25,33 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 		}
 		case RenderMessage::Type::MOVE_VIEW: {
 			//Update view
-			screenView.setSize(INITIAL_WIDTH * actualMsg->viewScale, INITIAL_HEIGHT * actualMsg->viewScale);
+			screenView.setSize(CAMERA_DEFAULT_WIDTH * actualMsg->viewScale,
+							   CAMERA_DEFAULT_HEIGHT * actualMsg->viewScale);
 			screenView.setCenter(sf::Vector2f(actualMsg->position));
 			window.setView(screenView);
+			break;
+		}
+		case RenderMessage::Type::DRAW_TEXT: {
+			if (!actualMsg->text.empty()) {
+				sf::Text renderText;
+				renderText.setFont(mainFont);
+				renderText.setString(actualMsg->text);
+				renderText.setFillColor(actualMsg->color);
+				renderText.setPosition(actualMsg->position.x, actualMsg->position.y);
+
+				window.draw(renderText);
+			}
+			break;
+		}
+		case RenderMessage::Type::DRAW_RECT: {
+			if (actualMsg->rectHeight != 0 && actualMsg->rectWidth != 0) {
+				//Create RectangleShape
+				sf::RectangleShape rectToDraw(sf::Vector2f(actualMsg->rectWidth, actualMsg->rectHeight));
+				rectToDraw.setPosition(sf::Vector2f(actualMsg->position));
+				rectToDraw.setFillColor(actualMsg->color);
+
+				window.draw(rectToDraw);
+			}
 			break;
 		}
 	}
@@ -36,7 +60,7 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 void RenderSystem::startup() {
 	//Create window
 	//Read these from a config file perhaps
-	window.create(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "RogueEmblem");
+	window.create(sf::VideoMode(INITIAL_WIDTH, INITIAL_HEIGHT), "RogueEmblem", sf::Style::Close | sf::Style::Titlebar);
 
 	//If window couldn't be opened, i.e. it's still closed, throw exception
 	if(!window.isOpen())
@@ -46,8 +70,11 @@ void RenderSystem::startup() {
 	window.setFramerateLimit(MAX_FRAMERATE);
 
 	//Set view to origin
-	screenView.setCenter(INITIAL_WIDTH/2, INITIAL_HEIGHT/2);
-	screenView.setSize(INITIAL_WIDTH,INITIAL_HEIGHT);
+	screenView.setCenter(CAMERA_DEFAULT_WIDTH / 2, CAMERA_DEFAULT_HEIGHT / 2);
+	screenView.setSize(CAMERA_DEFAULT_WIDTH, CAMERA_DEFAULT_HEIGHT);
+
+	//Load font
+	mainFont.loadFromFile("arial.ttf");
 }
 
 void RenderSystem::shutdown() {

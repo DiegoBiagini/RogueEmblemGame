@@ -70,6 +70,9 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 void FreeMovementState::enterState() {
 	std::string highLightPath("selectedTile.png");
 	selectedTileId = GameManager::getInstance().sendLoadTextureRequest(highLightPath);
+
+	sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
+	centerCameraOn(center.x, center.y);
 }
 
 void FreeMovementState::render() {
@@ -86,6 +89,13 @@ void FreeMovementState::render() {
 
 	GameManager::getInstance().sendRenderTextureRequest(selectedTileId, selTileX, selTileY);
 
+	//Draw tile information
+	hudHelper.drawTileInfo(selectedTile, map, camera);
+
+	//Draw character information
+	auto selectedChar = dynamic_cast<GameCharacter *>(map.getObjectAt(selectedTile));
+	if (selectedChar != nullptr)
+		hudHelper.drawGameCharacterInfo(*selectedChar, map, camera);
 }
 
 std::unique_ptr<GameState> FreeMovementState::update() {

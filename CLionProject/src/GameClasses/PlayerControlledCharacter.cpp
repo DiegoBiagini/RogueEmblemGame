@@ -16,11 +16,19 @@ int PlayerControlledCharacter::traverseCost(Tile::Type type) {
 void PlayerControlledCharacter::setup() {
 	maxHp = 20;
 	maxMana = 20;
-	hp = 20;
-	mana = 20;
+	hp = 15;
+	mana = 2;
 
 	posX = 1;
 	posY = 1;
+	name = "Tizio";
+
+	strength = 100;
+	intelligence = 101;
+	evasion = 102;
+
+	armor = 100;
+	magicArmor = 105;
 
 	std::string resourcePath{"playerSheet.png"};
 	//Send message with accurate information about the animation

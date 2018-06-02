@@ -63,10 +63,14 @@ void GameMap::initMap(int tileWidth, int tileHeight) {
 
 }
 
-GameObject *GameMap::getObjectAt(int x, int y) {
+GameObject *GameMap::getObjectAt(int x, int y) const {
 	if(isValidCell(x, y))
 		return mapMatrix.at(x).at(y).second.get();
+	return nullptr;
+}
 
+GameObject *GameMap::getObjectAt(std::pair<int, int> pos) const {
+	return getObjectAt(pos.first, pos.second);
 }
 
 bool GameMap::isValidCell(int x, int y) const {

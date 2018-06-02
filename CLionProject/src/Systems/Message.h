@@ -6,7 +6,7 @@
 #define ROGUEEMBLEMGAME_MESSAGE_H
 
 #include <iostream>
-#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics.hpp>
 #include "../Utils/VirtualKey.h"
 #include "../Utils/constants.h"
 
@@ -71,18 +71,29 @@ struct ResourceMessage : public Message {
 struct RenderMessage : public Message {
 	enum class Type{
 		RENDER_TEXTURE,
-		MOVE_VIEW
+		MOVE_VIEW,
+		DRAW_TEXT,
+		DRAW_RECT
 	};
 	Type type;
 
-
 	//How much the view should be scaled
 	float viewScale {1};
-	//Center of the view or position at which to render object
-	sf::Vector2i position {INITIAL_WIDTH/2, INITIAL_HEIGHT/2};
+	//Center of the view or position at which to render object/text
+	sf::Vector2i position{CAMERA_DEFAULT_WIDTH / 2, CAMERA_DEFAULT_HEIGHT / 2};
 
 	//For first type, id of the texture to render
 	int id {0};
+
+	//Text to render and its size
+	std::string text{""};
+	int textSize{0};
+
+	sf::Color color{0, 0, 0, 255};
+
+	//Rectangle size
+	int rectWidth{0};
+	int rectHeight{0};
 };
 
 //A message that will be sent to the Sound system
