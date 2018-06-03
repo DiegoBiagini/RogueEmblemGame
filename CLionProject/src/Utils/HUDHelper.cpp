@@ -33,7 +33,7 @@ void HUDHelper::loadTextures() {
 	std::string barPath("bar.png");
 	std::string tileContainerPath("tileInfo.png");
 	std::string objContainerPath("objCont.png");
-
+	std::string highLightPath("selectedTile.png");
 
 	strengthIconId = GameManager::getInstance().sendLoadTextureRequest(strengthIconPath);
 	intelligenceIconId = GameManager::getInstance().sendLoadTextureRequest(intelligenceIconPath);
@@ -46,6 +46,8 @@ void HUDHelper::loadTextures() {
 	barId = GameManager::getInstance().sendLoadTextureRequest(barPath);
 	tileContainerId = GameManager::getInstance().sendLoadTextureRequest(tileContainerPath);
 	objContainerId = GameManager::getInstance().sendLoadTextureRequest(objContainerPath);
+	highlightTileId = GameManager::getInstance().sendLoadTextureRequest(highLightPath);
+
 
 }
 
@@ -277,4 +279,11 @@ void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color c
 	msg->position = {posX, posY};
 
 	GameManager::getInstance().sendMsg(msg);
+}
+
+void HUDHelper::drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map) {
+	int selTileX = tileCoordinates.first * map.getTileSize();
+	int selTileY = tileCoordinates.second * map.getTileSize();
+
+	GameManager::getInstance().sendRenderTextureRequest(highlightTileId, selTileX, selTileY);
 }

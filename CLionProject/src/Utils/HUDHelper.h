@@ -23,6 +23,9 @@ public:
 	//Draws the GameCharacter information
 	void drawGameCharacterInfo(GameCharacter &character, GameMap &map, sf::IntRect cameraRect);
 
+	//Draws an highlight on the selected tile
+	void drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map);
+
 	//Sends request to draw HUD text
 	void renderHUDText(std::string &text, int posX, int posY, sf::Color color = {0, 0, 0, 255});
 
@@ -44,6 +47,9 @@ protected:
 
 	//The bar used to show how much mana/hp is left
 	int barId;
+
+	//The highlighter for a tile
+	int highlightTileId;
 
 
 };

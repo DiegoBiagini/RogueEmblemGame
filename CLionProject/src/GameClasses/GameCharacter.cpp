@@ -5,8 +5,8 @@
 #include "GameCharacter.h"
 #include "../GameManager.h"
 
-GameCharacter::GameCharacter() : maxHp(0), hp(0), maxMana(0), mana(0), armor(0), magicArmor(0), strength(0),
-								 intelligence(0), evasion(0), mobility(1) {
+GameCharacter::GameCharacter() : maxHp{0}, hp{0}, maxMana{0}, mana{0}, armor{0}, magicArmor{0}, strength{0},
+								 intelligence{0}, evasion{0}, mobility{1}, moved{false}, attacked{false} {
 }
 
 void GameCharacter::render(sf::IntRect camera, GameMap &map) {
@@ -55,6 +55,7 @@ void GameCharacter::move(std::vector<Movement> &movements) {
 		}
 
 		notify();
+		moved = true;
 	}
 }
 
@@ -154,6 +155,24 @@ void GameCharacter::move(int x, int y) {
 	posX = x;
 	posY = y;
 
+	moved = true;
 	notify();
+}
+
+void GameCharacter::resetActions() {
+	moved = false;
+	attacked = false;
+}
+
+bool GameCharacter::hasMoved() const {
+	return moved;
+}
+
+bool GameCharacter::hasAttacked() const {
+	return attacked;
+}
+
+bool GameCharacter::canPerformAction() {
+	return (!attacked || !moved);
 }
 

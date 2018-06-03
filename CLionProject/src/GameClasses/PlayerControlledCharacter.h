@@ -8,6 +8,7 @@
 #include <memory>
 #include "GameCharacter.h"
 
+//Base class for a character controlled by the player
 class PlayerControlledCharacter : public GameCharacter {
 public:
 	PlayerControlledCharacter() = default;
@@ -18,6 +19,16 @@ public:
 
 	void setup() override;
 
+	void resetActions() override;
+
+	bool canPerformAction() override;
+
+	bool hasUsedItem();
+
+private:
+
+	//Whether the player has used an item this turn
+	bool usedItem;
 };
 
 

@@ -30,8 +30,23 @@ void PlayerControlledCharacter::setup() {
 	armor = 100;
 	magicArmor = 105;
 
+	usedItem = false;
+
 	std::string resourcePath{"playerSheet.png"};
 	//Send message with accurate information about the animation
 	mediaId = GameManager::getInstance().sendLoadAnimationRequest(resourcePath, 8, TILE_SIZE, TILE_SIZE, 4);
 
+}
+
+bool PlayerControlledCharacter::canPerformAction() {
+	return (GameCharacter::canPerformAction() || !usedItem);
+}
+
+void PlayerControlledCharacter::resetActions() {
+	GameCharacter::resetActions();
+	usedItem = false;
+}
+
+bool PlayerControlledCharacter::hasUsedItem() {
+	return usedItem;
 }

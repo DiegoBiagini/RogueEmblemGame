@@ -36,6 +36,12 @@ public:
 
 	void move(int x, int y);
 
+	//Resets the actions taken by the character
+	virtual void resetActions();
+
+	//Returns true if the player can still perform an action this turn
+	virtual bool canPerformAction();
+
 	//Getters and setters
 
 	int getHp() const;
@@ -82,6 +88,9 @@ public:
 
 	std::pair<int, int> getPosition() const;
 
+	bool hasMoved() const;
+
+	bool hasAttacked() const;
 
 protected:
 
@@ -103,6 +112,10 @@ protected:
 
 	//How many spaces a character can traverse in a turn regardless of terrain
 	int mobility;
+
+	//Whether the character has moved/attacked this turn
+	int moved;
+	int attacked;
 };
 
 #endif //ROGUEEMBLEMGAME_GAMECHARACTER_H

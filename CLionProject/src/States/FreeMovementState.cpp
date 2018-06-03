@@ -4,6 +4,7 @@
 
 #include "FreeMovementState.h"
 #include "../GameManager.h"
+#include "SelectActionState.h"
 
 std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool pressed) {
 	if (pressed) {
@@ -11,51 +12,42 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 
 			case VirtualKey::UP: {
 				std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
-				if (map.isValidCell(newTile)) {
-					selectedTile.second--;
-					//center view
-					sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
-					centerCameraOn(center.x, center.y);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 			case VirtualKey::DOWN: {
 				std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
-				if (map.isValidCell(newTile)) {
-					selectedTile.second++;
-					//center view
-					sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
-					centerCameraOn(center.x, center.y);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 			case VirtualKey::LEFT: {
 				std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
-				if (map.isValidCell(newTile)) {
-					selectedTile.first--;
-					//center view
-					sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
-					centerCameraOn(center.x, center.y);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 			case VirtualKey::RIGHT: {
 				std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
-				if (map.isValidCell(newTile)) {
-					selectedTile.first++;
-					//center view
-					sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
-					centerCameraOn(center.x, center.y);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 
-			case VirtualKey::CONFIRM:
+			case VirtualKey::CONFIRM: {
+				auto selectedChar = dynamic_cast<PlayerControlledCharacter *>(map.getObjectAt(selectedTile));
+
+				//Check if it is in the list of players
+				for (auto &el : players) {
+					if (el.get() == selectedChar)
+						//Check if it can perform an action
+						if (selectedChar->canPerformAction())
+							//Go to SelectAction state
+							return std::unique_ptr<GameState>{new SelectActionState(*this)};
+				}
 				break;
+			}
 			case VirtualKey::BACK:
 				break;
 			case VirtualKey::PAUSE:
@@ -67,9 +59,20 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 	return nullptr;
 }
 
+void FreeMovementState::moveSelection(const pair<int, int> &newTile) {
+	if (map.isValidCell(newTile)) {
+		//Update selectedTile
+		selectedTile.first = newTile.first;
+		selectedTile.second = newTile.second;
+
+		//center view
+		sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
+		centerCameraOn(center.x, center.y);
+
+	}
+}
+
 void FreeMovementState::enterState() {
-	std::string highLightPath("selectedTile.png");
-	selectedTileId = GameManager::getInstance().sendLoadTextureRequest(highLightPath);
 
 	sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
 	centerCameraOn(center.x, center.y);
@@ -84,10 +87,8 @@ void FreeMovementState::render() {
 		element.get()->render(camera, map);
 
 	//Then the hud/gui
-	int selTileX = selectedTile.first * map.getTileSize();
-	int selTileY = selectedTile.second * map.getTileSize();
-
-	GameManager::getInstance().sendRenderTextureRequest(selectedTileId, selTileX, selTileY);
+	//Draw tile highlight
+	hudHelper.drawHighlightTile(selectedTile, map);
 
 	//Draw tile information
 	hudHelper.drawTileInfo(selectedTile, map, camera);
