@@ -32,13 +32,27 @@ namespace utility {
 
 			case Tile::FLOOR:
 				return "Floor";
-				break;
 			case Tile::WALL:
 				return "Wall";
-				break;
 			case Tile::NTILES:
 				return "";
-				break;
+		}
+	}
+
+	std::string getStringFromOption(const Option &opt) {
+		switch (opt) {
+
+			case Option::Move:
+				return "Move";
+			case Option::Fight:
+				return "Fight";
+			case Option::UseItem:
+				return "Use item";
+			case Option::Equip:
+				return "Equip";
+			case Option::EndTurn:
+				return "End turn";
 		}
 	}
 }
+

@@ -35,6 +35,9 @@ void HUDHelper::loadTextures() {
 	std::string objContainerPath("objCont.png");
 	std::string highLightPath("selectedTile.png");
 
+	std::string optionPath("singleOption.png");
+	std::string arrowOptionPath("arrow.png");
+
 	strengthIconId = GameManager::getInstance().sendLoadTextureRequest(strengthIconPath);
 	intelligenceIconId = GameManager::getInstance().sendLoadTextureRequest(intelligenceIconPath);
 	magicArmorIconId = GameManager::getInstance().sendLoadTextureRequest(magicArmorIconPath);
@@ -47,6 +50,9 @@ void HUDHelper::loadTextures() {
 	tileContainerId = GameManager::getInstance().sendLoadTextureRequest(tileContainerPath);
 	objContainerId = GameManager::getInstance().sendLoadTextureRequest(objContainerPath);
 	highlightTileId = GameManager::getInstance().sendLoadTextureRequest(highLightPath);
+
+	optionId = GameManager::getInstance().sendLoadTextureRequest(optionPath);
+	arrowOptionId = GameManager::getInstance().sendLoadTextureRequest(arrowOptionPath);
 
 
 }
@@ -106,7 +112,7 @@ void HUDHelper::drawTileInfo(std::pair<int, int> &tileCoordinates, GameMap &map,
 
 }
 
-void HUDHelper::drawGameCharacterInfo(GameCharacter &character, GameMap &map, sf::IntRect cameraRect) {
+void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &map, sf::IntRect cameraRect) {
 
 	//Texture of the stat container
 	auto *containerTexture = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(objContainerId));
@@ -286,4 +292,66 @@ void HUDHelper::drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap 
 	int selTileY = tileCoordinates.second * map.getTileSize();
 
 	GameManager::getInstance().sendRenderTextureRequest(highlightTileId, selTileX, selTileY);
+}
+
+void HUDHelper::drawOptions(const GameCharacter &character, std::vector<Option> &options, int selectedOption,
+							GameMap &map, sf::IntRect cameraRect) {
+
+	auto *singleOptionTexture = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(optionId));
+	if (singleOptionTexture == nullptr)
+		return;
+
+	//Width and height of the option texture
+	int optionWidth = singleOptionTexture->getWidth();
+	int optionHeight = singleOptionTexture->getHeight();
+
+	int selectedTileX = character.getPosX() * map.getTileSize() + map.getTileSize() / 2;
+	int selectedTileY = character.getPosY() * map.getTileSize() + map.getTileSize() / 2;
+
+
+	//Upper left corner of the option menu
+	int optMenuULX = 0;
+	int optMenuULY = 0;
+
+	//If it's in the upper left part of the screen, draw it to the bottom right
+	if (selectedTileX < CAMERA_DEFAULT_WIDTH / 2 && selectedTileY < CAMERA_DEFAULT_HEIGHT / 2) {
+		optMenuULX = selectedTileX + FONTSIZE_MEDIUM * 3;
+		optMenuULY = selectedTileY + FONTSIZE_MEDIUM * 3;
+	}
+
+		//If it's in the upper right part of the screen, draw it to the upper left
+	else if (selectedTileX > CAMERA_DEFAULT_WIDTH / 2 && selectedTileY < CAMERA_DEFAULT_HEIGHT / 2) {
+		optMenuULX = selectedTileX - FONTSIZE_MEDIUM * 3 - optionWidth;
+		optMenuULY = selectedTileY + FONTSIZE_MEDIUM * 3;
+	}
+
+		//If it's in the lower left part of the screen, draw it to the upper right
+	else if (selectedTileX < CAMERA_DEFAULT_WIDTH / 2 && selectedTileY > CAMERA_DEFAULT_HEIGHT / 2) {
+		optMenuULX = selectedTileX + FONTSIZE_MEDIUM * 3;
+		optMenuULY = selectedTileY - FONTSIZE_MEDIUM * 3 - optionHeight * options.size();
+	}
+
+		//If it's in the lower right part of the screen, draw it to the upper left
+	else {
+		optMenuULX = selectedTileX - FONTSIZE_MEDIUM * 3 - optionWidth;
+		optMenuULY = selectedTileY - FONTSIZE_MEDIUM * 3 - optionHeight * options.size();
+	}
+
+	//Draw all options
+	for (int i = 0; i < options.size(); i++) {
+		GameManager::getInstance().sendRenderTextureRequest(optionId,
+															optMenuULX,
+															optMenuULY + i * optionHeight);
+		//Write option content
+		//Get string relative to option
+		std::string optionString = utility::getStringFromOption(options.at(i));
+		int stringPosX = optionWidth / 2 - FONTSIZE_MEDIUM * optionString.size() / 4;
+
+		renderHUDText(optionString, optMenuULX + stringPosX, optMenuULY + i * optionHeight);
+	}
+
+	//Draw arrow
+	int arrowX = optMenuULX + optionWidth + FONTSIZE_MEDIUM / 2;
+	int arrowY = optMenuULY + selectedOption * optionHeight;
+	GameManager::getInstance().sendRenderTextureRequest(arrowOptionId, arrowX, arrowY);
 }

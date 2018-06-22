@@ -10,8 +10,11 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 		switch (key) {
 
 			case VirtualKey::UP:
+				selectedOption = selectedOption - 1 >= 0 ? selectedOption - 1 : possibleOptions.size() - 1;
 				break;
 			case VirtualKey::DOWN:
+				selectedOption = selectedOption + 1 != possibleOptions.size() ? selectedOption + 1 : 0;
+
 				break;
 			case VirtualKey::LEFT:
 				break;
@@ -48,6 +51,8 @@ void SelectActionState::enterState() {
 
 	possibleOptions.push_back(Option::Equip);
 	possibleOptions.push_back(Option::EndTurn);
+
+	selectedOption = 0;
 }
 
 void SelectActionState::render() {
@@ -61,6 +66,8 @@ void SelectActionState::render() {
 	//Then the hud/gui
 	//Draw tile highlight
 	hudHelper.drawHighlightTile(selectedTile, map);
+
+	hudHelper.drawOptions(*selectedPlayer.get(), possibleOptions, selectedOption, map, camera);
 }
 
 unique_ptr<GameState> SelectActionState::update() {

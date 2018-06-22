@@ -19,8 +19,8 @@ void EnterLevelState::enterState() {
 	std::shared_ptr<PlayerControlledCharacter> char1{new PlayerControlledCharacter};
 	char1->setup();
 
-	char1->setPosX(18);
-	char1->setPosY(1);
+	char1->setPosX(10);
+	char1->setPosY(10);
 
 	map.setObjectInCell(char1);
 	char1->attach(&map);

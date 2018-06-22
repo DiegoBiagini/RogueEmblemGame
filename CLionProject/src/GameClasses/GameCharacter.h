@@ -114,8 +114,8 @@ protected:
 	int mobility;
 
 	//Whether the character has moved/attacked this turn
-	int moved;
-	int attacked;
+	bool moved;
+	bool attacked;
 };
 
 #endif //ROGUEEMBLEMGAME_GAMECHARACTER_H
