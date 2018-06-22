@@ -62,8 +62,8 @@ VirtualKey InputHelper::getVirtualKey(sf::Keyboard::Key actualKey) const {
 
 void InputHelper::sendQuitMessage() {
 
-	std::unique_ptr<ManagerMessage> message{new ManagerMessage};
-	message->type = ManagerMessage::Type::QUIT;
+	std::unique_ptr<Message> message{new Message};
+	message->quitMessage = true;
 	message->content = "The game was closed";
 
 	GameManager::getInstance().sendMsg(std::move(message));

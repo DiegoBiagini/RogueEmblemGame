@@ -77,19 +77,18 @@ void GameManager::renderAndPlaySounds() {
 void GameManager::handleManagerMessages() {
 	for (auto &msg : messageQueue) {
 		//Checks if the message is actually for him
-		auto *actualMsg = dynamic_cast<ManagerMessage *>(msg.get());
+		auto *actualMsg = dynamic_cast<Message *>(msg.get());
 
 		if (actualMsg == nullptr) return;
 
-		switch (actualMsg->type) {
-			//If it's a quit message, stop game loop
-			case ManagerMessage::Type::QUIT:
-				running = false;
-				break;
+		//If it's a quit message, stop game loop
+		if (actualMsg->quitMessage)
+			running = false;
 
-		}
+
 	}
 }
+
 bool GameManager::startGame() {
 	//Call startup methods of every system
 	//Handle its possible errors
@@ -174,8 +173,7 @@ void GameManager::printMessagesInQueue() const {
 		if ((dynamic_cast<RenderMessage *>(element.get()) != nullptr && DEBUG_RENDER) ||
 			(dynamic_cast<ResourceMessage *>(element.get()) != nullptr && DEBUG_RESOURCE) ||
 			(dynamic_cast<GameLogicMessage *>(element.get()) != nullptr && DEBUG_GAMELOGIC) ||
-			(dynamic_cast<SoundMessage *>(element.get()) != nullptr && DEBUG_SOUND) ||
-			(dynamic_cast<ManagerMessage *>(element.get()) != nullptr && DEBUG_MANAGER))
+			(dynamic_cast<SoundMessage *>(element.get()) != nullptr && DEBUG_SOUND))
 
 			std::cout << element->content << std::endl;
 	}

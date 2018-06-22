@@ -15,6 +15,9 @@ struct Message{
 	//Some error/success message
 	std::string content;
 
+	//If the gamemanager has to quit after this message
+	bool quitMessage{false};
+
 	//To make it so polymorphism works
 	virtual ~Message() = default;
 };
@@ -34,15 +37,6 @@ struct GameLogicMessage : public Message {
 	bool pressed {false};
 };
 
-//A message sent to the GameManager notifying that something outside the game happened,
-// i.e. the window was closed, minimized, out of focused
-struct ManagerMessage : public Message {
-	enum class Type {
-		QUIT
-	};
-
-	Type type;
-};
 
 //A message that will be sent to the Resource System
 //It will tell it to load a texture,sound effect, music, etc
