@@ -40,6 +40,9 @@ public:
 
 	Tile getTileAt(int x, int y);
 
+	Tile getTileAt(std::pair<int, int> pos);
+
+
 	//Set the dimensions of the map and initialize it
 	void initMap(int tileWidth, int tileHeight);
 

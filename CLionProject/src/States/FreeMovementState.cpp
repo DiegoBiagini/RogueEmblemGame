@@ -59,18 +59,6 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 	return nullptr;
 }
 
-void FreeMovementState::moveSelection(const pair<int, int> &newTile) {
-	if (map.isValidCell(newTile)) {
-		//Update selectedTile
-		selectedTile.first = newTile.first;
-		selectedTile.second = newTile.second;
-
-		//center view
-		sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
-		centerCameraOn(center.x, center.y);
-
-	}
-}
 
 void FreeMovementState::enterState() {
 
@@ -103,6 +91,6 @@ std::unique_ptr<GameState> FreeMovementState::update() {
 	return nullptr;
 }
 
-FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy} {
+FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, selectedTileId{0} {
 
 }

@@ -12,6 +12,10 @@ Tile GameMap::getTileAt(int x, int y) {
 	return Tile(Tile::Type::NTILES);
 }
 
+Tile GameMap::getTileAt(std::pair<int, int> pos) {
+	return getTileAt(pos.first, pos.second);
+}
+
 
 int GameMap::getTileWidth() const {
 	return tileWidth;

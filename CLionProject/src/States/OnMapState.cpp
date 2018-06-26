@@ -28,3 +28,16 @@ void OnMapState::centerCameraOn(int x, int y) {
 
 	GameManager::getInstance().sendMsg(msg);
 }
+
+void OnMapState::moveSelection(const pair<int, int> &newTile) {
+	if (map.isValidCell(newTile)) {
+		//Update selectedTile
+		selectedTile.first = newTile.first;
+		selectedTile.second = newTile.second;
+
+		//center view
+		sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
+		centerCameraOn(center.x, center.y);
+
+	}
+}

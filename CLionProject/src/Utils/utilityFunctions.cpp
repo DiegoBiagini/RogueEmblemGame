@@ -54,5 +54,9 @@ namespace utility {
 				return "End turn";
 		}
 	}
+
+	int L1Distance(std::pair<int, int> first, std::pair<int, int> second) {
+		return abs(first.first - second.first) + abs(first.second - second.second);
+	}
 }
 

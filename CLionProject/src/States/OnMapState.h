@@ -50,6 +50,9 @@ protected:
 	void centerCameraOn(std::pair<int, int> centerTile);
 
 	void centerCameraOn(int x, int y);
+
+	virtual //Moves the selected tile and the camera to a new tile
+	void moveSelection(const pair<int, int> &newTile);
 };
 
 

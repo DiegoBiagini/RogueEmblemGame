@@ -42,6 +42,9 @@ public:
 	//Returns true if the player can still perform an action this turn
 	virtual bool canPerformAction();
 
+	//Calculates again the moves that it can perform(using the A* algorithm)
+	void calculateMoves(GameMap map);
+
 	//Getters and setters
 
 	int getHp() const;
@@ -92,6 +95,8 @@ public:
 
 	bool hasAttacked() const;
 
+	std::vector<std::pair<int, int>> getPossibleMoves() const;
+
 protected:
 
 	//Stats
@@ -116,6 +121,9 @@ protected:
 	//Whether the character has moved/attacked this turn
 	bool moved;
 	bool attacked;
+
+	//The cells the player can move to
+	std::vector<std::pair<int, int>> possibleMoves;
 };
 
 #endif //ROGUEEMBLEMGAME_GAMECHARACTER_H

@@ -28,7 +28,6 @@ protected:
 	//Id of the resource that highlights a tile
 	int selectedTileId;
 
-	void moveSelection(const pair<int, int> &newTile);
 };
 
 

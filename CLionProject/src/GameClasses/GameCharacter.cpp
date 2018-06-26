@@ -176,3 +176,27 @@ bool GameCharacter::canPerformAction() {
 	return (!attacked || !moved);
 }
 
+std::vector<std::pair<int, int>> GameCharacter::getPossibleMoves() const {
+	return possibleMoves;
+}
+
+void GameCharacter::calculateMoves(GameMap map) {
+	//Remove all previous possible movements
+	possibleMoves.clear();
+
+	//For now add all the cells whose L1 distance is less than the mobility of the character
+
+	for (int x = posX - mobility; x <= posX + mobility; x++) {
+		for (int y = posY - mobility; y <= posY + mobility; y++) {
+
+			std::pair<int, int> newCell = std::make_pair(x, y);
+
+			if (map.isValidCell(newCell) && utility::L1Distance(std::make_pair(posX, posY), newCell) <= mobility)
+
+				possibleMoves.push_back(newCell);
+		}
+	}
+
+
+}
+

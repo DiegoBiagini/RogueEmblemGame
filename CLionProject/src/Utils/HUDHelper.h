@@ -27,6 +27,12 @@ public:
 	//Draws an highlight on the selected tile
 	void drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map);
 
+	//Draws an animatedArrow on a tile
+	void drawMovingArrowOnTile(std::pair<int, int> tile, GameMap &map);
+
+	//Draws an highlight on the movements that a player can make
+	void drawAvailableMovements(std::vector<std::pair<int, int>> movements, GameMap &map);
+
 	//Displays the option the player has available and the one that he has selected
 	void drawOptions(const GameCharacter &character, std::vector<Option> &options, int selectedOption,
 					 GameMap &map, sf::IntRect cameraRect);
@@ -62,6 +68,12 @@ protected:
 
 	//The arrow that will point to the selected option
 	int arrowOptionId;
+
+	//The highlight for a valid movement
+	int validMovId;
+
+	//A moving arrow that will point to a tile on the map
+	int movingArrowId;
 
 
 };

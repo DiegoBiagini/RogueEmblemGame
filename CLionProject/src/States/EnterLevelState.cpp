@@ -32,6 +32,10 @@ void EnterLevelState::enterState() {
 	selectedTile.first = char1->getPosX();
 	selectedTile.second = char1->getPosY();
 
+	//Initialize all the available movements for the players
+	for (auto &player : players)
+		player->calculateMoves(map);
+
 	//Load the HUD
 	hudHelper.loadTextures();
 

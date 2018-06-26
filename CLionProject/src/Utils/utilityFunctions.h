@@ -20,6 +20,8 @@ namespace utility {
 	//Returns a string with a readable value of the Option enum class
 	std::string getStringFromOption(const Option &opt);
 
+	//L1 distance from 2 points on the map
+	int L1Distance(std::pair<int, int> first, std::pair<int, int> second);
 }
 
 #endif //ROGUEEMBLEMGAME_UTILITYFUNCTIONS_H

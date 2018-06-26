@@ -38,6 +38,9 @@ void HUDHelper::loadTextures() {
 	std::string optionPath("singleOption.png");
 	std::string arrowOptionPath("arrow.png");
 
+	std::string movingArrowPath("animArrow.png");
+	std::string validMovPath("movableTile.png");
+
 	strengthIconId = GameManager::getInstance().sendLoadTextureRequest(strengthIconPath);
 	intelligenceIconId = GameManager::getInstance().sendLoadTextureRequest(intelligenceIconPath);
 	magicArmorIconId = GameManager::getInstance().sendLoadTextureRequest(magicArmorIconPath);
@@ -53,6 +56,10 @@ void HUDHelper::loadTextures() {
 
 	optionId = GameManager::getInstance().sendLoadTextureRequest(optionPath);
 	arrowOptionId = GameManager::getInstance().sendLoadTextureRequest(arrowOptionPath);
+
+	movingArrowId = GameManager::getInstance().sendLoadAnimationRequest(movingArrowPath, 4, 128, 128, 4);
+	validMovId = GameManager::getInstance().sendLoadTextureRequest(validMovPath);
+
 
 
 }
@@ -354,4 +361,24 @@ void HUDHelper::drawOptions(const GameCharacter &character, std::vector<Option> 
 	int arrowX = optMenuULX + optionWidth + FONTSIZE_MEDIUM / 2;
 	int arrowY = optMenuULY + selectedOption * optionHeight;
 	GameManager::getInstance().sendRenderTextureRequest(arrowOptionId, arrowX, arrowY);
+}
+
+void HUDHelper::drawAvailableMovements(std::vector<std::pair<int, int>> movements, GameMap &map) {
+
+	for (auto &tile : movements) {
+		int posX = tile.first * map.getTileSize();
+		int posY = tile.second * map.getTileSize();
+
+		GameManager::getInstance().sendRenderTextureRequest(validMovId, posX, posY);
+	}
+}
+
+void HUDHelper::drawMovingArrowOnTile(std::pair<int, int> tile, GameMap &map) {
+
+	if (map.getTileAt(tile).getType() != Tile::NTILES) {
+		int posX = tile.first * map.getTileSize();
+		int posY = tile.second * map.getTileSize();
+
+		GameManager::getInstance().sendRenderTextureRequest(movingArrowId, posX, posY);
+	}
 }

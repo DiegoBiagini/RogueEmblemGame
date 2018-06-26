@@ -4,6 +4,7 @@
 
 #include "SelectActionState.h"
 #include "FreeMovementState.h"
+#include "MoveHeroState.h"
 
 unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool pressed) {
 	if (pressed) {
@@ -21,12 +22,29 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 			case VirtualKey::RIGHT:
 				break;
 
-			case VirtualKey::CONFIRM:
-				break;
+			case VirtualKey::CONFIRM: {
+				Option confirmedOption = possibleOptions.at(selectedOption);
+				switch (confirmedOption) {
 
-			case VirtualKey::BACK:
-				return std::unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+					//Go to moveHeroState
+					case Option::Move:
+						return std::unique_ptr<MoveHeroState>(new MoveHeroState(*this));
+
+					case Option::Fight:
+						break;
+					case Option::UseItem:
+						break;
+					case Option::Equip:
+						break;
+					case Option::EndTurn:
+						break;
+				}
 				break;
+			}
+
+			case VirtualKey::BACK: {
+				return std::unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+			}
 
 			case VirtualKey::PAUSE:
 				break;
@@ -53,6 +71,8 @@ void SelectActionState::enterState() {
 	possibleOptions.push_back(Option::EndTurn);
 
 	selectedOption = 0;
+
+	centerCameraOn(selectedTile);
 }
 
 void SelectActionState::render() {
