@@ -6,7 +6,6 @@
 #define ROGUEEMBLEMGAME_MOVEHEROSTATE_H
 
 
-#include <deque>
 #include "OnMapState.h"
 
 class MoveHeroState : public OnMapState {
@@ -31,6 +30,9 @@ private:
 
 	//The commands that the user has input to get to the selected position
 	std::vector<Movement> directionInput;
+
+	//Whether a movement has been chosen or not
+	bool movementChosen;
 };
 
 

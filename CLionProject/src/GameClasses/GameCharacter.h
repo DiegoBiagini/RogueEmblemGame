@@ -9,6 +9,7 @@
 #include "GameObject.h"
 #include "../Resources/Texture.h"
 #include "../Utils/Movement.h"
+#include "MovementHandler.h"
 #include "Tile.h"
 
 //Abstract class for a character that can move on the map
@@ -31,10 +32,13 @@ public:
 
 	void update() override;
 
-	//Moves the character along the map
-	void move(std::vector<Movement> &movements);
+	//changes position of the character on the map
+	void setPosition(std::vector<Movement> &movements);
 
-	void move(int x, int y);
+	void setPosition(int x, int y);
+
+	//Performs an animation to move from a cell to another
+	void move(std::vector<Movement> &movements);
 
 	//Resets the actions taken by the character
 	virtual void resetActions();
@@ -44,6 +48,9 @@ public:
 
 	//Calculates again the moves that it can perform(using the A* algorithm)
 	void calculateMoves(GameMap map);
+
+	//Returns the pixel coordinates of the character on the map taking into account its displacement because of ongoing movement
+	std::pair<int, int> getActualCoordinates(GameMap &map);
 
 	//Getters and setters
 
@@ -97,6 +104,8 @@ public:
 
 	std::vector<std::pair<int, int>> getPossibleMoves() const;
 
+	bool isMoving() const;
+
 protected:
 
 	//Stats
@@ -124,6 +133,12 @@ protected:
 
 	//The cells the player can move to
 	std::vector<std::pair<int, int>> possibleMoves;
+
+	//Whether the character is moving along the map or not
+	bool moving;
+
+	//Helper class
+	MovementHandler movementHandler;
 };
 
 #endif //ROGUEEMBLEMGAME_GAMECHARACTER_H

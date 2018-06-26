@@ -45,14 +45,14 @@ TEST_F(MapTest, ObjectsInCells) {
 	std::shared_ptr<GameCharacter> character{new PlayerControlledCharacter};
 	character->setup();
 
-	character->move(0, 0);
+	character->setPosition(0, 0);
 	map.setObjectInCell(character);
 
 	ASSERT_EQ(map.getObjectAt(0, 0), character.get());
 
 	int testX = 4;
 	int testY = 1;
-	character->move(testX, testY);
+	character->setPosition(testX, testY);
 	map.setObjectInCell(character);
 
 	ASSERT_EQ(map.getObjectAt(testX, testY), character.get());
@@ -69,19 +69,19 @@ TEST_F(MapTest, MovingCharacterInMap) {
 
 	std::shared_ptr<GameCharacter> character{new PlayerControlledCharacter};
 	character->setup();
-	character->move(0, 0);
+	character->setPosition(0, 0);
 
 	character->attach(&map);
 	map.setObjectInCell(character);
 
 	//Make him go to 1,2
 	std::vector<Movement> mov{Movement::RIGHT, Movement::DOWN, Movement::DOWN};
-	character->move(mov);
+	character->setPosition(mov);
 
 	ASSERT_EQ(map.getObjectAt(1, 2), character.get());
 
 	//Back to 0,0
-	character->move(0, 0);
+	character->setPosition(0, 0);
 
 	ASSERT_EQ(map.getObjectAt(0, 0), character.get());
 	ASSERT_EQ(map.getObjectAt(1, 2), nullptr);

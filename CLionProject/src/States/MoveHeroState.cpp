@@ -7,6 +7,7 @@
 
 
 MoveHeroState::MoveHeroState(OnMapState &previous) : OnMapState(previous) {
+	movementChosen = false;
 }
 
 
@@ -70,13 +71,7 @@ unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key, bool pressed) {
 			case VirtualKey::CONFIRM: {
 				if (!directionInput.empty()) {
 					selectedPlayer->move(directionInput);
-					moveSelection(selectedPlayer->getPosition());
-
-					//Update the players movement options
-					for (auto &el : players)
-						el->calculateMoves(*map);
-
-					return std::unique_ptr<SelectActionState>(new SelectActionState(*this));
+					movementChosen = true;
 				}
 				break;
 			}
@@ -106,21 +101,46 @@ void MoveHeroState::render() {
 	//First render the map
 	map->render(camera);
 
+	//Center on the actual coordinates of the player if it is moving, else center on the selected tile
+	if (movementChosen) {
+		std::pair<int, int> pixelCoordinates = selectedPlayer->getActualCoordinates(*map);
+		centerCameraOn(pixelCoordinates.first + map->getTileSize() / 2,
+					   pixelCoordinates.second + map->getTileSize() / 2);
+	} else {
+		centerCameraOn(selectedTile);
+	}
+
 	//Then the objects
 	for (auto element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
 
-	//Draw the tiles the player can move to
-	hudHelper.drawAvailableMovements(selectedPlayer->getPossibleMoves(), *map);
+	if (!movementChosen) {
+		//Draw the tiles the player can move to
+		hudHelper.drawAvailableMovements(selectedPlayer->getPossibleMoves(), *map);
 
-	//Draw an arrow on the tile that you are selecting
-	hudHelper.drawMovingArrowOnTile(selectedTile, *map);
+		//Draw an arrow on the tile that you are selecting
+		hudHelper.drawMovingArrowOnTile(selectedTile, *map);
+	}
 }
 
 unique_ptr<GameState> MoveHeroState::update() {
-	return unique_ptr<GameState>();
+	for (auto &el : objectList) {
+		el->update();
+	}
+
+	//If a movement choice was taken and if it has been carried out go back to the previous state
+	if (!selectedPlayer->isMoving() && movementChosen) {
+		moveSelection(selectedPlayer->getPosition());
+
+		//Update the players movement options
+		for (auto &el : players)
+			el->calculateMoves(*map);
+
+		return std::unique_ptr<SelectActionState>(new SelectActionState(*this));
+	}
+	return nullptr;
 }
 
 bool MoveHeroState::moveSelection(const pair<int, int> &newTile) {

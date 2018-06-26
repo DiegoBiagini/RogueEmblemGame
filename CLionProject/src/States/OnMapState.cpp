@@ -16,6 +16,24 @@ void OnMapState::centerCameraOn(int x, int y) {
 	camera.top = y - camera.height / 2;
 	camera.left = x - camera.width / 2;
 
+
+	//If it went out of frame reposition it
+	//Left
+	if (camera.left < 0)
+		camera.left = 0;
+
+	//Up
+	if (camera.top < 0)
+		camera.top = 0;
+
+	//Right
+	if (camera.left + camera.width > map->getMapWidth())
+		camera.left = map->getMapWidth() - camera.width;
+
+	//Down
+	if (camera.top + camera.height > map->getMapHeight())
+		camera.top = map->getMapHeight() - camera.height;
+
 	//Send message to renderSystem
 	std::shared_ptr<RenderMessage> msg{new RenderMessage};
 	msg->type = RenderMessage::Type::MOVE_VIEW;
@@ -24,7 +42,7 @@ void OnMapState::centerCameraOn(int x, int y) {
 	stringMsg << "Centering view to x:" << x << ", y:" << y;
 	msg->content = stringMsg.str();
 
-	msg->position = sf::Vector2i(x, y);
+	msg->position = sf::Vector2i(camera.left + camera.width / 2, camera.top + camera.height / 2);
 
 	GameManager::getInstance().sendMsg(msg);
 }

@@ -3,7 +3,7 @@ set(SOURCE_FILES GameManager.cpp
         Resources/Texture.cpp Utils/InputHelper.cpp Utils/InputHelper.h Utils/utilityFunctions.cpp Utils/utilityFunctions.h
         States/GameState.h GameClasses/GameObject.h GameClasses/GameMap.cpp GameClasses/GameMap.h GameClasses/Tile.cpp
         GameClasses/Tile.h Utils/Observer.h Utils/Subject.h Utils/Subject.cpp States/OnMapState.h States/EnterLevelState.cpp
-        States/EnterLevelState.h States/FreeMovementState.cpp States/FreeMovementState.h GameClasses/GameObject.cpp GameClasses/GameCharacter.cpp GameClasses/GameCharacter.h Utils/Movement.h GameClasses/PlayerControlledCharacter.cpp GameClasses/PlayerControlledCharacter.h Resources/Animation.cpp Resources/Animation.h States/OnMapState.cpp Utils/HUDHelper.cpp Utils/HUDHelper.h GameClasses/Options.h States/SelectActionState.cpp States/SelectActionState.h States/MoveHeroState.cpp States/MoveHeroState.h)
+        States/EnterLevelState.h States/FreeMovementState.cpp States/FreeMovementState.h GameClasses/GameObject.cpp GameClasses/GameCharacter.cpp GameClasses/GameCharacter.h Utils/Movement.h GameClasses/PlayerControlledCharacter.cpp GameClasses/PlayerControlledCharacter.h Resources/Animation.cpp Resources/Animation.h States/OnMapState.cpp Utils/HUDHelper.cpp Utils/HUDHelper.h GameClasses/Options.h States/SelectActionState.cpp States/SelectActionState.h States/MoveHeroState.cpp States/MoveHeroState.h GameClasses/MovementHandler.cpp GameClasses/MovementHandler.h)
 
 
 add_executable(RogueEmblemGame main.cpp)

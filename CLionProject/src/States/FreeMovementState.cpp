@@ -89,6 +89,9 @@ void FreeMovementState::render() {
 }
 
 std::unique_ptr<GameState> FreeMovementState::update() {
+	for (auto &el : objectList) {
+		el->update();
+	}
 	return nullptr;
 }
 

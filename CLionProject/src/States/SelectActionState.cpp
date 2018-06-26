@@ -91,6 +91,9 @@ void SelectActionState::render() {
 }
 
 unique_ptr<GameState> SelectActionState::update() {
+	for (auto &el : objectList) {
+		el->update();
+	}
 	return nullptr;
 }
 
