@@ -57,7 +57,7 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 
 void SelectActionState::enterState() {
 	selectedPlayer = std::shared_ptr<PlayerControlledCharacter>(
-			dynamic_cast<PlayerControlledCharacter *>(map.getObjectAt(selectedTile)));
+			dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(selectedTile)));
 
 	//Construct the vector of performable options
 	if (!selectedPlayer->hasMoved())
@@ -72,28 +72,28 @@ void SelectActionState::enterState() {
 
 	selectedOption = 0;
 
-	centerCameraOn(selectedTile);
+	moveSelection(selectedTile);
 }
 
 void SelectActionState::render() {
 	//First render the map
-	map.render(camera);
+	map->render(camera);
 
 	//Then the objects
 	for (auto element : objectList)
-		element.get()->render(camera, map);
+		element.get()->render(camera, *map);
 
 	//Then the hud/gui
 	//Draw tile highlight
-	hudHelper.drawHighlightTile(selectedTile, map);
+	hudHelper.drawHighlightTile(selectedTile, *map);
 
-	hudHelper.drawOptions(*selectedPlayer.get(), possibleOptions, selectedOption, map, camera);
+	hudHelper.drawOptions(*selectedPlayer.get(), possibleOptions, selectedOption, *map, camera);
 }
 
 unique_ptr<GameState> SelectActionState::update() {
 	return nullptr;
 }
 
-SelectActionState::SelectActionState(OnMapState &previousState) : OnMapState(previousState) {
+SelectActionState::SelectActionState(OnMapState &previousState) : OnMapState{previousState}, selectedOption{0} {
 
 }

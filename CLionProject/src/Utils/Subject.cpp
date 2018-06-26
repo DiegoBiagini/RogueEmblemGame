@@ -17,6 +17,6 @@ void Subject::detach(Observer * obs) {
 }
 
 void Subject::notify() {
-	for(auto& el : observers)
+	for (auto el : observers)
 		el->updateObserver(this);
 }

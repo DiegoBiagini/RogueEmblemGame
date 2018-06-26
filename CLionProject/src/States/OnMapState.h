@@ -21,6 +21,8 @@ class OnMapState : public GameState {
 public:
 	explicit OnMapState(int currentLevel) : currentLevel(currentLevel) {};
 
+	//Copy constructor
+	OnMapState(const OnMapState &src);
 
 
 protected:
@@ -32,7 +34,7 @@ protected:
 	std::list<std::shared_ptr<PlayerControlledCharacter>> players;
 
 	//Main map
-	GameMap map;
+	std::unique_ptr<GameMap> map;
 
 	//Which cell of the map is selected
 	std::pair<int, int> selectedTile;
@@ -51,8 +53,8 @@ protected:
 
 	void centerCameraOn(int x, int y);
 
-	virtual //Moves the selected tile and the camera to a new tile
-	void moveSelection(const pair<int, int> &newTile);
+	//Moves the selected tile and the camera to a new tile, returns true if the operation was performed
+	virtual bool moveSelection(const pair<int, int> &newTile);
 };
 
 

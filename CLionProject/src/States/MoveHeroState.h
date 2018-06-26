@@ -6,6 +6,7 @@
 #define ROGUEEMBLEMGAME_MOVEHEROSTATE_H
 
 
+#include <deque>
 #include "OnMapState.h"
 
 class MoveHeroState : public OnMapState {
@@ -21,12 +22,15 @@ public:
 	std::unique_ptr<GameState> update() override;
 
 protected:
-	void moveSelection(const pair<int, int> &newTile) override;
+	bool moveSelection(const pair<int, int> &newTile) override;
 
 private:
 
 	//The selected character(for easier access)
 	std::shared_ptr<PlayerControlledCharacter> selectedPlayer;
+
+	//The commands that the user has input to get to the selected position
+	std::vector<Movement> directionInput;
 };
 
 

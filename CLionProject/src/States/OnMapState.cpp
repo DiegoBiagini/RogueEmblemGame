@@ -6,8 +6,8 @@
 #include "../GameManager.h"
 
 void OnMapState::centerCameraOn(std::pair<int, int> centerTile) {
-	int posX = centerTile.first * map.getTileSize() + map.getTileSize() / 2;
-	int posY = centerTile.second * map.getTileSize() + map.getTileSize() / 2;
+	int posX = centerTile.first * map->getTileSize() + map->getTileSize() / 2;
+	int posY = centerTile.second * map->getTileSize() + map->getTileSize() / 2;
 
 	centerCameraOn(posX, posY);
 }
@@ -29,15 +29,30 @@ void OnMapState::centerCameraOn(int x, int y) {
 	GameManager::getInstance().sendMsg(msg);
 }
 
-void OnMapState::moveSelection(const pair<int, int> &newTile) {
-	if (map.isValidCell(newTile)) {
+bool OnMapState::moveSelection(const pair<int, int> &newTile) {
+	if (map->isValidCell(newTile)) {
 		//Update selectedTile
 		selectedTile.first = newTile.first;
 		selectedTile.second = newTile.second;
 
 		//center view
-		sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
+		sf::Vector2i center = map->getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
 		centerCameraOn(center.x, center.y);
 
+		return true;
 	}
+	return false;
+}
+
+OnMapState::OnMapState(const OnMapState &src) {
+	map.reset(src.map.get());
+	objectList = src.objectList;
+
+	selectedTile.first = src.selectedTile.first;
+	selectedTile.second = src.selectedTile.second;
+
+	players = src.players;
+	hudHelper = src.hudHelper;
+	camera = src.camera;
+	currentLevel = src.currentLevel;
 }

@@ -55,7 +55,7 @@ void GameCharacter::move(std::vector<Movement> &movements) {
 		}
 
 		notify();
-		moved = true;
+		//moved = true;
 	}
 }
 
@@ -155,7 +155,7 @@ void GameCharacter::move(int x, int y) {
 	posX = x;
 	posY = y;
 
-	moved = true;
+	//moved = true;
 	notify();
 }
 

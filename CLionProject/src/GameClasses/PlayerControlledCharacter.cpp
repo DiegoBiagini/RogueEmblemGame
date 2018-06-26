@@ -22,6 +22,7 @@ void PlayerControlledCharacter::setup() {
 	posX = 1;
 	posY = 1;
 	name = "Tizio";
+	mobility = 4;
 
 	strength = 100;
 	intelligence = 101;

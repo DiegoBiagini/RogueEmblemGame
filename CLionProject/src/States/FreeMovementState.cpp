@@ -36,15 +36,16 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 
 
 			case VirtualKey::CONFIRM: {
-				auto selectedChar = dynamic_cast<PlayerControlledCharacter *>(map.getObjectAt(selectedTile));
+				auto selectedChar = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(selectedTile));
 
 				//Check if it is in the list of players
 				for (auto &el : players) {
 					if (el.get() == selectedChar)
 						//Check if it can perform an action
-						if (selectedChar->canPerformAction())
+						if (selectedChar->canPerformAction()) {
 							//Go to SelectAction state
 							return std::unique_ptr<GameState>{new SelectActionState(*this)};
+						}
 				}
 				break;
 			}
@@ -62,29 +63,29 @@ std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool p
 
 void FreeMovementState::enterState() {
 
-	sf::Vector2i center = map.getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
+	sf::Vector2i center = map->getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
 	centerCameraOn(center.x, center.y);
 }
 
 void FreeMovementState::render() {
 	//First render the map
-	map.render(camera);
+	map->render(camera);
 
 	//Then the objects
 	for(auto element : objectList)
-		element.get()->render(camera, map);
+		element.get()->render(camera, *map);
 
 	//Then the hud/gui
 	//Draw tile highlight
-	hudHelper.drawHighlightTile(selectedTile, map);
+	hudHelper.drawHighlightTile(selectedTile, *map);
 
 	//Draw tile information
-	hudHelper.drawTileInfo(selectedTile, map, camera);
+	hudHelper.drawTileInfo(selectedTile, *map, camera);
 
 	//Draw character information
-	auto selectedChar = dynamic_cast<GameCharacter *>(map.getObjectAt(selectedTile));
+	auto selectedChar = dynamic_cast<GameCharacter *>(map->getObjectAt(selectedTile));
 	if (selectedChar != nullptr)
-		hudHelper.drawGameCharacterInfo(*selectedChar, map, camera);
+		hudHelper.drawGameCharacterInfo(*selectedChar, *map, camera);
 }
 
 std::unique_ptr<GameState> FreeMovementState::update() {
