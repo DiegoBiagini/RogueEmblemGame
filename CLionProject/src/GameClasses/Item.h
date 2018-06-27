@@ -7,11 +7,14 @@
 
 
 #include "GameCharacter.h"
+#include "../GameManager.h"
 
 class Item {
 
 public:
-	Item() = default;
+	Item(std::string &iconPath) {
+		iconId = GameManager::getInstance().sendLoadTextureRequest(iconPath);
+	};
 
 	//Applies an effect/modification on a character
 	virtual void applyOn(GameCharacter &character) = 0;

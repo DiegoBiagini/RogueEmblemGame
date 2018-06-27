@@ -3,7 +3,6 @@
 //
 
 #include "Equipment.h"
-#include "../GameManager.h"
 
 void Equipment::applyOn(GameCharacter &character) {
 	character.getExtraStatsReference() = character.getExtraStatsReference() + properties;
@@ -13,9 +12,7 @@ void Equipment::removeEffect(GameCharacter &character) {
 	character.getExtraStatsReference() = character.getExtraStatsReference() - properties;
 }
 
-
-Equipment::Equipment(std::string &iconPath) {
-	iconId = GameManager::getInstance().sendLoadTextureRequest(iconPath);
+Equipment::Equipment(std::string &iconPath) : Item(iconPath), properties{0, 0, 0, 0, 0, 0, 0, 0, 0} {
 }
 
 void Equipment::setProperties(const Stats &properties) {
