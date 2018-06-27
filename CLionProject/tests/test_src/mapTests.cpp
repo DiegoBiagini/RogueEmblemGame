@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "../../src/GameClasses/GameMap.h"
-#include "../../src/GameClasses/PlayerControlledCharacter.h"
+#include "../../src/GameClasses/GameObjectHierarchy/PlayerControlledCharacter.h"
 
 class MapTest : public ::testing::Test {
 	friend class GameMap;

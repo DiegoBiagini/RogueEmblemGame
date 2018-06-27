@@ -6,7 +6,7 @@
 #define ROGUEEMBLEMGAME_HUDHELPER_H
 
 #include <SFML/Graphics.hpp>
-#include "../GameClasses/GameCharacter.h"
+#include "../GameClasses/GameObjectHierarchy/GameCharacter.h"
 #include "../GameClasses/Options.h"
 
 

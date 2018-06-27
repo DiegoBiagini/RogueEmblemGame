@@ -3,7 +3,11 @@
 //
 
 #include "PlayerControlledCharacter.h"
-#include "../GameManager.h"
+#include "../../GameManager.h"
+
+PlayerControlledCharacter::PlayerControlledCharacter() : inventory{20} {
+
+}
 
 void PlayerControlledCharacter::fight(GameCharacter &foe) {
 
@@ -51,3 +55,4 @@ void PlayerControlledCharacter::resetActions() {
 bool PlayerControlledCharacter::hasUsedItem() {
 	return usedItem;
 }
+

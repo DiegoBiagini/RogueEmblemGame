@@ -7,11 +7,11 @@
 
 
 #include "GameObject.h"
-#include "../Resources/Texture.h"
-#include "../Utils/Movement.h"
-#include "../Utils/AStar.h"
-#include "MovementHandler.h"
-#include "Tile.h"
+#include "../../Resources/Texture.h"
+#include "../../Utils/Movement.h"
+#include "../../Utils/AStar.h"
+#include "../MovementHandler.h"
+#include "../Tile.h"
 #include "Stats.h"
 
 

@@ -7,11 +7,14 @@
 
 #include <memory>
 #include "GameCharacter.h"
+#include "../InventoryManagement/Weapon.h"
+#include "../InventoryManagement/Inventory.h"
+#include "../InventoryManagement/Equipment.h"
 
 //Base class for a character controlled by the player
 class PlayerControlledCharacter : public GameCharacter {
 public:
-	PlayerControlledCharacter() = default;
+	PlayerControlledCharacter();
 
 	void fight(GameCharacter &foe) override;
 
@@ -29,6 +32,15 @@ private:
 
 	//Whether the player has used an item this turn
 	bool usedItem;
+
+	//The inventory relative to the player
+	Inventory inventory;
+
+	//The equipped weapon
+	//Weapon equippedWeapon;
+
+	//Equipped equipment
+	//Equipment equippedEquip;
 };
 
 

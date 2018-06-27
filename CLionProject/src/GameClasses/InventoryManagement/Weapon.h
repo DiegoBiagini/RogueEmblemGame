@@ -10,6 +10,7 @@
 
 class Weapon : public Item {
 public:
+	Weapon() = default;
 	explicit Weapon(std::string &iconPath);
 
 	void applyOn(GameCharacter &character) override;
@@ -21,7 +22,9 @@ public:
 	};
 
 private:
+	//Which kind of weapon it is
 	WeaponClass wpClass;
+
 };
 
 

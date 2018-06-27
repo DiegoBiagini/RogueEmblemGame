@@ -7,7 +7,7 @@
 
 
 #include "OnMapState.h"
-#include "../GameClasses/PlayerControlledCharacter.h"
+#include "../GameClasses/GameObjectHierarchy/PlayerControlledCharacter.h"
 
 //State that will be entered before going into the game map
 class EnterLevelState : public OnMapState{

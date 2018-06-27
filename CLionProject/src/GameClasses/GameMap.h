@@ -12,7 +12,7 @@
 #include "../Utils/constants.h"
 #include "Tile.h"
 #include "../Utils/Observer.h"
-#include "GameObject.h"
+#include "GameObjectHierarchy/GameObject.h"
 
 using namespace std;
 

@@ -6,15 +6,14 @@
 #define ROGUEEMBLEMGAME_ITEM_H
 
 
-#include "GameCharacter.h"
-#include "../GameManager.h"
+#include "../GameObjectHierarchy/GameCharacter.h"
 
 class Item {
 
 public:
-	Item(std::string &iconPath) {
-		iconId = GameManager::getInstance().sendLoadTextureRequest(iconPath);
-	};
+	Item() = default;
+
+	explicit Item(std::string &iconPath);
 
 	//Applies an effect/modification on a character
 	virtual void applyOn(GameCharacter &character) = 0;
@@ -22,9 +21,19 @@ public:
 	//Removes an effect/modification on a character
 	virtual void removeEffect(GameCharacter &character) = 0;
 
+	//Loads icon
+	void loadIcon(std::string &iconPath);
+
 protected:
 	//Id for the resource of the icon
 	int iconId;
+
+	//Name of the item
+	std::string name;
+public:
+	const string &getName() const;
+
+	void setName(const string &name);
 };
 
 #endif //ROGUEEMBLEMGAME_ITEM_H

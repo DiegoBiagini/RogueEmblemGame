@@ -11,7 +11,7 @@
 
 #include "GameState.h"
 #include "../GameClasses/GameMap.h"
-#include "../GameClasses/PlayerControlledCharacter.h"
+#include "../GameClasses/GameObjectHierarchy/PlayerControlledCharacter.h"
 #include "../Utils/HUDHelper.h"
 
 

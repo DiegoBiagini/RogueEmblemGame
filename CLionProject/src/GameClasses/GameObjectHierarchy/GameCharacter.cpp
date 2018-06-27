@@ -3,7 +3,7 @@
 //
 
 #include "GameCharacter.h"
-#include "../GameManager.h"
+#include "../../GameManager.h"
 
 GameCharacter::GameCharacter() : baseStats{0, 0, 0, 0, 0, 0, 0, 0, 0}, extraStats{0, 0, 0, 0, 0, 0, 0, 0, 0},
 								 mobility{1}, moved{false},

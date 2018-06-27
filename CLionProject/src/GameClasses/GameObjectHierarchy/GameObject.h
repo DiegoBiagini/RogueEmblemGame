@@ -6,7 +6,7 @@
 #define ROGUEEMBLEMGAME_GAMEOBJECT_H
 
 #include <SFML/Graphics/Rect.hpp>
-#include "../Utils/Subject.h"
+#include "../../Utils/Subject.h"
 
 class GameMap;
 

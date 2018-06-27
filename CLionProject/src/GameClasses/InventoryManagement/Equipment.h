@@ -7,10 +7,11 @@
 
 
 #include "Item.h"
-#include "Stats.h"
+#include "../GameObjectHierarchy/Stats.h"
 
 class Equipment : public Item {
 public:
+	Equipment() = default;
 	explicit Equipment(std::string &iconPath);
 
 	void applyOn(GameCharacter &character) override;
@@ -21,9 +22,11 @@ public:
 
 	Stats getProperties() const;
 
+
 private:
 	//How much the equipment raises each stat
 	Stats properties;
+
 };
 
 
