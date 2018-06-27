@@ -46,6 +46,10 @@ private:
 					   pair<int, int> &toAddCell,
 					   pair<int, int> &currentCell,
 					   CellInfo &finalCell);
+
+	//The bulk of the algorithm, creates the open and closed maps
+	void algorithm(pair<int, int> start, pair<int, int> end, map<pair<int, int>, CellInfo> &open,
+				   map<pair<int, int>, CellInfo> &closed, CellInfo &finalCell);
 };
 
 

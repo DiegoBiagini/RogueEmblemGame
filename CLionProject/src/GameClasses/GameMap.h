@@ -47,7 +47,7 @@ public:
 	void initMap(int tileWidth, int tileHeight);
 
 	//Creates a (random) map
-	void createMap();
+	void generateMap();
 
 	//Render all tiles relative to the camera
 	void render(sf::IntRect cameraRectangle);
@@ -57,16 +57,19 @@ public:
 
 	bool isValidCell(std::pair<int, int> pos) const;
 
+	//Sets a cell to a certain tile
+	void setTile(Tile tile, int x, int y);
 
 	//Update method of the observer
 	void updateObserver(Subject *subject) override;
 
 	//Sets an object in a cell, will bind with the Observer pattern
-	void setObjectInCell(std::shared_ptr<GameObject> obj);
+	void setObjectInCell(shared_ptr<GameObject> obj);
 
 	//Returns the center of the rectangle of the camera that is fixed on a cell
 	//Will take care of not making the camera go out of the map
 	sf::Vector2i getCenterOfCameraOnTile(std::pair<int, int> tile, int cameraWidth, int cameraHeight);
+
 
 private:
 
@@ -84,10 +87,8 @@ private:
 	//Vector of all tiles, in each tile there could be a gameObject and a pointer to it will be stored
 	vector<vector<pair<Tile, shared_ptr<GameObject>>>> mapMatrix;
 
+	//Array containing the resource ids of each type of tile
 	array<int, Tile::Type::NTILES> tileTextureIds;
-
-	//Sets a cell to a certain tile
-	void setTile(Tile tile, int x, int y);
 
 	//Returns true if the passed coordinates are associated with an on screen tile
 	bool isTileInsideCamera(const sf::IntRect &cameraRectangle, int i, int j) const;

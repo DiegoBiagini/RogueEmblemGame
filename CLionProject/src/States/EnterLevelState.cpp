@@ -12,7 +12,7 @@ std::unique_ptr<GameState> EnterLevelState::handleInput(VirtualKey key, bool pre
 void EnterLevelState::enterState() {
 	map = std::unique_ptr<GameMap>(new GameMap());
 	map->initMap(20, 20);
-	map->createMap();
+	map->generateMap();
 
 	camera = {0, 0, CAMERA_DEFAULT_WIDTH, CAMERA_DEFAULT_HEIGHT};
 

@@ -85,7 +85,7 @@ bool GameMap::isValidCell(std::pair<int, int> pos) const {
 	return isValidCell(pos.first, pos.second);
 }
 
-void GameMap::createMap() {
+void GameMap::generateMap() {
 	//For now just put walls all around the map
 	Tile tWall(Tile::Type::WALL);
 	Tile tFloor(Tile::Type::FLOOR);
@@ -97,10 +97,6 @@ void GameMap::createMap() {
 			else
 				setTile(tFloor, i, j);
 		}
-	setTile(tWall, 2, 1);
-	setTile(tWall, 2, 2);
-	//setTile(tWall, 1, 2);
-
 
 }
 
@@ -141,7 +137,7 @@ void GameMap::render(sf::IntRect cameraRectangle) {
 }
 
 void GameMap::updateObserver(Subject *subject) {
-	GameObject* obj = dynamic_cast<GameObject*>(subject);
+	auto obj = dynamic_cast<GameObject *>(subject);
 	if(obj != nullptr) {
 		//Search for the object that changed
 		for (int i = 0; i < tileHeight; i++) {
