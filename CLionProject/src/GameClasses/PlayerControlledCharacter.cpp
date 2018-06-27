@@ -14,22 +14,22 @@ int PlayerControlledCharacter::traverseCost(Tile::Type type) {
 }
 
 void PlayerControlledCharacter::setup() {
-	maxHp = 20;
-	maxMana = 20;
-	hp = 15;
-	mana = 2;
+	baseStats.maxHp = 20;
+	baseStats.maxMana = 20;
+	baseStats.hp = 15;
+	baseStats.mana = 2;
 
 	posX = 1;
 	posY = 1;
 	name = "Tizio";
 	mobility = 4;
 
-	strength = 100;
-	intelligence = 101;
-	evasion = 102;
+	baseStats.strength = 100;
+	baseStats.intelligence = 101;
+	baseStats.evasion = 102;
 
-	armor = 100;
-	magicArmor = 105;
+	baseStats.armor = 100;
+	baseStats.magicArmor = 105;
 
 	usedItem = false;
 

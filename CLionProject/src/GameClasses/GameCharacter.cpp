@@ -5,9 +5,9 @@
 #include "GameCharacter.h"
 #include "../GameManager.h"
 
-GameCharacter::GameCharacter() : maxHp{0}, hp{0}, maxMana{0}, mana{0}, armor{0}, magicArmor{0}, strength{0},
-								 intelligence{0}, evasion{0}, mobility{1}, moved{false}, attacked{false},
-								 moving{false} {
+GameCharacter::GameCharacter() : baseStats{0, 0, 0, 0, 0, 0, 0, 0, 0}, extraStats{0, 0, 0, 0, 0, 0, 0, 0, 0},
+								 mobility{1}, moved{false},
+								 attacked{false}, moving{false} {
 }
 
 void GameCharacter::render(sf::IntRect camera, GameMap &map) {
@@ -56,75 +56,75 @@ void GameCharacter::setPosition(std::vector<Movement> &movements) {
 }
 
 int GameCharacter::getHp() const {
-	return hp;
+	return baseStats.hp;
 }
 
 void GameCharacter::setHp(int hp) {
-	GameCharacter::hp = hp;
+	GameCharacter::baseStats.hp = hp;
 }
 
 int GameCharacter::getMaxHp() const {
-	return maxHp;
+	return baseStats.maxHp;
 }
 
 void GameCharacter::setMaxHp(int maxHp) {
-	GameCharacter::maxHp = maxHp;
+	GameCharacter::baseStats.maxHp = maxHp;
 }
 
 int GameCharacter::getMana() const {
-	return mana;
+	return baseStats.mana;
 }
 
 void GameCharacter::setMana(int mana) {
-	GameCharacter::mana = mana;
+	GameCharacter::baseStats.mana = mana;
 }
 
 int GameCharacter::getMaxMana() const {
-	return maxMana;
+	return baseStats.maxMana;
 }
 
 void GameCharacter::setMaxMana(int maxMana) {
-	GameCharacter::maxMana = maxMana;
+	GameCharacter::baseStats.maxMana = maxMana;
 }
 
 int GameCharacter::getStrenght() const {
-	return strength;
+	return baseStats.strength;
 }
 
 void GameCharacter::setStrenght(int strength) {
-	GameCharacter::strength = strength;
+	GameCharacter::baseStats.strength = strength;
 }
 
 int GameCharacter::getIntelligence() const {
-	return intelligence;
+	return baseStats.intelligence;
 }
 
 void GameCharacter::setIntelligence(int intelligence) {
-	GameCharacter::intelligence = intelligence;
+	GameCharacter::baseStats.intelligence = intelligence;
 }
 
 int GameCharacter::getEvasion() const {
-	return evasion;
+	return baseStats.evasion;
 }
 
 void GameCharacter::setEvasion(int evasion) {
-	GameCharacter::evasion = evasion;
+	GameCharacter::baseStats.evasion = evasion;
 }
 
 int GameCharacter::getArmor() const {
-	return armor;
+	return baseStats.armor;
 }
 
 void GameCharacter::setArmor(int armor) {
-	GameCharacter::armor = armor;
+	GameCharacter::baseStats.armor = armor;
 }
 
 int GameCharacter::getMagicArmor() const {
-	return magicArmor;
+	return baseStats.magicArmor;
 }
 
 void GameCharacter::setMagicArmor(int magicArmor) {
-	GameCharacter::magicArmor = magicArmor;
+	GameCharacter::baseStats.magicArmor = magicArmor;
 }
 
 int GameCharacter::getMobility() const {
@@ -254,4 +254,8 @@ void GameCharacter::move(std::vector<Movement> &movements) {
 		moving = true;
 		movementHandler.startMoving(movements);
 	}
+}
+
+Stats &GameCharacter::getExtraStatsReference() {
+	return extraStats;
 }

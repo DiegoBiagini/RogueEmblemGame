@@ -7,7 +7,7 @@ set(SOURCE_FILES GameManager.cpp
         GameClasses/GameCharacter.cpp GameClasses/GameCharacter.h Utils/Movement.h GameClasses/PlayerControlledCharacter.cpp
         GameClasses/PlayerControlledCharacter.h Resources/Animation.cpp Resources/Animation.h States/OnMapState.cpp
         Utils/HUDHelper.cpp Utils/HUDHelper.h GameClasses/Options.h States/SelectActionState.cpp States/SelectActionState.h
-        States/MoveHeroState.cpp States/MoveHeroState.h GameClasses/MovementHandler.cpp GameClasses/MovementHandler.h Utils/AStar.cpp)
+        States/MoveHeroState.cpp States/MoveHeroState.h GameClasses/MovementHandler.cpp GameClasses/MovementHandler.h Utils/AStar.cpp GameClasses/Item.h GameClasses/Equipment.cpp GameClasses/Equipment.h GameClasses/Stats.h)
 
 
 add_executable(RogueEmblemGame main.cpp)

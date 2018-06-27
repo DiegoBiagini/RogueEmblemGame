@@ -12,6 +12,8 @@
 #include "../Utils/AStar.h"
 #include "MovementHandler.h"
 #include "Tile.h"
+#include "Stats.h"
+
 
 //Abstract class for a character that can move on the map
 class GameCharacter : public GameObject {
@@ -107,20 +109,14 @@ public:
 
 	bool isMoving() const;
 
+	Stats &getExtraStatsReference();
+
 protected:
+	//The stats of the character
+	Stats baseStats;
 
-	//Stats
-	int hp;            //Current character hit points
-	int maxHp;          //Max character hit points
-
-	int mana;           //Current points used to cast magics
-	int maxMana;        //Max mana
-
-	int strength;       //Attribute that dictates how much damage you do with weapons
-	int intelligence;    //Attribute that dictates how much damage you do with magics
-	int evasion;        //How good the character is at evading attacks
-	int armor;          //The character resistance to physical damage
-	int magicArmor;     //The character resistance to magical damage
+	//Stats given by the equipment/other sources
+	Stats extraStats;
 
 	//The name of the character
 	std::string name;
