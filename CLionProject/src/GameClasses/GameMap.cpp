@@ -97,6 +97,10 @@ void GameMap::createMap() {
 			else
 				setTile(tFloor, i, j);
 		}
+	setTile(tWall, 2, 1);
+	setTile(tWall, 2, 2);
+	//setTile(tWall, 1, 2);
+
 
 }
 

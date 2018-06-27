@@ -28,9 +28,6 @@ private:
 	//The selected character(for easier access)
 	std::shared_ptr<PlayerControlledCharacter> selectedPlayer;
 
-	//The commands that the user has input to get to the selected position
-	std::vector<Movement> directionInput;
-
 	//Whether a movement has been chosen or not
 	bool movementChosen;
 };

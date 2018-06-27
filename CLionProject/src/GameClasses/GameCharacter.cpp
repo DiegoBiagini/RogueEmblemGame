@@ -229,6 +229,7 @@ std::pair<int, int> GameCharacter::getActualCoordinates(GameMap &map) {
 void GameCharacter::calculateMoves(GameMap map) {
 	//Remove all previous possible movements
 	possibleMoves.clear();
+	AStar astar(map);
 
 	//For now add all the cells whose L1 distance is less than the mobility of the character
 
@@ -236,10 +237,11 @@ void GameCharacter::calculateMoves(GameMap map) {
 		for (int y = posY - mobility; y <= posY + mobility; y++) {
 
 			std::pair<int, int> newCell = std::make_pair(x, y);
-
-			if (map.isValidCell(newCell) && utility::L1Distance(std::make_pair(posX, posY), newCell) <= mobility)
-
-				possibleMoves.push_back(newCell);
+			std::pair<int, int> charCell = std::make_pair(posX, posY);
+			if (map.isValidCell(newCell) && utility::L1Distance(charCell, newCell) <= mobility &&
+				map.getTileAt(x, y).isWalkable() && map.getObjectAt(x, y) == nullptr)
+				if (astar.getMinDistance(charCell, newCell) <= mobility)
+					possibleMoves.push_back(newCell);
 		}
 	}
 

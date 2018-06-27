@@ -5,7 +5,6 @@
 #include "MoveHeroState.h"
 #include "SelectActionState.h"
 
-
 MoveHeroState::MoveHeroState(OnMapState &previous) : OnMapState(previous) {
 	movementChosen = false;
 }
@@ -16,17 +15,10 @@ unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key, bool pressed) {
 		switch (key) {
 
 			//Move the selection if the input is valid
-			//If it actually moved add the movement to the vector of movements, if it's the opposite of the last movement just remove that one
 
 			case VirtualKey::UP: {
 				std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
-
-				if (moveSelection(newTile)) {
-					if (!directionInput.empty() && directionInput.back() == Movement::DOWN)
-						directionInput.pop_back();
-					else
-						directionInput.push_back(Movement::UP);
-				}
+				moveSelection(newTile);
 
 				break;
 			}
@@ -34,43 +26,31 @@ unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key, bool pressed) {
 			case VirtualKey::DOWN: {
 				std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
 
-				if (moveSelection(newTile)) {
-					if (!directionInput.empty() && directionInput.back() == Movement::UP)
-						directionInput.pop_back();
-					else
-						directionInput.push_back(Movement::DOWN);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 			case VirtualKey::LEFT: {
 				std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
 
-				if (moveSelection(newTile)) {
-					if (!directionInput.empty() && directionInput.back() == Movement::RIGHT)
-						directionInput.pop_back();
-					else
-						directionInput.push_back(Movement::LEFT);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 			case VirtualKey::RIGHT: {
 				std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
 
-				if (moveSelection(newTile)) {
-					if (!directionInput.empty() && directionInput.back() == Movement::LEFT)
-						directionInput.pop_back();
-					else
-						directionInput.push_back(Movement::RIGHT);
-				}
+				moveSelection(newTile);
 				break;
 			}
 
 
 			case VirtualKey::CONFIRM: {
-				if (!directionInput.empty()) {
-					selectedPlayer->move(directionInput);
+				//Go to the selected tile with the shortest path
+				if (selectedTile != selectedPlayer->getPosition()) {
+					AStar aStar(*map);
+					auto shortestPath = aStar.getShortestPath(selectedPlayer->getPosition(), selectedTile);
+					selectedPlayer->move(shortestPath);
 					movementChosen = true;
 				}
 				break;
