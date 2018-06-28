@@ -5,11 +5,11 @@
 #ifndef ROGUEEMBLEMGAME_PLAYERCONTROLLEDCHARACTER_H
 #define ROGUEEMBLEMGAME_PLAYERCONTROLLEDCHARACTER_H
 
-#include <memory>
+
 #include "GameCharacter.h"
 #include "../InventoryManagement/Weapon.h"
-#include "../InventoryManagement/Inventory.h"
 #include "../InventoryManagement/Equipment.h"
+#include "../InventoryManagement/Inventory.h"
 
 
 //Base class for a character controlled by the player

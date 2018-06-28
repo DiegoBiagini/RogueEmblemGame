@@ -5,6 +5,7 @@
 #include "PlayerFactory.h"
 #include "../GameObjectHierarchy/PlayerControlledCharacter.h"
 #include "../../GameManager.h"
+#include "ItemFactory.h"
 
 shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::CharacterType type) {
 	shared_ptr<PlayerControlledCharacter> player{new PlayerControlledCharacter};
@@ -36,6 +37,10 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 
 			player->setAnimationId(animId);
 
+			ItemFactory itemFactory;
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::BasicSword, player);
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::LeatherArmor, player);
+
 			break;
 		}
 		case GameCharacter::CharacterType::Skeleton: {
@@ -59,6 +64,10 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 4, 128, 128, 4);
 
 			player->setAnimationId(animId);
+
+			ItemFactory itemFactory;
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::BasicSword, player);
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::LeatherArmor, player);
 			break;
 		}
 		case GameCharacter::CharacterType::Knight: {
@@ -82,6 +91,10 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);
 
 			player->setAnimationId(animId);
+
+			ItemFactory itemFactory;
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::BasicSword, player);
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::LeatherArmor, player);
 			break;
 		}
 	}

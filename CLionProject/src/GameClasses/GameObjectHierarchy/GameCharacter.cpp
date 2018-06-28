@@ -55,7 +55,7 @@ void GameCharacter::setPosition(vector<Movement> &movements) {
 }
 
 int GameCharacter::getHp() const {
-	return baseStats.hp;
+	return baseStats.hp + extraStats.hp;
 }
 
 void GameCharacter::setHp(int hp) {
@@ -63,7 +63,7 @@ void GameCharacter::setHp(int hp) {
 }
 
 int GameCharacter::getMaxHp() const {
-	return baseStats.maxHp;
+	return baseStats.maxHp + extraStats.maxHp;
 }
 
 void GameCharacter::setMaxHp(int maxHp) {
@@ -71,7 +71,7 @@ void GameCharacter::setMaxHp(int maxHp) {
 }
 
 int GameCharacter::getMana() const {
-	return baseStats.mana;
+	return baseStats.mana + extraStats.mana;
 }
 
 void GameCharacter::setMana(int mana) {
@@ -79,7 +79,7 @@ void GameCharacter::setMana(int mana) {
 }
 
 int GameCharacter::getMaxMana() const {
-	return baseStats.maxMana;
+	return baseStats.maxMana + extraStats.maxMana;
 }
 
 void GameCharacter::setMaxMana(int maxMana) {
@@ -87,7 +87,7 @@ void GameCharacter::setMaxMana(int maxMana) {
 }
 
 int GameCharacter::getStrenght() const {
-	return baseStats.strength;
+	return baseStats.strength + extraStats.strength;
 }
 
 void GameCharacter::setStrenght(int strength) {
@@ -95,7 +95,7 @@ void GameCharacter::setStrenght(int strength) {
 }
 
 int GameCharacter::getIntelligence() const {
-	return baseStats.intelligence;
+	return baseStats.intelligence + extraStats.intelligence;
 }
 
 void GameCharacter::setIntelligence(int intelligence) {
@@ -103,7 +103,7 @@ void GameCharacter::setIntelligence(int intelligence) {
 }
 
 int GameCharacter::getEvasion() const {
-	return baseStats.evasion;
+	return baseStats.evasion + extraStats.evasion;
 }
 
 void GameCharacter::setEvasion(int evasion) {
@@ -111,7 +111,7 @@ void GameCharacter::setEvasion(int evasion) {
 }
 
 int GameCharacter::getArmor() const {
-	return baseStats.armor;
+	return baseStats.armor + extraStats.armor;
 }
 
 void GameCharacter::setArmor(int armor) {
@@ -119,7 +119,7 @@ void GameCharacter::setArmor(int armor) {
 }
 
 int GameCharacter::getMagicArmor() const {
-	return baseStats.magicArmor;
+	return baseStats.magicArmor + extraStats.magicArmor;
 }
 
 void GameCharacter::setMagicArmor(int magicArmor) {

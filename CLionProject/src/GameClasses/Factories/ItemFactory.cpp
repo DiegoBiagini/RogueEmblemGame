@@ -59,6 +59,7 @@ ItemFactory::createItemAndEquip(ItemFactory::ItemType type, std::shared_ptr<Play
 				break;
 			}
 		}
+		return item;
 
 	}
 }

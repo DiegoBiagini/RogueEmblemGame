@@ -4,7 +4,6 @@
 #include "Item.h"
 #include "../../GameManager.h"
 
-
 Item::Item(std::string &iconPath) {
 	loadIcon(iconPath);
 }

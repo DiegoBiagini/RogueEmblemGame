@@ -5,8 +5,8 @@
 #ifndef ROGUEEMBLEMGAME_WEAPON_H
 #define ROGUEEMBLEMGAME_WEAPON_H
 
-#include "../GameObjectHierarchy/GameCharacter.h"
 #include "Item.h"
+#include "../GameObjectHierarchy/GameCharacter.h"
 
 class Weapon : public Item {
 public:

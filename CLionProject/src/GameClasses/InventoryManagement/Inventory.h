@@ -8,8 +8,8 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
-#include "Item.h"
 
+class Item;
 
 //A place that will be able to store Items
 class Inventory {

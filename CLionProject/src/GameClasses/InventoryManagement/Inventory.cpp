@@ -3,6 +3,7 @@
 //
 
 #include "Inventory.h"
+#include "Item.cpp"
 
 Inventory::Inventory(int capacity) : capacity{capacity} {
 

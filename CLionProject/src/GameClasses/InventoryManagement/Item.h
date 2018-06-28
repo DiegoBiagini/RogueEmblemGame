@@ -6,15 +6,12 @@
 #define ROGUEEMBLEMGAME_ITEM_H
 
 #include <iostream>
-
 class PlayerControlledCharacter;
 
 class Item {
 
 public:
 	Item() = default;
-
-	virtual ~Item() = 0;
 
 	explicit Item(std::string &iconPath);
 
