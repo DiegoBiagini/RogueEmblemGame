@@ -11,6 +11,7 @@
 #include "../InventoryManagement/Inventory.h"
 #include "../InventoryManagement/Equipment.h"
 
+
 //Base class for a character controlled by the player
 class PlayerControlledCharacter : public GameCharacter {
 public:
@@ -23,9 +24,23 @@ public:
 	//Resets the flags that tell the game that the player has already acted this turn
 	void resetActions() override;
 
+	//Put item into inventory
+	void putItemInInventory(shared_ptr<Item> item);
+
+	//Returns true if inventory is full
+	bool isInventoryFull() const;
+
 	bool canPerformAction() override;
 
 	bool hasUsedItem();
+
+	const shared_ptr<Weapon> &getEquippedWeapon() const;
+
+	void setEquippedWeapon(shared_ptr<Weapon> &equippedWeapon);
+
+	const shared_ptr<Equipment> &getEquipment() const;
+
+	void setEquipment(shared_ptr<Equipment> &equipment);
 
 private:
 
@@ -39,7 +54,7 @@ private:
 	shared_ptr<Weapon> equippedWeapon;
 
 	//Equipped equipment
-	shared_ptr<Equipment> equippedEquip;
+	shared_ptr<Equipment> equipment;
 };
 
 

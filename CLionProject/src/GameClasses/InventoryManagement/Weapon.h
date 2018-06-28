@@ -5,7 +5,7 @@
 #ifndef ROGUEEMBLEMGAME_WEAPON_H
 #define ROGUEEMBLEMGAME_WEAPON_H
 
-
+#include "../GameObjectHierarchy/GameCharacter.h"
 #include "Item.h"
 
 class Weapon : public Item {
@@ -13,16 +13,28 @@ public:
 	Weapon() = default;
 	explicit Weapon(std::string &iconPath);
 
-	void applyOn(GameCharacter &character) override;
+	void applyOn(PlayerControlledCharacter &character) override;
 
-	void removeEffect(GameCharacter &character) override;
+	void removeEffect(PlayerControlledCharacter &character) override;
 
 	//Returns the damage that character attacker would deal to character defender using this weapon
-	int use(GameCharacter &attacker, GameCharacter &defender);
+	int use(PlayerControlledCharacter &attacker, GameCharacter &defender);
 
 	enum class WeaponClass {
 		MELEE, RANGED
 	};
+
+	WeaponClass getWpClass() const;
+
+	void setWpClass(WeaponClass wpClass);
+
+	int getPhysicalDamage() const;
+
+	void setPhysicalDamage(int physicalDamage);
+
+	int getMagicDamage() const;
+
+	void setMagicDamage(int magicDamage);
 
 private:
 	//Which kind of weapon it is

@@ -5,7 +5,11 @@
 #ifndef ROGUEEMBLEMGAME_INVENTORY_H
 #define ROGUEEMBLEMGAME_INVENTORY_H
 
+#include <memory>
+#include <vector>
+#include <algorithm>
 #include "Item.h"
+
 
 //A place that will be able to store Items
 class Inventory {
@@ -22,6 +26,8 @@ public:
 	int getCapacity() const;
 
 	int getSize() const;
+
+	bool isFull() const;
 
 	std::shared_ptr<Item> getItemAt(int index) const;
 

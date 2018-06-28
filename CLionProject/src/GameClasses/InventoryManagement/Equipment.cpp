@@ -3,12 +3,13 @@
 //
 
 #include "Equipment.h"
+#include "../GameObjectHierarchy/PlayerControlledCharacter.h"
 
-void Equipment::applyOn(GameCharacter &character) {
+void Equipment::applyOn(PlayerControlledCharacter &character) {
 	character.getExtraStatsReference() = character.getExtraStatsReference() + properties;
 }
 
-void Equipment::removeEffect(GameCharacter &character) {
+void Equipment::removeEffect(PlayerControlledCharacter &character) {
 	character.getExtraStatsReference() = character.getExtraStatsReference() - properties;
 }
 

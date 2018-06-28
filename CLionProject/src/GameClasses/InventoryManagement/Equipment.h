@@ -14,9 +14,9 @@ public:
 	Equipment() = default;
 	explicit Equipment(std::string &iconPath);
 
-	void applyOn(GameCharacter &character) override;
+	void applyOn(PlayerControlledCharacter &character) override;
 
-	void removeEffect(GameCharacter &character) override;
+	void removeEffect(PlayerControlledCharacter &character) override;
 
 	void setProperties(const Stats &properties);
 

@@ -5,28 +5,31 @@
 #ifndef ROGUEEMBLEMGAME_ITEM_H
 #define ROGUEEMBLEMGAME_ITEM_H
 
+#include <iostream>
 
-#include "../GameObjectHierarchy/GameCharacter.h"
+class PlayerControlledCharacter;
 
 class Item {
 
 public:
 	Item() = default;
 
+	virtual ~Item() = 0;
+
 	explicit Item(std::string &iconPath);
 
 	//Applies an effect/modification on a character
-	virtual void applyOn(GameCharacter &character) = 0;
+	virtual void applyOn(PlayerControlledCharacter &character) = 0;
 
 	//Removes an effect/modification on a character
-	virtual void removeEffect(GameCharacter &character) = 0;
+	virtual void removeEffect(PlayerControlledCharacter &character) = 0;
 
 	//Loads icon
 	void loadIcon(std::string &iconPath);
 
-	const string &getName() const;
+	const std::string &getName() const;
 
-	void setName(const string &name);
+	void setName(const std::string &name);
 
 protected:
 	//Id for the resource of the icon

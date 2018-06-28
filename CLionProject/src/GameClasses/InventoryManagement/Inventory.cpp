@@ -39,3 +39,7 @@ std::shared_ptr<Item> Inventory::getItemAt(int index) const {
 int Inventory::getSize() const {
 	return items.size();
 }
+
+bool Inventory::isFull() const {
+	return items.size() == capacity;
+}

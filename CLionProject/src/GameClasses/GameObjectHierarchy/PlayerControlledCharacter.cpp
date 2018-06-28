@@ -29,3 +29,31 @@ bool PlayerControlledCharacter::hasUsedItem() {
 	return usedItem;
 }
 
+void PlayerControlledCharacter::putItemInInventory(shared_ptr<Item> item) {
+	inventory.addItem(item);
+}
+
+bool PlayerControlledCharacter::isInventoryFull() const {
+	return inventory.isFull();
+}
+
+const shared_ptr<Weapon> &PlayerControlledCharacter::getEquippedWeapon() const {
+	return equippedWeapon;
+}
+
+void PlayerControlledCharacter::setEquippedWeapon(shared_ptr<Weapon> &equippedWeapon) {
+	PlayerControlledCharacter::equippedWeapon = equippedWeapon;
+	equippedWeapon->applyOn(*this);
+
+}
+
+const shared_ptr<Equipment> &PlayerControlledCharacter::getEquipment() const {
+	return equipment;
+}
+
+void PlayerControlledCharacter::setEquipment(shared_ptr<Equipment> &equipment) {
+	PlayerControlledCharacter::equipment = equipment;
+	equipment->applyOn(*this);
+
+}
+
