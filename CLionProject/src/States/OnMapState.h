@@ -14,6 +14,7 @@
 #include "../GameClasses/GameObjectHierarchy/PlayerControlledCharacter.h"
 #include "../Utils/HUDHelper.h"
 
+using namespace std;
 
 //State that will be the base class to all the main state in the actual game, contains many useful attributes
 //regarding the state of the game
@@ -28,16 +29,16 @@ public:
 protected:
 
 	//List that will contain all gameObjects
-	std::list<std::shared_ptr<GameObject>> objectList;
+	list <shared_ptr<GameObject>> objectList;
 
 	//List that will contain the playing characters
-	std::list<std::shared_ptr<PlayerControlledCharacter>> players;
+	list <shared_ptr<PlayerControlledCharacter>> players;
 
 	//Main map
-	std::unique_ptr<GameMap> map;
+	unique_ptr<GameMap> map;
 
 	//Which cell of the map is selected
-	std::pair<int, int> selectedTile;
+	pair<int, int> selectedTile;
 
 	//The rectangle that tells us what is in the view
 	sf::IntRect camera;
@@ -49,7 +50,7 @@ protected:
 	int currentLevel;
 
 	//Centers camera on a tile or a coordinate
-	void centerCameraOn(std::pair<int, int> centerTile);
+	void centerCameraOn(pair<int, int> centerTile);
 
 	void centerCameraOn(int x, int y);
 

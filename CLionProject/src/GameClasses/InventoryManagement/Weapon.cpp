@@ -15,3 +15,7 @@ void Weapon::removeEffect(GameCharacter &character) {
 Weapon::Weapon(std::string &iconPath) : Item(iconPath) {
 
 }
+
+int Weapon::use(GameCharacter &attacker, GameCharacter &defender) {
+	return 1;
+}

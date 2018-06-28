@@ -17,6 +17,9 @@ public:
 
 	void removeEffect(GameCharacter &character) override;
 
+	//Returns the damage that character attacker would deal to character defender using this weapon
+	int use(GameCharacter &attacker, GameCharacter &defender);
+
 	enum class WeaponClass {
 		MELEE, RANGED
 	};
@@ -24,6 +27,10 @@ public:
 private:
 	//Which kind of weapon it is
 	WeaponClass wpClass;
+
+	//Damage of weapon
+	int physicalDamage;
+	int magicDamage;
 
 };
 

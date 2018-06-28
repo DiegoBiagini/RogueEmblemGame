@@ -5,7 +5,7 @@
 #include "OnMapState.h"
 #include "../GameManager.h"
 
-void OnMapState::centerCameraOn(std::pair<int, int> centerTile) {
+void OnMapState::centerCameraOn(pair<int, int> centerTile) {
 	int posX = centerTile.first * map->getTileSize() + map->getTileSize() / 2;
 	int posY = centerTile.second * map->getTileSize() + map->getTileSize() / 2;
 
@@ -35,10 +35,10 @@ void OnMapState::centerCameraOn(int x, int y) {
 		camera.top = map->getMapHeight() - camera.height;
 
 	//Send message to renderSystem
-	std::shared_ptr<RenderMessage> msg{new RenderMessage};
+	shared_ptr<RenderMessage> msg{new RenderMessage};
 	msg->type = RenderMessage::Type::MOVE_VIEW;
 
-	std::stringstream stringMsg;
+	stringstream stringMsg;
 	stringMsg << "Centering view to x:" << x << ", y:" << y;
 	msg->content = stringMsg.str();
 

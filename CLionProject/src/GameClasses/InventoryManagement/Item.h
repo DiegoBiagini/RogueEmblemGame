@@ -24,16 +24,17 @@ public:
 	//Loads icon
 	void loadIcon(std::string &iconPath);
 
+	const string &getName() const;
+
+	void setName(const string &name);
+
 protected:
 	//Id for the resource of the icon
 	int iconId;
 
 	//Name of the item
 	std::string name;
-public:
-	const string &getName() const;
 
-	void setName(const string &name);
 };
 
 #endif //ROGUEEMBLEMGAME_ITEM_H
