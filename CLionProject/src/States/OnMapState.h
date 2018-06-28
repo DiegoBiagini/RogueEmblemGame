@@ -32,7 +32,7 @@ protected:
 	list <shared_ptr<GameObject>> objectList;
 
 	//List that will contain the playing characters
-	list <shared_ptr<PlayerControlledCharacter>> players;
+	list <shared_ptr<GameCharacter>> players;
 
 	//Main map
 	unique_ptr<GameMap> map;

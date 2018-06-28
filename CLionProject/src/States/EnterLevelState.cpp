@@ -16,15 +16,12 @@ void EnterLevelState::enterState() {
 
 	camera = {0, 0, CAMERA_DEFAULT_WIDTH, CAMERA_DEFAULT_HEIGHT};
 
+	//Create factories
+	PlayerFactory playerFactory;
 	//Create player, put it in map
-	std::shared_ptr<PlayerControlledCharacter> char1{new PlayerControlledCharacter};
-	char1->setup();
+	pair<int, int> posChar1 = make_pair(1, 1);
+	auto char1 = playerFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Skeleton, *map.get(), posChar1);
 
-	char1->setPosX(1);
-	char1->setPosY(1);
-
-	map->setObjectInCell(char1);
-	char1->attach(map.get());
 
 	//Add it to the object and character list
 	players.push_back(char1);

@@ -20,8 +20,7 @@ public:
 
 	int traverseCost(Tile::Type type) override;
 
-	void setup() override;
-
+	//Resets the flags that tell the game that the player has already acted this turn
 	void resetActions() override;
 
 	bool canPerformAction() override;
@@ -37,10 +36,10 @@ private:
 	Inventory inventory;
 
 	//The equipped weapon
-	//Weapon equippedWeapon;
+	shared_ptr<Weapon> equippedWeapon;
 
 	//Equipped equipment
-	//Equipment equippedEquip;
+	shared_ptr<Equipment> equippedEquip;
 };
 
 

@@ -175,7 +175,13 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 		msg->color = {255, 0, 0, 255};
 		msg->content = "Rendering health";
 		msg->position = {objInfoULX + textPosX + 2, objInfoULY + textPosY + 2};
-		msg->rectWidth = character.getHp() * maxHealthSize / character.getMaxHp();
+
+		//Prevent 0-related errors
+		if (character.getHp() == 0 || character.getHp() == 0)
+			msg->rectWidth = 0;
+		else
+			msg->rectWidth = character.getHp() * maxHealthSize / character.getMaxHp();
+
 		msg->rectHeight = barTexture->getHeight() - 4;
 
 		GameManager::getInstance().sendMsg(msg);
@@ -211,7 +217,12 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 		//Width of rect to draw = currentMana * maxWidth /maxMana
 		msg->position = {objInfoULX + textPosX + 2, objInfoULY + textPosY + 2};
 
-		msg->rectWidth = character.getMana() * maxManaSize / character.getMaxMana();
+		//Prevent 0-related errors
+		if (character.getMaxMana() == 0 || character.getMana() == 0)
+			msg->rectWidth = 0;
+		else
+			msg->rectWidth = character.getMana() * maxManaSize / character.getMaxMana();
+
 		msg->rectHeight = barTexture->getHeight() - 4;
 
 		GameManager::getInstance().sendMsg(msg);

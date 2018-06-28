@@ -131,8 +131,23 @@ int GameCharacter::getMobility() const {
 	return mobility;
 }
 
+void GameCharacter::setMobility(int mobility) {
+	GameCharacter::mobility = mobility;
+}
 bool GameCharacter::isMoving() const {
 	return moving;
+}
+
+Stats &GameCharacter::getExtraStatsReference() {
+	return extraStats;
+}
+
+GameCharacter::CharacterType GameCharacter::getType() const {
+	return type;
+}
+
+void GameCharacter::setType(GameCharacter::CharacterType type) {
+	GameCharacter::type = type;
 }
 
 
@@ -256,6 +271,6 @@ void GameCharacter::move(std::vector<Movement> &movements) {
 	}
 }
 
-Stats &GameCharacter::getExtraStatsReference() {
-	return extraStats;
+void GameCharacter::setAnimationId(int mediaId) {
+	GameCharacter::mediaId = mediaId;
 }

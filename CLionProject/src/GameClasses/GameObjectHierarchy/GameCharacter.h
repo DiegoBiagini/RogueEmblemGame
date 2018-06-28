@@ -30,9 +30,6 @@ public:
 	//Overridden method
 	virtual void render(sf::IntRect camera, GameMap &map) override;
 
-	//Sets up the initial state of the character and loads necessary data
-	virtual void setup() = 0;
-
 	void update() override;
 
 	//changes position of the character on the map
@@ -54,6 +51,14 @@ public:
 
 	//Returns the pixel coordinates of the character on the map taking into account its displacement because of ongoing movement
 	std::pair<int, int> getActualCoordinates(GameMap &map);
+
+	//Sets an animation for the character
+	void setAnimationId(int mediaId);
+
+	//Type of character
+	enum class CharacterType {
+		Orc, Skeleton, Knight
+	};
 
 	//Getters and setters
 
@@ -95,6 +100,8 @@ public:
 
 	int getMobility() const;
 
+	void setMobility(int mobility);
+
 	const std::string &getName() const;
 
 	void setName(const std::string &name);
@@ -111,6 +118,10 @@ public:
 
 	Stats &getExtraStatsReference();
 
+	CharacterType getType() const;
+
+	void setType(CharacterType type);
+
 protected:
 	//The stats of the character
 	Stats baseStats;
@@ -123,6 +134,9 @@ protected:
 
 	//How many spaces a character can traverse in a turn regardless of terrain
 	int mobility;
+
+	//Type of the character
+	CharacterType type;
 
 	//Whether the character has moved/attacked this turn
 	bool moved;

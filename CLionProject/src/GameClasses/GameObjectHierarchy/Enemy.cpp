@@ -12,9 +12,6 @@ int Enemy::traverseCost(Tile::Type type) {
 	return 0;
 }
 
-void Enemy::setup() {
-
-}
 
 void Enemy::setBehaviour(EnemyBehaviour::Type behaviour) {
 	switch (behaviour) {
