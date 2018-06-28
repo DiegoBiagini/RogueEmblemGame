@@ -18,7 +18,7 @@ void GameCharacter::render(sf::IntRect camera, GameMap &map) {
 		int imgWidth = media->getWidth();
 		int imgHeight = media->getHeight();
 
-		std::pair<int, int> pixelCoordinates = getActualCoordinates(map);
+		pair<int, int> pixelCoordinates = getActualCoordinates(map);
 
 		//Check if it is inside the camera
 		sf::IntRect charRect{pixelCoordinates.first, pixelCoordinates.second, imgWidth, imgHeight};
@@ -29,7 +29,7 @@ void GameCharacter::render(sf::IntRect camera, GameMap &map) {
 }
 
 
-void GameCharacter::setPosition(std::vector<Movement> &movements) {
+void GameCharacter::setPosition(vector<Movement> &movements) {
 
 	if (!movements.empty()) {
 		for (auto el : movements) {
@@ -51,7 +51,6 @@ void GameCharacter::setPosition(std::vector<Movement> &movements) {
 		}
 
 		notify();
-		//moved = true;
 	}
 }
 
@@ -159,35 +158,35 @@ void GameCharacter::update() {
 		if (!movementHandler.isMoving()) {
 			//Calculate how much it has been displaced and set the new position accordingly
 
-			std::pair<int, int> displacement = movementHandler.getTotalMapDisplacement();
+			pair<int, int> displacement = movementHandler.getTotalMapDisplacement();
 			setPosX(posX + displacement.first);
 			setPosY(posY + displacement.second);
 
 			//End the movement
 			moving = false;
 
+			moved = true;
 			notify();
 		}
 	}
 }
 
-const std::string &GameCharacter::getName() const {
+const string &GameCharacter::getName() const {
 	return name;
 }
 
-void GameCharacter::setName(const std::string &name) {
+void GameCharacter::setName(const string &name) {
 	GameCharacter::name = name;
 }
 
-std::pair<int, int> GameCharacter::getPosition() const {
-	return std::make_pair(posX, posY);
+pair<int, int> GameCharacter::getPosition() const {
+	return make_pair(posX, posY);
 }
 
 void GameCharacter::setPosition(int x, int y) {
 	posX = x;
 	posY = y;
 
-	//moved = true;
 	notify();
 }
 
@@ -208,11 +207,11 @@ bool GameCharacter::canPerformAction() {
 	return (!attacked || !moved);
 }
 
-std::vector<std::pair<int, int>> GameCharacter::getPossibleMoves() const {
+vector<pair<int, int>> GameCharacter::getPossibleMoves() const {
 	return possibleMoves;
 }
 
-std::pair<int, int> GameCharacter::getActualCoordinates(GameMap &map) {
+pair<int, int> GameCharacter::getActualCoordinates(GameMap &map) {
 	//First get the Animation Object
 	auto *media = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(mediaId));
 	if (media != nullptr) {
@@ -231,28 +230,28 @@ std::pair<int, int> GameCharacter::getActualCoordinates(GameMap &map) {
 		//Add an offset if it is moving
 		if (moving) {
 
-			std::pair<int, int> offset = movementHandler.getCurrentOffsets();
+			pair<int, int> offset = movementHandler.getCurrentOffsets();
 
 			xCoordinate += offset.first;
 			yCoordinate += offset.second;
 		}
-		return std::make_pair(xCoordinate, yCoordinate);
+		return make_pair(xCoordinate, yCoordinate);
 	}
-	return std::make_pair(0, 0);
+	return make_pair(0, 0);
 }
 
-void GameCharacter::calculateMoves(GameMap map) {
+void GameCharacter::calculateMoves(const GameMap &map) {
 	//Remove all previous possible movements
 	possibleMoves.clear();
 	AStar astar(map);
 
-	//For now add all the cells whose L1 distance is less than the mobility of the character
+	//Add all the cells whose distance is less than the mobility of the character
+	pair<int, int> charCell = make_pair(posX, posY);
 
 	for (int x = posX - mobility; x <= posX + mobility; x++) {
 		for (int y = posY - mobility; y <= posY + mobility; y++) {
 
-			std::pair<int, int> newCell = std::make_pair(x, y);
-			std::pair<int, int> charCell = std::make_pair(posX, posY);
+			pair<int, int> newCell = make_pair(x, y);
 			if (map.isValidCell(newCell) && utility::L1Distance(charCell, newCell) <= mobility &&
 				map.getTileAt(x, y).isWalkable() && map.getObjectAt(x, y) == nullptr)
 				if (astar.getMinDistance(charCell, newCell) <= mobility)
@@ -263,7 +262,7 @@ void GameCharacter::calculateMoves(GameMap map) {
 
 }
 
-void GameCharacter::move(std::vector<Movement> &movements) {
+void GameCharacter::move(vector<Movement> &movements) {
 
 	if (!movements.empty()) {
 		moving = true;
@@ -273,4 +272,40 @@ void GameCharacter::move(std::vector<Movement> &movements) {
 
 void GameCharacter::setAnimationId(int mediaId) {
 	GameCharacter::mediaId = mediaId;
+}
+
+int GameCharacter::getAttackRange() const {
+	return attackRange;
+}
+
+void GameCharacter::setAttackRange(int attackRange) {
+	GameCharacter::attackRange = attackRange;
+}
+
+vector<pair<int, int>> GameCharacter::getPossibleAttacks(const GameMap &map) {
+	vector<pair<int, int>> possibleAttacks;
+	pair<int, int> charCell = make_pair(posX, posY);
+
+	//The character can attack a cell that is walkable, that is within its attack range and
+	// that isn't the cell on which the character is
+
+	for (int x = posX - attackRange; x <= posX + attackRange; x++) {
+		for (int y = posY - attackRange; y <= posY + attackRange; y++) {
+
+			pair<int, int> newCell = make_pair(x, y);
+
+			if (map.isValidCell(newCell) && map.getTileAt(newCell).isWalkable() &&
+				utility::L1Distance(charCell, newCell) <= attackRange && newCell != charCell)
+				possibleAttacks.push_back(newCell);
+		}
+	}
+	return possibleAttacks;
+}
+
+void GameCharacter::setMoved(bool moved) {
+	GameCharacter::moved = moved;
+}
+
+void GameCharacter::setAttacked(bool attacked) {
+	GameCharacter::attacked = attacked;
 }

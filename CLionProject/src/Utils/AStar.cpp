@@ -5,7 +5,7 @@
 #include <map>
 #include "AStar.h"
 
-AStar::AStar(GameMap &mapRef) : gameMap(mapRef) {
+AStar::AStar(const GameMap &mapRef) : gameMap(mapRef) {
 
 }
 
@@ -21,7 +21,8 @@ int AStar::getMinDistance(std::pair<int, int> origin, std::pair<int, int> dest) 
 
 	algorithm(origin, dest, open, closed, finalCell);
 
-	return finalCell.G;
+
+	return finalCell.G != 0 ? finalCell.G : INTINF;
 }
 
 std::vector<Movement> AStar::getShortestPath(std::pair<int, int> origin, std::pair<int, int> dest) {
@@ -170,8 +171,8 @@ void AStar::algorithm(pair<int, int> start, pair<int, int> end, map<pair<int, in
 			break;
 
 		//Search for the cell with the lowest F
-		newCell.G = 10000;
-		newCell.H = 10000;
+		newCell.G = INTINF / 2;
+		newCell.H = INTINF / 2;
 		int minCellX = 0;
 		int minCellY = 0;
 

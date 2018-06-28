@@ -40,6 +40,8 @@ void HUDHelper::loadTextures() {
 
 	std::string movingArrowPath("animArrow.png");
 	std::string validMovPath("movableTile.png");
+	std::string validAtkPath("attackableTile.png");
+
 
 	strengthIconId = GameManager::getInstance().sendLoadTextureRequest(strengthIconPath);
 	intelligenceIconId = GameManager::getInstance().sendLoadTextureRequest(intelligenceIconPath);
@@ -59,8 +61,7 @@ void HUDHelper::loadTextures() {
 
 	movingArrowId = GameManager::getInstance().sendLoadAnimationRequest(movingArrowPath, 4, 128, 128, 4);
 	validMovId = GameManager::getInstance().sendLoadTextureRequest(validMovPath);
-
-
+	validAtkId = GameManager::getInstance().sendLoadTextureRequest(validAtkPath);
 
 }
 
@@ -381,6 +382,16 @@ void HUDHelper::drawAvailableMovements(std::vector<std::pair<int, int>> movement
 		int posY = tile.second * map.getTileSize();
 
 		GameManager::getInstance().sendRenderTextureRequest(validMovId, posX, posY);
+	}
+}
+
+void HUDHelper::drawAvailableAttacks(std::vector<std::pair<int, int>> attacks, GameMap &map) {
+
+	for (auto &tile : attacks) {
+		int posX = tile.first * map.getTileSize();
+		int posY = tile.second * map.getTileSize();
+
+		GameManager::getInstance().sendRenderTextureRequest(validAtkId, posX, posY);
 	}
 }
 

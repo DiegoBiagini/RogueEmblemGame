@@ -12,13 +12,15 @@
 
 #include <map>
 
+//To symbolize infinite distance
+#define INTINF 2000000000
 
 using namespace std;
 
 
 class AStar {
 public:
-	explicit AStar(GameMap &mapRef);
+	explicit AStar(const GameMap &mapRef);
 
 	//Returns shortest path cost
 	int getMinDistance(std::pair<int, int> origin, std::pair<int, int> dest);
@@ -35,7 +37,7 @@ public:
 	};
 
 private:
-	GameMap &gameMap;
+	const GameMap &gameMap;
 
 	//Checks if a vector of CellInfo contains a coordinate
 	bool contains(map<pair<int, int>, CellInfo> &gameMap, pair<int, int> cell);

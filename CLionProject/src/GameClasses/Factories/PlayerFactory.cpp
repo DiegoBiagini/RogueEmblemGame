@@ -28,6 +28,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setMagicArmor(2);
 			player->setEvasion(2);
 
+			player->setAttackRange(1);
 			player->setMobility(2);
 
 			string animationPath("orc.png");
@@ -51,6 +52,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setMagicArmor(2);
 			player->setEvasion(3);
 
+			player->setAttackRange(1);
 			player->setMobility(3);
 
 			string animationPath("skeleton.png");
@@ -74,6 +76,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setEvasion(1);
 
 			player->setMobility(2);
+			player->setAttackRange(1);
 
 			string animationPath("playerSheet.png");
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);

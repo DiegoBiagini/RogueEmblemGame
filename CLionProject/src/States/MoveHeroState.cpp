@@ -4,6 +4,7 @@
 
 #include "MoveHeroState.h"
 #include "SelectActionState.h"
+#include "../GameClasses/GameObjectHierarchy/Enemy.h"
 
 MoveHeroState::MoveHeroState(OnMapState &previous) : OnMapState(previous) {
 	movementChosen = false;
@@ -118,6 +119,15 @@ unique_ptr<GameState> MoveHeroState::update() {
 		for (auto &el : players)
 			el->calculateMoves(*map);
 
+		//If there are no legal targets for attacking just remove the option to attack
+		auto possibleAttacks = selectedPlayer->getPossibleAttacks(*map);
+		selectedPlayer->setAttacked(true);
+
+		for (auto el: possibleAttacks) {
+			auto contentOfCell = dynamic_cast<Enemy *>(map->getObjectAt(el));
+			if (contentOfCell != nullptr)
+				selectedPlayer->setAttacked(false);
+		}
 		return std::unique_ptr<SelectActionState>(new SelectActionState(*this));
 	}
 	return nullptr;

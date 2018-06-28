@@ -84,10 +84,15 @@ void SelectActionState::render() {
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
-	//Draw tile highlight
+	if (possibleOptions.at(selectedOption) == Option::Move) {
+		hudHelper.drawAvailableMovements(selectedPlayer->getPossibleMoves(), *map);
+	} else if (possibleOptions.at(selectedOption) == Option::Fight)
+		hudHelper.drawAvailableAttacks(selectedPlayer->getPossibleAttacks(*map), *map);
+
 	hudHelper.drawHighlightTile(selectedTile, *map);
 
 	hudHelper.drawOptions(*selectedPlayer.get(), possibleOptions, selectedOption, *map, camera);
+
 }
 
 unique_ptr<GameState> SelectActionState::update() {

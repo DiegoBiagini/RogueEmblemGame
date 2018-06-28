@@ -5,14 +5,14 @@
 #include "GameMap.h"
 #include "../GameManager.h"
 
-Tile GameMap::getTileAt(int x, int y) {
+Tile GameMap::getTileAt(int x, int y) const {
 	if(isValidCell(x,y))
 		return mapMatrix.at(x).at(y).first;
 	//If it's out of the borders return an invalid tile
 	return Tile(Tile::Type::NTILES);
 }
 
-Tile GameMap::getTileAt(std::pair<int, int> pos) {
+Tile GameMap::getTileAt(std::pair<int, int> pos) const {
 	return getTileAt(pos.first, pos.second);
 }
 

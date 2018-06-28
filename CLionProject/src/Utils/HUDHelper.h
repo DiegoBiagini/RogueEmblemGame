@@ -33,6 +33,9 @@ public:
 	//Draws an highlight on the movements that a player can make
 	void drawAvailableMovements(std::vector<std::pair<int, int>> movements, GameMap &map);
 
+	//Draws an highlight on the attacks that a player can make
+	void drawAvailableAttacks(std::vector<std::pair<int, int>> attacks, GameMap &map);
+
 	//Displays the option the player has available and the one that he has selected
 	void drawOptions(const GameCharacter &character, std::vector<Option> &options, int selectedOption,
 					 GameMap &map, sf::IntRect cameraRect);
@@ -71,6 +74,9 @@ protected:
 
 	//The highlight for a valid movement
 	int validMovId;
+
+	//The highlight for a valid attack
+	int validAtkId;
 
 	//A moving arrow that will point to a tile on the map
 	int movingArrowId;

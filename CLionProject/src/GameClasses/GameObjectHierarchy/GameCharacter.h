@@ -33,12 +33,12 @@ public:
 	void update() override;
 
 	//changes position of the character on the map
-	void setPosition(std::vector<Movement> &movements);
+	void setPosition(vector<Movement> &movements);
 
 	void setPosition(int x, int y);
 
 	//Performs an animation to move from a cell to another
-	void move(std::vector<Movement> &movements);
+	void move(vector<Movement> &movements);
 
 	//Resets the actions taken by the character
 	virtual void resetActions();
@@ -47,13 +47,16 @@ public:
 	virtual bool canPerformAction();
 
 	//Calculates again the moves that it can perform(using the A* algorithm)
-	void calculateMoves(GameMap map);
+	void calculateMoves(const GameMap &map);
 
 	//Returns the pixel coordinates of the character on the map taking into account its displacement because of ongoing movement
-	std::pair<int, int> getActualCoordinates(GameMap &map);
+	pair<int, int> getActualCoordinates(GameMap &map);
 
 	//Sets an animation for the character
 	void setAnimationId(int mediaId);
+
+	//Returns the cell that he could attack
+	vector<pair<int, int>> getPossibleAttacks(const GameMap &map);
 
 	//Type of character
 	enum class CharacterType {
@@ -102,17 +105,17 @@ public:
 
 	void setMobility(int mobility);
 
-	const std::string &getName() const;
+	const string &getName() const;
 
-	void setName(const std::string &name);
+	void setName(const string &name);
 
-	std::pair<int, int> getPosition() const;
+	pair<int, int> getPosition() const;
 
 	bool hasMoved() const;
 
 	bool hasAttacked() const;
 
-	std::vector<std::pair<int, int>> getPossibleMoves() const;
+	vector<pair<int, int>> getPossibleMoves() const;
 
 	bool isMoving() const;
 
@@ -122,6 +125,16 @@ public:
 
 	void setType(CharacterType type);
 
+	int getAttackRange() const;
+
+	void setAttackRange(int attackRange);
+
+	void setMoved(bool moved);
+
+	void setAttacked(bool attacked);
+
+
+
 protected:
 	//The stats of the character
 	Stats baseStats;
@@ -130,10 +143,13 @@ protected:
 	Stats extraStats;
 
 	//The name of the character
-	std::string name;
+	string name;
 
 	//How many spaces a character can traverse in a turn regardless of terrain
 	int mobility;
+
+	//From how many spaces the character can attack
+	int attackRange;
 
 	//Type of the character
 	CharacterType type;
@@ -143,7 +159,7 @@ protected:
 	bool attacked;
 
 	//The cells the player can move to
-	std::vector<std::pair<int, int>> possibleMoves;
+	vector<pair<int, int>> possibleMoves;
 
 	//Whether the character is moving along the map or not
 	bool moving;
