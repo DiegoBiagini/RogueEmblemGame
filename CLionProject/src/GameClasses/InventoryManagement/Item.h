@@ -28,6 +28,8 @@ public:
 
 	void setName(const std::string &name);
 
+	int getIconId() const;
+
 protected:
 	//Id for the resource of the icon
 	int iconId;

@@ -169,6 +169,7 @@ void GameCharacter::update() {
 			notify();
 		}
 	}
+	moved = false;
 }
 
 const string &GameCharacter::getName() const {

@@ -18,4 +18,8 @@ void Item::setName(const string &name) {
 
 void Item::loadIcon(std::string &iconPath) {
 	iconId = GameManager::getInstance().sendLoadTextureRequest(iconPath);
+}
+
+int Item::getIconId() const {
+	return iconId;
 };

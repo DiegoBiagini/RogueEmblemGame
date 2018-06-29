@@ -81,7 +81,7 @@ struct RenderMessage : public Message {
 
 	//Text to render and its size
 	std::string text{""};
-	int textSize{0};
+	int textSize{FONTSIZE_MEDIUM};
 
 	sf::Color color{0, 0, 0, 255};
 

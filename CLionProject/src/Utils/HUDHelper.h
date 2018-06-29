@@ -59,6 +59,7 @@ protected:
 	//The containers on which the hud will be drawn
 	int tileContainerId;
 	int objContainerId;
+	int equipObjContainerId;
 
 	//The bar used to show how much mana/hp is left
 	int barId;

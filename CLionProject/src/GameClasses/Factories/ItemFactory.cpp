@@ -13,6 +13,9 @@ std::shared_ptr<Item> ItemFactory::createItem(ItemFactory::ItemType type) {
 			item->setPhysicalDamage(2);
 			item->setMagicDamage(0);
 			item->setWpClass(Weapon::WeaponClass::MELEE);
+
+			string path("swordIcon.png");
+			item->loadIcon(path);
 			return item;
 		}
 		case ItemType::LeatherArmor: {
@@ -20,6 +23,9 @@ std::shared_ptr<Item> ItemFactory::createItem(ItemFactory::ItemType type) {
 			item->setName("Leather Armor");
 			Stats extraStats{0, 0, 0, 0, 0, 0, 0, 2, 1};
 			item->setProperties(extraStats);
+
+			string path("leatherArmorIcon.png");
+			item->loadIcon(path);
 			return item;
 		}
 	}

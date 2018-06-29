@@ -35,6 +35,7 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 			if (!actualMsg->text.empty()) {
 				sf::Text renderText;
 				renderText.setFont(mainFont);
+				renderText.setCharacterSize(actualMsg->textSize);
 				renderText.setString(actualMsg->text);
 				renderText.setFillColor(actualMsg->color);
 				renderText.setPosition(actualMsg->position.x, actualMsg->position.y);

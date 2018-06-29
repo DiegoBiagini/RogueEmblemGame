@@ -33,6 +33,7 @@ void HUDHelper::loadTextures() {
 	std::string barPath("bar.png");
 	std::string tileContainerPath("tileInfo.png");
 	std::string objContainerPath("objCont.png");
+	std::string equipObjContPath("equipObjCont.png");
 	std::string highLightPath("selectedTile.png");
 
 	std::string optionPath("singleOption.png");
@@ -54,6 +55,7 @@ void HUDHelper::loadTextures() {
 	barId = GameManager::getInstance().sendLoadTextureRequest(barPath);
 	tileContainerId = GameManager::getInstance().sendLoadTextureRequest(tileContainerPath);
 	objContainerId = GameManager::getInstance().sendLoadTextureRequest(objContainerPath);
+	equipObjContainerId = GameManager::getInstance().sendLoadTextureRequest(equipObjContPath);
 	highlightTileId = GameManager::getInstance().sendLoadTextureRequest(highLightPath);
 
 	optionId = GameManager::getInstance().sendLoadTextureRequest(optionPath);
@@ -137,10 +139,8 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 
 	//If it's in any place other than the upper right corner render it there
 	//Else render it in the lower right corner
-	if (selectedTileX > CAMERA_DEFAULT_WIDTH / 2 + cameraRect.left &&
-		selectedTileY < CAMERA_DEFAULT_HEIGHT / 2 + cameraRect.top)
-		objInfoULY =
-				CAMERA_DEFAULT_HEIGHT - CAMERA_DEFAULT_HEIGHT / 20 - containerTexture->getHeight() + cameraRect.top;
+	if (selectedTileX > CAMERA_DEFAULT_WIDTH / 2 + cameraRect.left)
+		objInfoULX = CAMERA_DEFAULT_WIDTH / 20 + cameraRect.left;
 
 
 	GameManager::getInstance().sendRenderTextureRequest(objContainerId, objInfoULX, objInfoULY);
@@ -290,6 +290,64 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 														objInfoULX + containerTexture->getWidth() / 4 * 3 -
 														FONTSIZE_MEDIUM / 2,
 														objInfoULY + textPosY);
+
+	//The if it is a PlayerControlledCharacter show its equipped items
+	auto player = dynamic_cast<const PlayerControlledCharacter *>(&character);
+	if (player != nullptr) {
+		//Draw the container
+		objInfoULY += containerTexture->getHeight();
+
+		GameManager::getInstance().sendRenderTextureRequest(equipObjContainerId, objInfoULX, objInfoULY);
+
+		//Get the equipment
+		const auto &weapon = player->getEquippedWeapon();
+		const auto &equipment = player->getEquipment();
+
+		textPosY = 0;
+
+		//Display their name
+		tmpString = weapon->getName();
+		textPosX = containerTexture->getWidth() / 4 - FONTSIZE_MEDIUM * tmpString.size() / 4;
+		renderHUDText(tmpString, objInfoULX + textPosX, objInfoULY + textPosY);
+
+		tmpString = equipment->getName();
+		textPosX = containerTexture->getWidth() / 4 * 3 - FONTSIZE_MEDIUM * tmpString.size() / 4;
+		renderHUDText(tmpString, objInfoULX + textPosX, objInfoULY + textPosY);
+
+		textPosY += FONTSIZE_MEDIUM * 2;
+
+		//Display their icons
+		auto *weaponIcon = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(weapon->getIconId()));
+		auto *equipmentIcon = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(
+				equipment->getIconId()));
+
+		if (weaponIcon != nullptr) {
+			textPosX = containerTexture->getWidth() / 4 - weaponIcon->getWidth() / 2;
+			GameManager::getInstance().sendRenderTextureRequest(weapon->getIconId(), objInfoULX + textPosX,
+																objInfoULY + textPosY);
+
+			//Display its attack values
+
+			tmpStringStream.str("");
+			tmpStringStream << "ATK: " << weapon->getPhysicalDamage();
+			tmpString = tmpStringStream.str();
+			textPosX = containerTexture->getWidth() / 4 - FONTSIZE_MEDIUM * tmpString.size() / 4;
+			renderHUDText(tmpString, objInfoULX + textPosX, objInfoULY + textPosY + weaponIcon->getHeight());
+
+			tmpStringStream.str("");
+			tmpStringStream << "MATK: " << weapon->getMagicDamage();
+			tmpString = tmpStringStream.str();
+			textPosX = containerTexture->getWidth() / 4 - FONTSIZE_MEDIUM * tmpString.size() / 4;
+			renderHUDText(tmpString, objInfoULX + textPosX,
+						  objInfoULY + textPosY + FONTSIZE_MEDIUM + weaponIcon->getHeight());
+		}
+
+		if (equipmentIcon != nullptr) {
+			textPosX = containerTexture->getWidth() / 4 * 3 - equipmentIcon->getWidth() / 2;
+			GameManager::getInstance().sendRenderTextureRequest(equipment->getIconId(), objInfoULX + textPosX,
+																objInfoULY + textPosY);
+		}
+	}
 }
 
 void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color color) {
@@ -402,5 +460,6 @@ void HUDHelper::drawMovingArrowOnTile(std::pair<int, int> tile, GameMap &map) {
 		int posY = tile.second * map.getTileSize();
 
 		GameManager::getInstance().sendRenderTextureRequest(movingArrowId, posX, posY);
+
 	}
 }
