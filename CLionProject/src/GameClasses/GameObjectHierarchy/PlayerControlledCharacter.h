@@ -17,7 +17,9 @@ class PlayerControlledCharacter : public GameCharacter {
 public:
 	PlayerControlledCharacter();
 
-	void fight(GameCharacter &foe) override;
+	int fight(GameCharacter &foe) override;
+
+	int damageCalculation(GameCharacter &foe) override;
 
 	int traverseCost(Tile::Type type) override;
 

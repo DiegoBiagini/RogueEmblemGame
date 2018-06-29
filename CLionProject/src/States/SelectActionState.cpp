@@ -5,6 +5,8 @@
 #include "SelectActionState.h"
 #include "FreeMovementState.h"
 #include "MoveHeroState.h"
+#include "../GameClasses/GameObjectHierarchy/Enemy.h"
+#include "SelectAttackState.h"
 
 unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool pressed) {
 	if (pressed) {
@@ -28,10 +30,25 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 
 					//Go to moveHeroState
 					case Option::Move:
-						return std::unique_ptr<MoveHeroState>(new MoveHeroState(*this));
+						return unique_ptr<MoveHeroState>(new MoveHeroState(*this));
 
-					case Option::Fight:
+					case Option::Fight: {
+						//Check if there is an available attack
+						auto attacks = selectedPlayer->getPossibleAttacks(*map);
+						vector<shared_ptr<Enemy>> attackableEnemies;
+
+						//Iterate through all the cell he can attack to
+						for (auto &el : attacks) {
+							auto enemy = dynamic_cast<Enemy *>(map->getObjectAt(el));
+							//If there is an enemy he can attack add it to a vector
+							if (enemy != nullptr)
+								attackableEnemies.push_back(make_shared<Enemy>(*enemy));
+
+						}
+						if (!attackableEnemies.empty())
+							return unique_ptr<SelectAttackState>(new SelectAttackState(*this, attackableEnemies));
 						break;
+					}
 					case Option::UseItem:
 						break;
 					case Option::Equip:

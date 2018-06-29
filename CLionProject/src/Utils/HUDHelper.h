@@ -24,6 +24,10 @@ public:
 	//Draws the GameCharacter information
 	void drawGameCharacterInfo(const GameCharacter &character, GameMap &map, sf::IntRect cameraRect);
 
+	//Draws the defender character information and the expected damage dealt to it and by it
+	void drawBeforeFightInfo(const GameCharacter &defender, int damageDealt, int damageReceived, GameMap &map,
+							 sf::IntRect cameraRect);
+
 	//Draws an highlight on the selected tile
 	void drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map);
 

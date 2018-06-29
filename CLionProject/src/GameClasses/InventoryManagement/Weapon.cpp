@@ -15,8 +15,8 @@ Weapon::Weapon(std::string &iconPath) : Item(iconPath) {
 
 }
 
-int Weapon::use(PlayerControlledCharacter &attacker, GameCharacter &defender) {
-	return 1;
+pair<int, int> Weapon::use(PlayerControlledCharacter &attacker) {
+	return make_pair<int, int>(1, 0);
 }
 
 Weapon::WeaponClass Weapon::getWpClass() const {

@@ -22,7 +22,12 @@ public:
 	GameCharacter();
 
 	//Method that will be overridden to make characters fight in a basic sense
-	virtual void fight(GameCharacter &foe) = 0;
+	//Returns the damage that this character would deal to the other
+	//If it returns -1 it means the attack missed
+	virtual int fight(GameCharacter &foe) = 0;
+
+	//Returns the expected damage that will be done to the other character regardless of misses, crits, etc.
+	virtual int damageCalculation(GameCharacter &foe) = 0;
 
 	//How much mobility it costs for the character to traverse a certain tile
 	virtual int traverseCost(Tile::Type type) = 0;

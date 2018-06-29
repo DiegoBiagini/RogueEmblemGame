@@ -14,7 +14,11 @@ class Enemy : public GameCharacter {
 public:
 	Enemy() = default;
 
-	void fight(GameCharacter &foe) override;
+	Enemy(const Enemy &other);
+
+	int fight(GameCharacter &foe) override;
+
+	int damageCalculation(GameCharacter &foe) override;
 
 	int traverseCost(Tile::Type type) override;
 
@@ -23,7 +27,7 @@ public:
 
 private:
 	//Pointer to the correct strategy
-	std::unique_ptr<EnemyBehaviour> behaviour;
+	unique_ptr<EnemyBehaviour> behaviour;
 
 
 };

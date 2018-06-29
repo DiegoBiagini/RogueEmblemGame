@@ -137,7 +137,9 @@ bool MoveHeroState::moveSelection(const pair<int, int> &newTile) {
 	auto possibleMoves = selectedPlayer->getPossibleMoves();
 
 	//If the selected movement is in one those that the player can perform
-	if (std::find(possibleMoves.begin(), possibleMoves.end(), newTile) != possibleMoves.end()) {
+	if (find(possibleMoves.begin(), possibleMoves.end(), newTile) != possibleMoves.end() ||
+		newTile == selectedPlayer->getPosition()) {
+
 		OnMapState::moveSelection(newTile);
 		return true;
 	}

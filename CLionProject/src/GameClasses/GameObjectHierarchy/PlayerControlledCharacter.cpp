@@ -5,13 +5,19 @@
 #include "PlayerControlledCharacter.h"
 
 
-PlayerControlledCharacter::PlayerControlledCharacter() : inventory{20} {
+PlayerControlledCharacter::PlayerControlledCharacter() : inventory{20}, usedItem{false} {
 
 }
 
-void PlayerControlledCharacter::fight(GameCharacter &foe) {
-
+int PlayerControlledCharacter::fight(GameCharacter &foe) {
+	return 1;
 }
+
+int PlayerControlledCharacter::damageCalculation(GameCharacter &foe) {
+	return 0;
+}
+
+
 
 int PlayerControlledCharacter::traverseCost(Tile::Type type) {
 	return 0;

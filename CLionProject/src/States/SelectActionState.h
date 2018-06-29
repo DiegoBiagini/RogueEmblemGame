@@ -23,13 +23,13 @@ public:
 
 private:
 	//Vector containing the possible options the player can take
-	std::vector<Option> possibleOptions;
+	vector<Option> possibleOptions;
 
 	//The selected option
 	int selectedOption;
 
 	//The selected character(for easier access)
-	std::shared_ptr<PlayerControlledCharacter> selectedPlayer;
+	shared_ptr<PlayerControlledCharacter> selectedPlayer;
 
 };
 

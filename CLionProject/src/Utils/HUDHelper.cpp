@@ -463,3 +463,51 @@ void HUDHelper::drawMovingArrowOnTile(std::pair<int, int> tile, GameMap &map) {
 
 	}
 }
+
+void
+HUDHelper::drawBeforeFightInfo(const GameCharacter &defender, int damageDealt, int damageReceived, GameMap &map,
+							   sf::IntRect cameraRect) {
+
+	drawGameCharacterInfo(defender, map, cameraRect);
+
+	//Get the upperLeft corner of the container that will have the damage dealt received info
+	auto *containerTexture = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(objContainerId));
+	if (containerTexture == nullptr)
+		return;
+
+	int objInfoULX = CAMERA_DEFAULT_WIDTH - containerTexture->getWidth() - CAMERA_DEFAULT_WIDTH / 20 + cameraRect.left;
+	int objInfoULY = CAMERA_DEFAULT_HEIGHT / 20 + cameraRect.top + containerTexture->getHeight();
+
+	//Get the GameCharacter coordinates on the screen
+	int selectedTileX = defender.getPosX() * map.getTileSize() + map.getTileSize() / 2;
+	int selectedTileY = defender.getPosY() * map.getTileSize() + map.getTileSize() / 2;
+
+	//If it's in any place other than the upper right corner render it there
+	//Else render it in the lower right corner
+	if (selectedTileX > CAMERA_DEFAULT_WIDTH / 2 + cameraRect.left)
+		objInfoULX = CAMERA_DEFAULT_WIDTH / 20 + cameraRect.left;
+
+	//Reuse the equipment container
+	auto extraContainer = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(equipObjContainerId));
+	if (extraContainer == nullptr)
+		return;
+
+	GameManager::getInstance().sendRenderTextureRequest(equipObjContainerId, objInfoULX, objInfoULY);
+
+	int stringPosX = extraContainer->getWidth() / 20;
+	int stringPosY = extraContainer->getHeight() / 4 - FONTSIZE_MEDIUM / 2;
+
+	stringstream tmpStringStream("");
+	tmpStringStream << "Expected damage dealt: " << damageDealt;
+	string tmpString = tmpStringStream.str();
+
+	renderHUDText(tmpString, objInfoULX + stringPosX, objInfoULY + stringPosY);
+
+	tmpStringStream.str("");
+	tmpStringStream << "Expected damage received: " << damageReceived;
+	tmpString = tmpStringStream.str();
+
+	stringPosY = extraContainer->getHeight() / 4 * 3 - FONTSIZE_MEDIUM / 2;
+
+	renderHUDText(tmpString, objInfoULX + stringPosX, objInfoULY + stringPosY);
+}
