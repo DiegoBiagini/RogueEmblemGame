@@ -20,7 +20,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 			enemy->setMaxMana(0);
 			enemy->setMana(0);
 
-			enemy->setStrenght(5);
+			enemy->setStrength(5);
 			enemy->setIntelligence(1);
 			enemy->setArmor(4);
 			enemy->setMagicArmor(2);
@@ -44,7 +44,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 			enemy->setMaxMana(0);
 			enemy->setMana(0);
 
-			enemy->setStrenght(3);
+			enemy->setStrength(3);
 			enemy->setIntelligence(3);
 			enemy->setArmor(1);
 			enemy->setMagicArmor(2);
@@ -67,7 +67,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 			enemy->setMaxMana(0);
 			enemy->setMana(0);
 
-			enemy->setStrenght(4);
+			enemy->setStrength(4);
 			enemy->setIntelligence(3);
 			enemy->setArmor(5);
 			enemy->setMagicArmor(4);

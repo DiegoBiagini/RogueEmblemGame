@@ -86,9 +86,9 @@ public:
 
 	void setMaxMana(int maxMana);
 
-	int getStrenght() const;
+	int getStrength() const;
 
-	void setStrenght(int strength);
+	void setStrength(int strength);
 
 	int getIntelligence() const;
 

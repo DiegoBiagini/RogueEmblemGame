@@ -10,11 +10,38 @@ PlayerControlledCharacter::PlayerControlledCharacter() : inventory{20}, usedItem
 }
 
 int PlayerControlledCharacter::fight(GameCharacter &foe) {
-	return 1;
+	//There is a chance that the attack will miss if the foe evasion is higher, this chance is 5% for each evasion point
+	//difference
+	int evasionDifference = foe.getEvasion() - getEvasion();
+	if (evasionDifference > 0) {
+		float evasionChance = evasionDifference * 5;
+
+		//Random number between 1 and 100
+		random_device generator;
+		uniform_int_distribution<int> distribution(1, 100);
+		int rand = distribution(generator);
+
+		//If it's lower than the chance it missed
+		if (rand <= evasionChance)
+			return -1;
+	}
+	return damageCalculation(foe);
 }
 
 int PlayerControlledCharacter::damageCalculation(GameCharacter &foe) {
-	return 0;
+	//The formula is
+	// damage = weaponPhysicalDamage + (strength - enemy.armor) + weaponMagicDamage + ( intelligence - enemy.magicArmor)
+	pair<int, int> weaponDamage = equippedWeapon->use(*this);
+
+	int physicalDamage = weaponDamage.first + getStrength() - foe.getArmor();
+	if (physicalDamage < 0)
+		physicalDamage = 0;
+
+	int magicDamage = weaponDamage.second + getIntelligence() - foe.getMagicArmor();
+	if (magicDamage < 0)
+		magicDamage = 0;
+
+	return physicalDamage + magicDamage;
 }
 
 

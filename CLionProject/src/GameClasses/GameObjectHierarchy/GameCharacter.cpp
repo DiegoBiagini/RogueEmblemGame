@@ -86,11 +86,11 @@ void GameCharacter::setMaxMana(int maxMana) {
 	GameCharacter::baseStats.maxMana = maxMana;
 }
 
-int GameCharacter::getStrenght() const {
+int GameCharacter::getStrength() const {
 	return baseStats.strength + extraStats.strength;
 }
 
-void GameCharacter::setStrenght(int strength) {
+void GameCharacter::setStrength(int strength) {
 	GameCharacter::baseStats.strength = strength;
 }
 

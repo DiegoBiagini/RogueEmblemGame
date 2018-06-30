@@ -5,7 +5,7 @@
 #ifndef ROGUEEMBLEMGAME_ENEMY_H
 #define ROGUEEMBLEMGAME_ENEMY_H
 
-
+#include <random>
 #include "GameCharacter.h"
 #include "EnemyBehaviour.h"
 

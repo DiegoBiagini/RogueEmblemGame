@@ -241,8 +241,8 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 	//Same row
 	textPosY += FONTSIZE_MEDIUM * 3;
 
-	//Strenght
-	tmpString = std::to_string(character.getStrenght());
+	//Strength
+	tmpString = std::to_string(character.getStrength());
 	textPosX = containerTexture->getWidth() / 4 - FONTSIZE_MEDIUM * tmpString.size() / 2 - FONTSIZE_MEDIUM;
 	renderHUDText(tmpString, objInfoULX + textPosX, objInfoULY + textPosY);
 

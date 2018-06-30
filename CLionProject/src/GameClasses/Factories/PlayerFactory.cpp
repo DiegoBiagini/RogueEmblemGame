@@ -23,7 +23,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setMaxMana(0);
 			player->setMana(0);
 
-			player->setStrenght(5);
+			player->setStrength(5);
 			player->setIntelligence(1);
 			player->setArmor(4);
 			player->setMagicArmor(2);
@@ -51,13 +51,13 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setMaxMana(0);
 			player->setMana(0);
 
-			player->setStrenght(3);
+			player->setStrength(3);
 			player->setIntelligence(3);
 			player->setArmor(1);
 			player->setMagicArmor(2);
 			player->setEvasion(3);
 
-			player->setAttackRange(1);
+			player->setAttackRange(2);
 			player->setMobility(3);
 
 			string animationPath("skeleton.png");
@@ -78,7 +78,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setMaxMana(0);
 			player->setMana(0);
 
-			player->setStrenght(4);
+			player->setStrength(4);
 			player->setIntelligence(3);
 			player->setArmor(5);
 			player->setMagicArmor(4);

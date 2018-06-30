@@ -5,12 +5,30 @@
 #include "Enemy.h"
 
 int Enemy::fight(GameCharacter &foe) {
-	return 1;
+	//There is a chance that the attack will miss if the foe evasion is higher, this chance is 5% for each evasion point
+	//difference
+	int evasionDifference = foe.getEvasion() - getEvasion();
+	if (evasionDifference > 0) {
+		float evasionChance = evasionDifference * 5;
+
+		//Random number between 1 and 100
+		random_device generator;
+		uniform_int_distribution<int> distribution(1, 100);
+		int rand = distribution(generator);
+
+		//If it's lower than the chance it missed
+		if (rand <= evasionChance)
+			return -1;
+
+	}
+	return damageCalculation(foe);
+
 }
 
 
 int Enemy::damageCalculation(GameCharacter &foe) {
-	return 1;
+	//For now just takes into account strength
+	return getStrength() - foe.getArmor() < 0 ? 0 : getStrength() - foe.getArmor();
 }
 
 
@@ -31,6 +49,5 @@ void Enemy::setBehaviour(EnemyBehaviour::Type behaviour) {
 }
 
 Enemy::Enemy(const Enemy &other) : GameCharacter{other} {
-	//TODO: implement this when there are concrete behaviours
-	//this->behaviour = unique_ptr<EnemyBehaviour>{new EnemyBehaviour};
+	this->behaviour.reset(other.behaviour.get());
 }

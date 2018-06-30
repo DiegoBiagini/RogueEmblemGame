@@ -31,8 +31,8 @@ unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key, bool presse
 				selectedTile.first = selectedEnemy->getPosition().first;
 				selectedTile.second = selectedEnemy->getPosition().second;
 
-				expectedDamageDealt = selectedPlayer->fight(*selectedEnemy.get());
-				expectedDamagerReceived = selectedEnemy->fight(*selectedPlayer.get());
+				expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
+				expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
 
 				break;
 			}
@@ -46,8 +46,8 @@ unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key, bool presse
 				selectedTile.first = selectedEnemy->getPosition().first;
 				selectedTile.second = selectedEnemy->getPosition().second;
 
-				expectedDamageDealt = selectedPlayer->fight(*selectedEnemy.get());
-				expectedDamagerReceived = selectedEnemy->fight(*selectedPlayer.get());
+				expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
+				expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
 
 				break;
 			}
@@ -82,8 +82,8 @@ void SelectAttackState::enterState() {
 	selectedTile.first = selectedEnemy->getPosition().first;
 	selectedTile.second = selectedEnemy->getPosition().second;
 
-	expectedDamageDealt = selectedPlayer->fight(*selectedEnemy.get());
-	expectedDamagerReceived = selectedEnemy->fight(*selectedPlayer.get());
+	expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
+	expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
 
 }
 

@@ -5,7 +5,7 @@
 #ifndef ROGUEEMBLEMGAME_PLAYERCONTROLLEDCHARACTER_H
 #define ROGUEEMBLEMGAME_PLAYERCONTROLLEDCHARACTER_H
 
-
+#include <random>
 #include "GameCharacter.h"
 #include "../InventoryManagement/Weapon.h"
 #include "../InventoryManagement/Equipment.h"
