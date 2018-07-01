@@ -32,17 +32,16 @@ void EnterLevelState::enterState() {
 	auto posChar4 = make_pair<int, int>(1, 3);
 	auto char4 = enemyFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Orc, *map.get(), posChar4);
 
-	auto posChar5 = make_pair<int, int>(2, 4);
-	auto char5 = enemyFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Orc, *map.get(), posChar5);
 	//Add it to the object and character list
 	players.push_back(char1);
 	players.push_back(char3);
 
+	objectList.push_back(char3);
+
+
 	objectList.push_back(char1);
 	objectList.push_back(char2);
-	objectList.push_back(char3);
 	objectList.push_back(char4);
-	objectList.push_back(char5);
 
 
 	selectedTile.first = char1->getPosX();

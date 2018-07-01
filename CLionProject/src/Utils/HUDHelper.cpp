@@ -350,7 +350,8 @@ void HUDHelper::drawGameCharacterInfo(const GameCharacter &character, GameMap &m
 	}
 }
 
-void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color color) {
+void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color color, int size, sf::Color outlineColor,
+							  int outlineSize) {
 	std::shared_ptr<RenderMessage> msg{new RenderMessage};
 
 	msg->type = RenderMessage::Type::DRAW_TEXT;
@@ -360,7 +361,9 @@ void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color c
 	msg->text = text;
 	msg->color = color;
 	msg->position = {posX, posY};
-
+	msg->outlineColor = outlineColor;
+	msg->outlineSize = outlineSize;
+	msg->textSize = size;
 	GameManager::getInstance().sendMsg(msg);
 }
 
@@ -510,4 +513,24 @@ HUDHelper::drawBeforeFightInfo(const GameCharacter &defender, int damageDealt, i
 	stringPosY = extraContainer->getHeight() / 4 * 3 - FONTSIZE_MEDIUM / 2;
 
 	renderHUDText(tmpString, objInfoULX + stringPosX, objInfoULY + stringPosY);
+}
+
+void HUDHelper::drawDamageNumber(const GameCharacter &character, int damage, int characterSize, int verticalOffset,
+								 GameMap &map) {
+
+	//Get the base coordinates on the screen
+	int coorX = character.getPosX() * map.getTileSize() + map.getTileSize() / 2;
+	int coorY = character.getPosY() * map.getTileSize() + verticalOffset - characterSize;
+
+	//If it's -1 print miss in blue
+	string damageText = damage == -1 ? "Miss" : to_string(-damage);
+
+	coorX -= characterSize / 4 * damageText.size();
+
+	sf::Color damageColor{255, 0, 0, 255};
+
+	if (damage == -1)
+		damageColor = {0, 0, 255, 255};
+
+	renderHUDText(damageText, coorX, coorY, damageColor, characterSize, {0, 0, 0, 255});
 }

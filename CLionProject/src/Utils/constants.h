@@ -24,7 +24,7 @@ const int ANIMATION_SPEED = 100;
 //Various font sizes
 
 const int FONTSIZE_BIG = 40;
-const int FONTSIZE_MEDIUM = 25;
+const int FONTSIZE_MEDIUM = 26;
 const int FONTSIZE_SMALL = 15;
 
 #endif //ROGUEEMBLEMGAME_CONSTANTS_H

@@ -42,7 +42,7 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 							auto enemy = dynamic_cast<Enemy *>(map->getObjectAt(el));
 							//If there is an enemy he can attack add it to a vector
 							if (enemy != nullptr)
-								attackableEnemies.push_back(make_shared<Enemy>(*enemy));
+								attackableEnemies.push_back(shared_ptr<Enemy>(enemy));
 
 						}
 						if (!attackableEnemies.empty())

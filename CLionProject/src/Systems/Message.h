@@ -85,6 +85,10 @@ struct RenderMessage : public Message {
 
 	sf::Color color{0, 0, 0, 255};
 
+	//Outline of the text
+	int outlineSize{0};
+	sf::Color outlineColor{0, 0, 0, 255};
+
 	//Rectangle size
 	int rectWidth{0};
 	int rectHeight{0};

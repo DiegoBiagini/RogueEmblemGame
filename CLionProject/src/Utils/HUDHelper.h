@@ -19,7 +19,7 @@ public:
 	void loadTextures();
 
 	//Draws the tile information
-	void drawTileInfo(std::pair<int, int> &tileCoordinates, GameMap &map, sf::IntRect cameraRect);
+	void drawTileInfo(pair<int, int> &tileCoordinates, GameMap &map, sf::IntRect cameraRect);
 
 	//Draws the GameCharacter information
 	void drawGameCharacterInfo(const GameCharacter &character, GameMap &map, sf::IntRect cameraRect);
@@ -29,23 +29,28 @@ public:
 							 sf::IntRect cameraRect);
 
 	//Draws an highlight on the selected tile
-	void drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map);
+	void drawHighlightTile(pair<int, int> &tileCoordinates, GameMap &map);
 
 	//Draws an animatedArrow on a tile
-	void drawMovingArrowOnTile(std::pair<int, int> tile, GameMap &map);
+	void drawMovingArrowOnTile(pair<int, int> tile, GameMap &map);
 
 	//Draws an highlight on the movements that a player can make
-	void drawAvailableMovements(std::vector<std::pair<int, int>> movements, GameMap &map);
+	void drawAvailableMovements(vector<pair<int, int>> movements, GameMap &map);
 
 	//Draws an highlight on the attacks that a player can make
-	void drawAvailableAttacks(std::vector<std::pair<int, int>> attacks, GameMap &map);
+	void drawAvailableAttacks(vector<pair<int, int>> attacks, GameMap &map);
 
 	//Displays the option the player has available and the one that he has selected
-	void drawOptions(const GameCharacter &character, std::vector<Option> &options, int selectedOption,
+	void drawOptions(const GameCharacter &character, vector<Option> &options, int selectedOption,
 					 GameMap &map, sf::IntRect cameraRect);
 
+	//Draw damage number on top of character with the color red and with an outline
+	void
+	drawDamageNumber(const GameCharacter &character, int damage, int characterSize, int verticalOffset, GameMap &map);
+
 	//Sends request to draw HUD text
-	void renderHUDText(std::string &text, int posX, int posY, sf::Color color = {0, 0, 0, 255});
+	void renderHUDText(string &text, int posX, int posY, sf::Color color = {255, 255, 255, 255},
+					   int size = FONTSIZE_MEDIUM, sf::Color outlineColor = {0, 0, 0, 255}, int outlineSize = 2);
 
 
 protected:

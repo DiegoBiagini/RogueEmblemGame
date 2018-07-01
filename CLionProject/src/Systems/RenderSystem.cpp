@@ -38,6 +38,8 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 				renderText.setCharacterSize(actualMsg->textSize);
 				renderText.setString(actualMsg->text);
 				renderText.setFillColor(actualMsg->color);
+				renderText.setOutlineThickness(actualMsg->outlineSize);
+				renderText.setOutlineColor(actualMsg->outlineColor);
 				renderText.setPosition(actualMsg->position.x, actualMsg->position.y);
 
 				window.draw(renderText);

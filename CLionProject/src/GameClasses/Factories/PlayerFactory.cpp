@@ -55,7 +55,7 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			player->setIntelligence(3);
 			player->setArmor(1);
 			player->setMagicArmor(2);
-			player->setEvasion(3);
+			player->setEvasion(5);
 
 			player->setAttackRange(2);
 			player->setMobility(3);

@@ -4,6 +4,7 @@
 
 #include "SelectAttackState.h"
 #include "SelectActionState.h"
+#include "FightState.h"
 
 
 SelectAttackState::SelectAttackState(OnMapState &previousState, vector<shared_ptr<Enemy>> &attackableEnemies) :
@@ -51,8 +52,11 @@ unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key, bool presse
 
 				break;
 			}
-			case VirtualKey::CONFIRM:
-				break;
+			case VirtualKey::CONFIRM: {
+
+				return unique_ptr<FightState>{
+						new FightState(*this, selectedPlayer, attackableEnemies.at(selectedEnemyIndex), true)};
+			}
 			case VirtualKey::BACK:
 				selectedTile.first = selectedPlayer->getPosX();
 				selectedTile.second = selectedPlayer->getPosY();
