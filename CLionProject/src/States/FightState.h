@@ -39,14 +39,22 @@ private:
 	const int initialOffSet{TILE_SIZE / 2};
 	const int finalOffset{TILE_SIZE / 4};
 
-	const int animationLenghtMs{600};
+	const int animationLenghtMs{500};
 
 	const int animationSteps{30};
 
 	//Variables to handle the animation state
+	//For the offset of the damage number
 	int currentOffset;
-
 	int offSetPerStep;
+
+	//For the fade away effect after a character has died
+
+	bool playerDead;
+	bool enemyDead;
+
+	int currentTransparency;
+	int transparencyPerStep;
 
 	sf::Clock clock;
 

@@ -6,7 +6,10 @@
 #include "FreeMovementState.h"
 
 FightState::FightState(OnMapState &previous, shared_ptr<PlayerControlledCharacter> player, shared_ptr<Enemy> enemy,
-					   bool playerTurn) : OnMapState{previous}, player{player}, enemy{enemy}, playerTurn{playerTurn} {
+					   bool playerTurn) :
+		OnMapState{previous}, player{player}, enemy{enemy}, playerTurn{playerTurn}, currentOffset{0}, enemyDamage{0},
+		offSetPerStep{0}, playerDamage{0}, enemyDead{false}, playerDead{false}, currentTransparency{255},
+		transparencyPerStep{0} {
 }
 
 unique_ptr<GameState> FightState::handleInput(VirtualKey key, bool pressed) {
@@ -43,11 +46,17 @@ void FightState::enterState() {
 	if (enemyDamage != -1)
 		enemy->setHp(enemy->getHp() - enemyDamage);
 
+	//Check if the characters died
+	if (player->getHp() <= 0)
+		playerDead = true;
+	if (enemy->getHp() <= 0)
+		enemyDead = true;
 
 	//Set the animation
 	currentOffset = initialOffSet;
 
 	offSetPerStep = -abs(finalOffset - initialOffSet) / animationSteps;
+	transparencyPerStep = 255. / animationSteps;
 
 	clock.restart();
 }
@@ -67,18 +76,27 @@ void FightState::render() {
 }
 
 unique_ptr<GameState> FightState::update() {
+
+	//Check advancement of animation
 	if (clock.getElapsedTime().asMilliseconds() >= animationLenghtMs / animationSteps) {
 		clock.restart();
+		//Increase offset of damage number and transparency of supposedly dead character
 		currentOffset += offSetPerStep;
+		currentTransparency -= transparencyPerStep;
 
-		//if the animation has finished return to the previous state
-		if (currentOffset <= finalOffset) {
-			//If a character died remove it from the game
-			if (player->getHp() <= 0)
+		//Set the dead character(s) to a certain transparency level
+		if (playerDead)
+			player->setTransparency(currentTransparency);
+		if (enemyDead)
+			enemy->setTransparency(currentTransparency);
+
+		//if the animation has finished
+		if (currentOffset <= finalOffset && currentTransparency <= 0) {
+
+			if (playerDead)
 				removeDeadCharacter(player);
-			if (enemy->getHp() <= 0)
+			if (enemyDead)
 				removeDeadCharacter(enemy);
-
 
 			if (playerTurn) {
 				selectedTile.first = player->getPosX();
@@ -87,6 +105,7 @@ unique_ptr<GameState> FightState::update() {
 				return unique_ptr<FreeMovementState>{new FreeMovementState(*this)};
 			}
 			//TODO: return to enemy turn
+
 		}
 
 	}
