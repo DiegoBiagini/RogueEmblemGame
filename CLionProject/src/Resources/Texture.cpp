@@ -34,11 +34,11 @@ bool Texture::isValidResource() {
 }
 
 //Overloaded render methods
-void Texture::render(sf::RenderWindow& window, int x, int y) {
-	render(window, x, y, tWidth, tHeight);
+void Texture::render(sf::RenderWindow &window, int x, int y, int transparency) {
+	render(window, x, y, tWidth, tHeight, transparency);
 }
 
-void Texture::render(sf::RenderWindow& window, int x, int y, int w, int h) {
+void Texture::render(sf::RenderWindow &window, int x, int y, int w, int h, int transparency) {
 	//Creates rectangle in which it will be rendered
 	sf::IntRect dstRect {x, y , w, h};
 
@@ -46,6 +46,10 @@ void Texture::render(sf::RenderWindow& window, int x, int y, int w, int h) {
 	sf::IntRect srcRect {0, 0, tWidth, tHeight};
 
 	sf::Sprite sprite{texture,srcRect};
+
+	//Set transparency
+	sprite.setColor(sf::Color{255, 255, 255, transparency});
+
 	sprite.setPosition(dstRect.left, dstRect.top);
 	window.draw(sprite);
 

@@ -10,49 +10,6 @@ GameCharacter::GameCharacter() : baseStats{0, 0, 0, 0, 0, 0, 0, 0, 0}, extraStat
 								 attacked{false}, moving{false} {
 }
 
-void GameCharacter::render(sf::IntRect camera, GameMap &map) {
-	//First get the Animation Object
-	auto *media = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(mediaId));
-	if (media != nullptr) {
-		//Dimensions of image
-		int imgWidth = media->getWidth();
-		int imgHeight = media->getHeight();
-
-		pair<int, int> pixelCoordinates = getActualCoordinates(map);
-
-		//Check if it is inside the camera
-		sf::IntRect charRect{pixelCoordinates.first, pixelCoordinates.second, imgWidth, imgHeight};
-		if (camera.intersects(charRect))
-			GameManager::getInstance().sendRenderTextureRequest(mediaId, pixelCoordinates.first,
-																pixelCoordinates.second);
-	}
-}
-
-
-void GameCharacter::setPosition(vector<Movement> &movements) {
-
-	if (!movements.empty()) {
-		for (auto el : movements) {
-			switch (el) {
-				case Movement::UP:
-					posY -= 1;
-					break;
-
-				case Movement::DOWN:
-					posY += 1;
-					break;
-				case Movement::LEFT:
-					posX -= 1;
-					break;
-				case Movement::RIGHT:
-					posX += 1;
-					break;
-			}
-		}
-
-		notify();
-	}
-}
 
 int GameCharacter::getHp() const {
 	return baseStats.hp + extraStats.hp;
@@ -180,17 +137,6 @@ void GameCharacter::setName(const string &name) {
 	GameCharacter::name = name;
 }
 
-pair<int, int> GameCharacter::getPosition() const {
-	return make_pair(posX, posY);
-}
-
-void GameCharacter::setPosition(int x, int y) {
-	posX = x;
-	posY = y;
-
-	notify();
-}
-
 void GameCharacter::resetActions() {
 	moved = false;
 	attacked = false;
@@ -213,32 +159,19 @@ vector<pair<int, int>> GameCharacter::getPossibleMoves() const {
 }
 
 pair<int, int> GameCharacter::getActualCoordinates(GameMap &map) {
-	//First get the Animation Object
-	auto *media = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(mediaId));
-	if (media != nullptr) {
-		//Dimensions of image
-		int imgWidth = media->getWidth();
-		int imgHeight = media->getHeight();
+	pair<int, int> actualCoordinates = GameObject::getActualCoordinates(map);
 
-		//Get the coordinates of the center of the tile on which the Character is
-		int centerTileX = posX * map.getTileSize() + map.getTileSize() / 2;
-		int centerTileY = posY * map.getTileSize() + map.getTileSize() / 2;
+	//Add an offset if it is moving
+	if (moving) {
 
-		//Get the actual coordinates of the upleft corner of the image
-		int xCoordinate = centerTileX - imgWidth / 2;
-		int yCoordinate = centerTileY - imgHeight / 2;
+		pair<int, int> offset = movementHandler.getCurrentOffsets();
 
-		//Add an offset if it is moving
-		if (moving) {
-
-			pair<int, int> offset = movementHandler.getCurrentOffsets();
-
-			xCoordinate += offset.first;
-			yCoordinate += offset.second;
-		}
-		return make_pair(xCoordinate, yCoordinate);
+		actualCoordinates.first += offset.first;
+		actualCoordinates.second += offset.second;
 	}
-	return make_pair(0, 0);
+
+	return actualCoordinates;
+
 }
 
 void GameCharacter::calculateMoves(const GameMap &map) {

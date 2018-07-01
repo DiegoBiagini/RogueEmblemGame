@@ -24,11 +24,11 @@ bool Animation::isValidResource() {
 }
 
 
-void Animation::render(sf::RenderWindow &window, int x, int y) {
-	render(window, x, y, singleImageWidth, singleImageHeight);
+void Animation::render(sf::RenderWindow &window, int x, int y, int transparency) {
+	render(window, x, y, singleImageWidth, singleImageHeight, transparency);
 }
 
-void Animation::render(sf::RenderWindow &window, int x, int y, int w, int h) {
+void Animation::render(sf::RenderWindow &window, int x, int y, int w, int h, int transparency) {
 	//Creates rectangle in which it will be rendered
 	sf::IntRect dstRect{x, y, w, h};
 
@@ -36,6 +36,10 @@ void Animation::render(sf::RenderWindow &window, int x, int y, int w, int h) {
 	sf::IntRect currentFrameRect = frameRects.at(static_cast<unsigned long>(currentImage));
 
 	sf::Sprite sprite(texture, currentFrameRect);
+
+	//Set transparency
+	sprite.setColor(sf::Color{255, 255, 255, transparency});
+
 	sprite.setPosition(dstRect.left, dstRect.top);
 	window.draw(sprite);
 

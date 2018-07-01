@@ -74,3 +74,35 @@ OnMapState::OnMapState(const OnMapState &src) {
 	camera = src.camera;
 	currentLevel = src.currentLevel;
 }
+
+void OnMapState::removeDeadCharacter(shared_ptr<GameCharacter> character) {
+	//Check if it is a PlayerControlledCharacter or Enemy
+	auto deadPlayer = dynamic_cast<PlayerControlledCharacter *>(character.get());
+	auto deadEnemy = dynamic_cast<Enemy *>(character.get());
+
+	GameCharacter *deadCharacter = nullptr;
+	if (deadPlayer != nullptr) {
+		//Remove it from the available players
+		//Search in the players vector and remove
+		auto playerIt = find(players.begin(), players.end(), character);
+		if (playerIt != players.end())
+			players.erase(playerIt);
+
+		deadCharacter = deadPlayer;
+	} else if (deadEnemy != nullptr)
+		deadCharacter = deadEnemy;
+
+	if (deadCharacter != nullptr) {
+		//Remove it from the GameObjects
+		auto objectIt = find(objectList.begin(), objectList.end(), character);
+		if (objectIt != objectList.end())
+			objectList.erase(objectIt);
+
+		//Remove it from the map
+		map->removeObjectInCell(deadCharacter->getPosition());
+
+		//Recalculate moves for the players
+		for (auto &el : players)
+			el->calculateMoves(*map);
+	}
+}

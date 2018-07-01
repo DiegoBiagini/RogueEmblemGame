@@ -22,8 +22,9 @@ public:
 
 
 	//Renders the texture to a window in a certain position
-	virtual void render(sf::RenderWindow& window, int x, int y);
-	virtual void render(sf::RenderWindow& window, int x, int y,int w, int h);
+	virtual void render(sf::RenderWindow &window, int x, int y, int transparency = 255);
+
+	virtual void render(sf::RenderWindow &window, int x, int y, int w, int h, int transparency);
 
 	//Returns true if texture is empty
 	bool isValidResource() override;

@@ -27,6 +27,16 @@ public:
 
 
 protected:
+	//Centers camera on a tile or a coordinate
+	void centerCameraOn(pair<int, int> centerTile);
+
+	void centerCameraOn(int x, int y);
+
+	//Moves the selected tile and the camera to a new tile, returns true if the operation was performed
+	virtual bool moveSelection(const pair<int, int> &newTile);
+
+	//Removes a dead character from the game
+	void removeDeadCharacter(shared_ptr<GameCharacter> deadCharacter);
 
 	//List that will contain all gameObjects
 	list <shared_ptr<GameObject>> objectList;
@@ -49,13 +59,6 @@ protected:
 	//Current level of the game
 	int currentLevel;
 
-	//Centers camera on a tile or a coordinate
-	void centerCameraOn(pair<int, int> centerTile);
-
-	void centerCameraOn(int x, int y);
-
-	//Moves the selected tile and the camera to a new tile, returns true if the operation was performed
-	virtual bool moveSelection(const pair<int, int> &newTile);
 };
 
 

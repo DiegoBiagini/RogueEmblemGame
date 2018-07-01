@@ -46,9 +46,7 @@ void FightState::enterState() {
 
 	//Set the animation
 	currentOffset = initialOffSet;
-	currentTextSize = initialTextSize;
 
-	textSizePerStep = abs(finalTextSize - initialTextSize) / animationSteps;
 	offSetPerStep = -abs(finalOffset - initialOffSet) / animationSteps;
 
 	clock.restart();
@@ -63,8 +61,8 @@ void FightState::render() {
 		element.get()->render(camera, *map);
 
 	//Draw damage numbers
-	hudHelper.drawDamageNumber(*player.get(), playerDamage, currentTextSize, currentOffset, *map.get());
-	hudHelper.drawDamageNumber(*enemy.get(), enemyDamage, currentTextSize, currentOffset, *map.get());
+	hudHelper.drawDamageNumber(*player.get(), playerDamage, FONTSIZE_BIG, currentOffset, *map.get());
+	hudHelper.drawDamageNumber(*enemy.get(), enemyDamage, FONTSIZE_BIG, currentOffset, *map.get());
 
 }
 
@@ -72,10 +70,16 @@ unique_ptr<GameState> FightState::update() {
 	if (clock.getElapsedTime().asMilliseconds() >= animationLenghtMs / animationSteps) {
 		clock.restart();
 		currentOffset += offSetPerStep;
-		currentTextSize += textSizePerStep;
 
 		//if the animation has finished return to the previous state
-		if (currentOffset <= finalOffset && currentTextSize >= finalTextSize) {
+		if (currentOffset <= finalOffset) {
+			//If a character died remove it from the game
+			if (player->getHp() <= 0)
+				removeDeadCharacter(player);
+			if (enemy->getHp() <= 0)
+				removeDeadCharacter(enemy);
+
+
 			if (playerTurn) {
 				selectedTile.first = player->getPosX();
 				selectedTile.second = player->getPosY();

@@ -19,7 +19,7 @@ void RenderSystem::handleMsg(std::shared_ptr<Message> message) {
 			auto *toRender = dynamic_cast<Texture *>(GameManager::getInstance().getResourceById(actualMsg->id));
 			if (toRender != nullptr) {
 				//Texture is valid
-				toRender->render(window, actualMsg->position.x, actualMsg->position.y);
+				toRender->render(window, actualMsg->position.x, actualMsg->position.y, actualMsg->transparency);
 			}
 			break;
 		}

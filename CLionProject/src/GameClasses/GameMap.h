@@ -66,6 +66,9 @@ public:
 	//Sets an object in a cell, will bind with the Observer pattern
 	void setObjectInCell(shared_ptr<GameObject> obj);
 
+	//Remove an object from a cell by setting it to nullptr
+	void removeObjectInCell(pair<int, int> cell);
+
 	//Returns the center of the rectangle of the camera that is fixed on a cell
 	//Will take care of not making the camera go out of the map
 	sf::Vector2i getCenterOfCameraOnTile(std::pair<int, int> tile, int cameraWidth, int cameraHeight);

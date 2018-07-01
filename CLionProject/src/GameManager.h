@@ -49,7 +49,7 @@ public:
 	int sendLoadAnimationRequest(std::string &path, int nImages, int singleImageWidth, int singleImageHeight,
 								 int imagesInRow);
 	//Sends request to render a texture with its original dimensions
-	void sendRenderTextureRequest(int id, int posX, int posY);
+	void sendRenderTextureRequest(int id, int posX, int posY, int transparency = 255);
 
 
 private:

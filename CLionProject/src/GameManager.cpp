@@ -149,7 +149,7 @@ Resource *GameManager::getResourceById(int id) {
 	return resourceSystem.getResourceById(id);
 }
 
-void GameManager::sendRenderTextureRequest(int id, int posX, int posY) {
+void GameManager::sendRenderTextureRequest(int id, int posX, int posY, int transparency) {
 	std::shared_ptr<RenderMessage> msg{new RenderMessage};
 
 	msg->type = RenderMessage::Type::RENDER_TEXTURE;
@@ -159,7 +159,7 @@ void GameManager::sendRenderTextureRequest(int id, int posX, int posY) {
 	msg->content = msgString.str();
 
 	msg->id = id;
-
+	msg->transparency = transparency;
 	msg->position = {posX, posY};
 
 	sendMsg(std::move(msg));

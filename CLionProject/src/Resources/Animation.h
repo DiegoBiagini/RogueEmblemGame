@@ -14,9 +14,9 @@ public:
 	explicit Animation(int id, std::string path = "");
 
 
-	void render(sf::RenderWindow &window, int x, int y) override;
+	void render(sf::RenderWindow &window, int x, int y, int transparency = 255) override;
 
-	void render(sf::RenderWindow &window, int x, int y, int w, int h) override;
+	void render(sf::RenderWindow &window, int x, int y, int w, int h, int trasparency) override;
 
 	//Overridden functions
 

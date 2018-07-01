@@ -35,8 +35,6 @@ private:
 	int enemyDamage;
 
 	//Constants for the animation
-	const int initialTextSize{15};
-	const int finalTextSize{50};
 
 	const int initialOffSet{TILE_SIZE / 2};
 	const int finalOffset{TILE_SIZE / 4};
@@ -46,10 +44,8 @@ private:
 	const int animationSteps{30};
 
 	//Variables to handle the animation state
-	int currentTextSize;
 	int currentOffset;
 
-	int textSizePerStep;
 	int offSetPerStep;
 
 	sf::Clock clock;

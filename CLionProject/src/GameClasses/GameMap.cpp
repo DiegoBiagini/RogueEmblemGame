@@ -172,6 +172,12 @@ void GameMap::setObjectInCell(std::shared_ptr<GameObject> obj) {
 	}
 }
 
+void GameMap::removeObjectInCell(pair<int, int> cell) {
+	if (isValidCell(cell))
+		mapMatrix.at(cell.first).at(cell.second).second = nullptr;
+}
+
+
 bool GameMap::isTileInsideCamera(const sf::IntRect &cameraRectangle, int i, int j) const {
 
 	int xPosition = singleTileSize * i;
@@ -226,3 +232,4 @@ sf::Vector2i GameMap::getCenterOfCameraOnTile(std::pair<int, int> tile, int came
 
 	return {centerX, centerY};
 }
+

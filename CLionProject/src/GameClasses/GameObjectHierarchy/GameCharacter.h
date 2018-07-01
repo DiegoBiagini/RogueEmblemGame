@@ -32,15 +32,11 @@ public:
 	//How much mobility it costs for the character to traverse a certain tile
 	virtual int traverseCost(Tile::Type type) = 0;
 
-	//Overridden method
-	virtual void render(sf::IntRect camera, GameMap &map) override;
-
+	//Overridden
 	void update() override;
 
-	//changes position of the character on the map
-	void setPosition(vector<Movement> &movements);
-
-	void setPosition(int x, int y);
+	//Returns the pixel coordinates of the object on the map taking into account its displacement because of ongoing movement
+	std::pair<int, int> getActualCoordinates(GameMap &map) override;
 
 	//Performs an animation to move from a cell to another
 	void move(vector<Movement> &movements);
@@ -53,9 +49,6 @@ public:
 
 	//Calculates again the moves that it can perform(using the A* algorithm)
 	void calculateMoves(const GameMap &map);
-
-	//Returns the pixel coordinates of the character on the map taking into account its displacement because of ongoing movement
-	pair<int, int> getActualCoordinates(GameMap &map);
 
 	//Sets an animation for the character
 	void setAnimationId(int mediaId);
@@ -114,8 +107,6 @@ public:
 
 	void setName(const string &name);
 
-	pair<int, int> getPosition() const;
-
 	bool hasMoved() const;
 
 	bool hasAttacked() const;
@@ -137,7 +128,6 @@ public:
 	void setMoved(bool moved);
 
 	void setAttacked(bool attacked);
-
 
 
 protected:

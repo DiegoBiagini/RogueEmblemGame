@@ -76,10 +76,11 @@ struct RenderMessage : public Message {
 	//Center of the view or position at which to render object/text
 	sf::Vector2i position{CAMERA_DEFAULT_WIDTH / 2, CAMERA_DEFAULT_HEIGHT / 2};
 
-	//For first type, id of the texture to render
+	//For first type, id of the texture to render and its transparency
 	int id {0};
+	int transparency{255};
 
-	//Text to render and its size
+	//Text to render,its size and color
 	std::string text{""};
 	int textSize{FONTSIZE_MEDIUM};
 
