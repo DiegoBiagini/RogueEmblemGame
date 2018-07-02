@@ -43,7 +43,6 @@ TEST_F(MapTest, ObjectsInCells) {
 	ASSERT_EQ(map.getObjectAt(0, 0), nullptr);
 
 	std::shared_ptr<GameCharacter> character{new PlayerControlledCharacter};
-	character->setup();
 
 	character->setPosition(0, 0);
 	map.setObjectInCell(character);
@@ -68,7 +67,6 @@ TEST_F(MapTest, MovingCharacterInMap) {
 	map.initMap(w, h);
 
 	std::shared_ptr<GameCharacter> character{new PlayerControlledCharacter};
-	character->setup();
 	character->setPosition(0, 0);
 
 	character->attach(&map);
