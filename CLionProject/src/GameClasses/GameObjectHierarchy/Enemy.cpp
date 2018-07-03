@@ -7,6 +7,8 @@
 int Enemy::fight(GameCharacter &foe) {
 	//There is a chance that the attack will miss if the foe evasion is higher, this chance is 5% for each evasion point
 	//difference
+	int damage = damageCalculation(foe);
+
 	int evasionDifference = foe.getEvasion() - getEvasion();
 	if (evasionDifference > 0) {
 		float evasionChance = evasionDifference * 5;
@@ -18,11 +20,16 @@ int Enemy::fight(GameCharacter &foe) {
 
 		//If it's lower than the chance it missed
 		if (rand <= evasionChance)
-			return -1;
+			damage = -1;
 
 	}
-	return damageCalculation(foe);
 
+	if (damage != -1) {
+		foe.setHp(foe.getHp() - damage < 0 ? 0 : foe.getHp() - damage);
+
+	}
+
+	return damage;
 }
 
 

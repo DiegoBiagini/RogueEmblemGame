@@ -61,7 +61,7 @@ public:
 	void setTile(Tile tile, int x, int y);
 
 	//Update method of the observer
-	void updateObserver(Subject *subject) override;
+	void updateObserver(GameObject *subject) override;
 
 	//Sets an object in a cell, will bind with the Observer pattern
 	void setObjectInCell(shared_ptr<GameObject> obj);

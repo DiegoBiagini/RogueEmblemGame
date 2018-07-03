@@ -34,6 +34,8 @@ public:
 	//Setters and getters
 	std::pair<int, int> getPosition() const;
 
+	void notify() override;
+
 	int getPosX() const;
 
 	int getPosY() const;

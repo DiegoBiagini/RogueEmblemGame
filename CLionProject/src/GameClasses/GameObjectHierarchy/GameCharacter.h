@@ -58,7 +58,7 @@ public:
 
 	//Type of character
 	enum class CharacterType {
-		Orc, Skeleton, Knight
+		Orc, Skeleton, Knight, OpCharacter
 	};
 
 	//Getters and setters

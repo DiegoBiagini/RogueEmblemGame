@@ -136,13 +136,12 @@ void GameMap::render(sf::IntRect cameraRectangle) {
 
 }
 
-void GameMap::updateObserver(Subject *subject) {
-	auto obj = dynamic_cast<GameObject *>(subject);
+void GameMap::updateObserver(GameObject *obj) {
 	if(obj != nullptr) {
 		//Search for the object that changed
 		for (int i = 0; i < tileHeight; i++) {
 			for (int j = 0; j < tileWidth; j++) {
-				if (getObjectAt(i, j) == subject) {
+				if (getObjectAt(i, j) == obj) {
 					//Object found
 					int x = obj->getPosX();
 					int y = obj->getPosY();

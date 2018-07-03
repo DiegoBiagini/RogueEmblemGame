@@ -5,12 +5,12 @@
 #ifndef ROGUEEMBLEMGAME_OBSERVER_H
 #define ROGUEEMBLEMGAME_OBSERVER_H
 
-class Subject;
+class GameObject;
 
 class Observer {
 public:
 	virtual ~Observer() = default;
 
-	virtual void updateObserver(Subject* subject) = 0;
+	virtual void updateObserver(GameObject *obj) = 0;
 };
 #endif //ROGUEEMBLEMGAME_OBSERVER_H

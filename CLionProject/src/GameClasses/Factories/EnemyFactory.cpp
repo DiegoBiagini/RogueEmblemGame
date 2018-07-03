@@ -82,6 +82,28 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 			enemy->setAnimationId(animId);
 			break;
 		}
+		case GameCharacter::CharacterType::OpCharacter:
+			enemy->setName("OpCharacter");
+
+			enemy->setMaxHp(100);
+			enemy->setHp(100);
+			enemy->setMaxMana(0);
+			enemy->setMana(0);
+
+			enemy->setStrength(99);
+			enemy->setIntelligence(99);
+			enemy->setArmor(99);
+			enemy->setMagicArmor(99);
+			enemy->setEvasion(99);
+
+			enemy->setAttackRange(10);
+			enemy->setMobility(10);
+
+			string animationPath("playerSheet.png");
+			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);
+
+			enemy->setAnimationId(animId);
+			break;
 	}
 
 	return enemy;

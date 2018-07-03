@@ -97,6 +97,32 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacter(GameCharacter::Characte
 			itemFactory.createItemAndEquip(ItemFactory::ItemType::LeatherArmor, player);
 			break;
 		}
+		case GameCharacter::CharacterType::OpCharacter:
+			player->setName("OpCharacter");
+
+			player->setMaxHp(100);
+			player->setHp(100);
+			player->setMaxMana(0);
+			player->setMana(0);
+
+			player->setStrength(99);
+			player->setIntelligence(99);
+			player->setArmor(99);
+			player->setMagicArmor(99);
+			player->setEvasion(99);
+
+			player->setMobility(10);
+			player->setAttackRange(10);
+
+			string animationPath("playerSheet.png");
+			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);
+
+			player->setAnimationId(animId);
+
+			ItemFactory itemFactory;
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::BasicSword, player);
+			itemFactory.createItemAndEquip(ItemFactory::ItemType::LeatherArmor, player);
+			break;
 	}
 
 	return player;

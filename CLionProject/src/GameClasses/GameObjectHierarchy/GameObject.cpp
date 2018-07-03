@@ -104,3 +104,8 @@ int GameObject::getTransparency() const {
 void GameObject::setTransparency(int transparency) {
 	GameObject::transparency = transparency;
 }
+
+void GameObject::notify() {
+	for (auto el : observers)
+		el->updateObserver(this);
+}

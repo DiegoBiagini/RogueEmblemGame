@@ -11,13 +11,14 @@
 
 class Subject {
 public:
-	virtual ~Subject();
+	virtual ~Subject() = default;
 
 	virtual void attach(Observer* obs);
 	virtual void detach(Observer* obs);
-	virtual void notify();
 
-private:
+	virtual void notify() = 0;
+
+protected:
 	std::vector<Observer*> observers;
 
 };

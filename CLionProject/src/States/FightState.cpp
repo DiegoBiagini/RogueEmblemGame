@@ -41,11 +41,6 @@ void FightState::enterState() {
 	playerDamage = enemy->fight(*player);
 	enemyDamage = player->fight(*enemy);
 
-	if (playerDamage != -1)
-		player->setHp(player->getHp() - playerDamage);
-	if (enemyDamage != -1)
-		enemy->setHp(enemy->getHp() - enemyDamage);
-
 	//Check if the characters died
 	if (player->getHp() <= 0)
 		playerDead = true;
