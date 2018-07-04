@@ -58,3 +58,14 @@ void Enemy::setBehaviour(EnemyBehaviour::Type behaviour) {
 Enemy::Enemy(const Enemy &other) : GameCharacter{other} {
 	this->behaviour.reset(other.behaviour.get());
 }
+
+pair<int, int>
+Enemy::getNextMovements(vector<Movement> &movements, list<shared_ptr<GameCharacter>> &players, GameMap &map) {
+	return behaviour->decideMovement(this, movements, players, map);
+}
+
+
+pair<int, int> Enemy::getNextAttack(list<shared_ptr<GameCharacter>>& players, GameMap &map) {
+	return behaviour->decideAttack(this, players, map);
+}
+
