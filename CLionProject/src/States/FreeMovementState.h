@@ -27,9 +27,6 @@ public:
 
 protected:
 
-	//Id of the resource that highlights a tile
-	int selectedTileId;
-
 	//Will be true when all the actions for the player turn have been taken and the game isy to pass the turn to the enemy
 	bool playerTurnFinished;
 

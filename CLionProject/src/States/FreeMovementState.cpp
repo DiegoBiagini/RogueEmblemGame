@@ -5,9 +5,9 @@
 #include "FreeMovementState.h"
 #include "../GameManager.h"
 #include "SelectActionState.h"
+#include "EnemyTurnState.h"
 
-FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, selectedTileId{0},
-															   exhaustedPlayerOnTile{false} {
+FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, exhaustedPlayerOnTile{false} {
 
 }
 
@@ -134,8 +134,13 @@ std::unique_ptr<GameState> FreeMovementState::update() {
 		animationClock.restart();
 		currentRectangleWidth += rectangleWidthPerStep;
 
-		if (currentRectangleWidth >= finalRectangleWidth)
-			currentRectangleWidth = 0;
+		if (currentRectangleWidth >= finalRectangleWidth) {
+			//Reset enemy actions
+			for (auto &el : enemies)
+				el->resetActions();
+
+			return unique_ptr<EnemyTurnState>(new EnemyTurnState(*this));
+		}
 	}
 	return nullptr;
 }

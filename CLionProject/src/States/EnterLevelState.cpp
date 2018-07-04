@@ -36,9 +36,10 @@ void EnterLevelState::enterState() {
 	players.push_back(char1);
 	players.push_back(char3);
 
+	enemies.push_back(char2);
+	enemies.push_back(char4);
+
 	objectList.push_back(char3);
-
-
 	objectList.push_back(char1);
 	objectList.push_back(char2);
 	objectList.push_back(char4);

@@ -44,6 +44,9 @@ protected:
 	//List that will contain the playing characters
 	list <shared_ptr<GameCharacter>> players;
 
+	//List that will contain the enemies
+	list <shared_ptr<GameCharacter>> enemies;
+
 	//Main map
 	unique_ptr<GameMap> map;
 

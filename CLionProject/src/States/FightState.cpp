@@ -4,6 +4,7 @@
 
 #include "FightState.h"
 #include "FreeMovementState.h"
+#include "EnemyTurnState.h"
 
 FightState::FightState(OnMapState &previous, shared_ptr<PlayerControlledCharacter> player, shared_ptr<Enemy> enemy,
 					   bool playerTurn) :
@@ -98,8 +99,8 @@ unique_ptr<GameState> FightState::update() {
 				selectedTile.second = player->getPosY();
 
 				return unique_ptr<FreeMovementState>{new FreeMovementState(*this)};
-			}
-			//TODO: return to enemy turn
+			} else
+				return unique_ptr<EnemyTurnState>{new EnemyTurnState(*this)};
 
 		}
 
