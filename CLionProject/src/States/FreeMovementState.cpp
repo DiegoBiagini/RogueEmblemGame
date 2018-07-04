@@ -6,6 +6,11 @@
 #include "../GameManager.h"
 #include "SelectActionState.h"
 
+FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, selectedTileId{0},
+															   exhaustedPlayerOnTile{false} {
+
+}
+
 std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool pressed) {
 	if (pressed) {
 		switch (key) {
@@ -65,6 +70,26 @@ void FreeMovementState::enterState() {
 
 	sf::Vector2i center = map->getCenterOfCameraOnTile(selectedTile, camera.width, camera.height);
 	centerCameraOn(center.x, center.y);
+
+	playerTurnFinished = true;
+
+	//Setup animation
+	rectangleWidthPerStep = finalRectangleWidth / animationSteps;
+	currentRectangleWidth = 0;
+
+	//Check if all players have exhausted their options
+	for (auto &el : players) {
+		if (el->canPerformAction())
+			playerTurnFinished = false;
+	}
+
+	if (playerTurnFinished)
+		animationClock.restart();
+
+	//Check if on the selected tile there is a player that finished all their actions
+	auto playerOnTile = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(selectedTile));
+	if (playerOnTile != nullptr)
+		exhaustedPlayerOnTile = !playerOnTile->canPerformAction();
 }
 
 void FreeMovementState::render() {
@@ -76,25 +101,52 @@ void FreeMovementState::render() {
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
-	//Draw tile highlight
-	hudHelper.drawHighlightTile(selectedTile, *map);
+	if (playerTurnFinished) {
 
-	//Draw tile information
-	hudHelper.drawTileInfo(selectedTile, *map, camera);
+		string enemyTurnString("");
+		if (currentRectangleWidth >= FONTSIZE_BIG)
+			enemyTurnString = "ENEMY TURN";
 
-	//Draw character information
-	auto selectedChar = dynamic_cast<GameCharacter *>(map->getObjectAt(selectedTile));
-	if (selectedChar != nullptr)
-		hudHelper.drawGameCharacterInfo(*selectedChar, *map, camera);
+		hudHelper.drawTextOnRectangle(enemyTurnString, currentRectangleWidth, {255, 255, 255, 255},
+									  {150, 150, 150, 100}, camera);
+	} else {
+		//Draw tile highlight
+
+		hudHelper.drawHighlightTile(selectedTile, *map, exhaustedPlayerOnTile);
+
+
+		//Draw tile information
+		hudHelper.drawTileInfo(selectedTile, *map, camera);
+
+		//Draw character information
+		auto selectedChar = dynamic_cast<GameCharacter *>(map->getObjectAt(selectedTile));
+		if (selectedChar != nullptr)
+			hudHelper.drawGameCharacterInfo(*selectedChar, *map, camera);
+	}
 }
 
 std::unique_ptr<GameState> FreeMovementState::update() {
 	for (auto &el : objectList) {
 		el->update();
 	}
+	if (playerTurnFinished && animationClock.getElapsedTime().asMilliseconds() >= animationLenghtMs / animationSteps) {
+		//Increase size of rect
+		animationClock.restart();
+		currentRectangleWidth += rectangleWidthPerStep;
+
+		if (currentRectangleWidth >= finalRectangleWidth)
+			currentRectangleWidth = 0;
+	}
 	return nullptr;
 }
 
-FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, selectedTileId{0} {
+bool FreeMovementState::moveSelection(const pair<int, int> &newTile) {
+	bool res = OnMapState::moveSelection(newTile);
+
+	//Check if tile on which we moved there is a player and that player has performed all his actions
+	auto playerOnTile = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(newTile));
+	if (playerOnTile != nullptr)
+		exhaustedPlayerOnTile = !playerOnTile->canPerformAction();
 
 }
+

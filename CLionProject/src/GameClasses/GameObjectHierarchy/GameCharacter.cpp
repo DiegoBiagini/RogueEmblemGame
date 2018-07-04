@@ -126,7 +126,6 @@ void GameCharacter::update() {
 			notify();
 		}
 	}
-	moved = false;
 }
 
 const string &GameCharacter::getName() const {
@@ -201,6 +200,8 @@ void GameCharacter::move(vector<Movement> &movements) {
 	if (!movements.empty()) {
 		moving = true;
 		movementHandler.startMoving(movements);
+
+		moved = true;
 	}
 }
 
@@ -242,4 +243,9 @@ void GameCharacter::setMoved(bool moved) {
 
 void GameCharacter::setAttacked(bool attacked) {
 	GameCharacter::attacked = attacked;
+}
+
+void GameCharacter::finishTurn() {
+	moved = true;
+	attacked = true;
 }

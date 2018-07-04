@@ -53,8 +53,12 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 						break;
 					case Option::Equip:
 						break;
-					case Option::EndTurn:
-						break;
+					case Option::EndTurn: {
+						for (auto &el : players)
+							el->finishTurn();
+
+						return unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+					}
 				}
 				break;
 			}

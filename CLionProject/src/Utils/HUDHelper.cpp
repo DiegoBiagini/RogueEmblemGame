@@ -367,11 +367,15 @@ void HUDHelper::renderHUDText(std::string &text, int posX, int posY, sf::Color c
 	GameManager::getInstance().sendMsg(msg);
 }
 
-void HUDHelper::drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map) {
+void HUDHelper::drawHighlightTile(std::pair<int, int> &tileCoordinates, GameMap &map, bool playerExhausted) {
 	int selTileX = tileCoordinates.first * map.getTileSize();
 	int selTileY = tileCoordinates.second * map.getTileSize();
 
-	GameManager::getInstance().sendRenderTextureRequest(highlightTileId, selTileX, selTileY);
+	if (playerExhausted)
+		GameManager::getInstance().sendRenderTextureRequest(validAtkId, selTileX, selTileY);
+	else
+		GameManager::getInstance().sendRenderTextureRequest(highlightTileId, selTileX, selTileY);
+
 }
 
 void HUDHelper::drawOptions(const GameCharacter &character, std::vector<Option> &options, int selectedOption,
@@ -533,4 +537,24 @@ void HUDHelper::drawDamageNumber(const GameCharacter &character, int damage, int
 		damageColor = {0, 0, 255, 255};
 
 	renderHUDText(damageText, coorX, coorY, damageColor, characterSize, {0, 0, 0, 255});
+}
+
+void HUDHelper::drawTextOnRectangle(string &text, int rectangleHeight, sf::Color textColor, sf::Color rectangleColor,
+									sf::IntRect cameraRect) {
+	//Draw a rectangle on the center of the screen
+	std::shared_ptr<RenderMessage> msg{new RenderMessage};
+	msg->type = RenderMessage::Type::DRAW_RECT;
+	msg->color = rectangleColor;
+	msg->content = "Rendering rectangle in the middle of the screen";
+	msg->position = {cameraRect.left, cameraRect.top + cameraRect.height / 2 - rectangleHeight / 2};
+
+	msg->rectHeight = rectangleHeight;
+	msg->rectWidth = cameraRect.width;
+
+	GameManager::getInstance().sendMsg(msg);
+
+	//Draw text on top of it
+	int textPosX = cameraRect.left + cameraRect.width / 2 - FONTSIZE_BIG / 2 * text.size() / 2;
+	int textPosY = cameraRect.top + cameraRect.height / 2 - FONTSIZE_BIG / 2;
+	renderHUDText(text, textPosX, textPosY, textColor, FONTSIZE_BIG);
 }

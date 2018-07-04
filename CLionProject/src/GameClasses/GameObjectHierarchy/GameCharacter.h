@@ -56,6 +56,9 @@ public:
 	//Returns the cell that he could attack
 	vector<pair<int, int>> getPossibleAttacks(const GameMap &map);
 
+	//Makes it so the character can't perform anymore actions this turn
+	virtual void finishTurn();
+
 	//Type of character
 	enum class CharacterType {
 		Orc, Skeleton, Knight, OpCharacter

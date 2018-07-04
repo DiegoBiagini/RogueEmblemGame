@@ -29,7 +29,7 @@ public:
 							 sf::IntRect cameraRect);
 
 	//Draws an highlight on the selected tile
-	void drawHighlightTile(pair<int, int> &tileCoordinates, GameMap &map);
+	void drawHighlightTile(pair<int, int> &tileCoordinates, GameMap &map, bool playerExhausted = false);
 
 	//Draws an animatedArrow on a tile
 	void drawMovingArrowOnTile(pair<int, int> tile, GameMap &map);
@@ -51,6 +51,10 @@ public:
 	//Sends request to draw HUD text
 	void renderHUDText(string &text, int posX, int posY, sf::Color color = {255, 255, 255, 255},
 					   int size = FONTSIZE_MEDIUM, sf::Color outlineColor = {0, 0, 0, 255}, int outlineSize = 2);
+
+	//Draw a rectangle in the middle of the screen, semi transparent with text in it
+	void drawTextOnRectangle(string &text, int rectangleHeight, sf::Color textColor, sf::Color rectangleColor,
+							 sf::IntRect cameraRect);
 
 
 protected:

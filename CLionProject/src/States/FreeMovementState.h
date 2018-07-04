@@ -23,10 +23,30 @@ public:
 
 	std::unique_ptr<GameState> update() override;
 
+	bool moveSelection(const pair<int, int> &newTile) override;
+
 protected:
 
 	//Id of the resource that highlights a tile
 	int selectedTileId;
+
+	//Will be true when all the actions for the player turn have been taken and the game isy to pass the turn to the enemy
+	bool playerTurnFinished;
+
+	//Is true if the player on the selected tile has already finished his actions
+	bool exhaustedPlayerOnTile;
+
+	//Variables for the animation of the turn change
+	const int animationLenghtMs{700};
+
+	const int animationSteps{30};
+
+	const int finalRectangleWidth{150};
+
+	int currentRectangleWidth;
+	int rectangleWidthPerStep;
+
+	sf::Clock animationClock;
 
 };
 

@@ -53,6 +53,7 @@ unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key, bool presse
 				break;
 			}
 			case VirtualKey::CONFIRM: {
+				selectedPlayer->finishTurn();
 
 				return unique_ptr<FightState>{
 						new FightState(*this, selectedPlayer, attackableEnemies.at(selectedEnemyIndex), true)};

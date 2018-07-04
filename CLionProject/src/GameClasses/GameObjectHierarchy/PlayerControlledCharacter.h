@@ -32,7 +32,7 @@ public:
 	//Returns true if inventory is full
 	bool isInventoryFull() const;
 
-	bool canPerformAction() override;
+	void finishTurn() override;
 
 	bool hasUsedItem();
 

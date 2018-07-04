@@ -56,9 +56,6 @@ int PlayerControlledCharacter::traverseCost(Tile::Type type) {
 	return 0;
 }
 
-bool PlayerControlledCharacter::canPerformAction() {
-	return (GameCharacter::canPerformAction() || !usedItem);
-}
 
 void PlayerControlledCharacter::resetActions() {
 	GameCharacter::resetActions();
@@ -95,5 +92,10 @@ void PlayerControlledCharacter::setEquipment(shared_ptr<Equipment> &equipment) {
 	PlayerControlledCharacter::equipment = equipment;
 	equipment->applyOn(*this);
 
+}
+
+void PlayerControlledCharacter::finishTurn() {
+	GameCharacter::finishTurn();
+	usedItem = true;
 }
 
