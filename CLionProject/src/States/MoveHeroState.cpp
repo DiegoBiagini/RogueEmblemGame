@@ -52,6 +52,9 @@ unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key, bool pressed) {
 					AStar aStar(*map);
 					auto shortestPath = aStar.getShortestPath(selectedPlayer->getPosition(), selectedTile);
 					selectedPlayer->move(shortestPath);
+
+					selectedPlayer->setMoved(true);
+
 					movementChosen = true;
 				}
 				break;

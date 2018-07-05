@@ -122,7 +122,6 @@ void GameCharacter::update() {
 			//End the movement
 			moving = false;
 
-			moved = true;
 			notify();
 		}
 	}
@@ -201,7 +200,6 @@ void GameCharacter::move(vector<Movement> &movements) {
 		moving = true;
 		movementHandler.startMoving(movements);
 
-		moved = true;
 	}
 }
 

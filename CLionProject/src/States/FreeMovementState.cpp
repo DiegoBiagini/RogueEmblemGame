@@ -148,6 +148,8 @@ std::unique_ptr<GameState> FreeMovementState::update() {
 bool FreeMovementState::moveSelection(const pair<int, int> &newTile) {
 	bool res = OnMapState::moveSelection(newTile);
 
+	exhaustedPlayerOnTile = false;
+
 	//Check if tile on which we moved there is a player and that player has performed all his actions
 	auto playerOnTile = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(newTile));
 	if (playerOnTile != nullptr)

@@ -116,7 +116,6 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacterOnMapCell(GameCharacter::
 		enemy->setPosition(cell.first, cell.second);
 
 		map.setObjectInCell(enemy);
-		enemy->attach(&map);
 		return enemy;
 	} else {
 		stringstream errorMessage("Error instantiating enemy in cell");

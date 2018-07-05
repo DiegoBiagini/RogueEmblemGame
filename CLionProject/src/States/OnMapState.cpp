@@ -70,6 +70,8 @@ OnMapState::OnMapState(const OnMapState &src) {
 	selectedTile.second = src.selectedTile.second;
 
 	players = src.players;
+	enemies = src.enemies;
+
 	hudHelper = src.hudHelper;
 	camera = src.camera;
 	currentLevel = src.currentLevel;

@@ -54,6 +54,7 @@ unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool presse
 					case Option::Equip:
 						break;
 					case Option::EndTurn: {
+						//Finish the turns of the players
 						for (auto &el : players)
 							el->finishTurn();
 

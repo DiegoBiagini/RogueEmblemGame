@@ -36,7 +36,7 @@ private:
 	vector<Movement> movements;
 
 	//Animation variables
-	const int initialDelay {800};
+	const int initialDelay{1300};
 
 	bool startedMoving;
 	bool finishedMoving;

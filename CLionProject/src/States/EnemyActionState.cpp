@@ -60,8 +60,10 @@ void EnemyActionState::render() {
 	map->render(camera);
 
 	//Center on the actual coordinates of the enemy if it is moving, else center on the selected tile
-	if(!startedMoving)
-		hudHelper.drawTileInfo(selectedTile,*map, camera);
+	if (!startedMoving) {
+		hudHelper.drawTileInfo(selectedTile, *map, camera);
+		hudHelper.drawHighlightTile(selectedTile, *map);
+	}
 	else{
 		pair<int, int> pixelCoordinates = selectedEnemy->getActualCoordinates(*map);
 		centerCameraOn(pixelCoordinates.first + map->getTileSize() / 2, pixelCoordinates.second + map->getTileSize() / 2);

@@ -3,6 +3,8 @@
 //
 
 #include "Enemy.h"
+#include "ClosestPlayerBehaviour.h"
+#include "WeakestPlayerBehaviour.h"
 
 int Enemy::fight(GameCharacter &foe) {
 	//There is a chance that the attack will miss if the foe evasion is higher, this chance is 5% for each evasion point
@@ -44,12 +46,14 @@ int Enemy::traverseCost(Tile::Type type) {
 }
 
 
-void Enemy::setBehaviour(EnemyBehaviour::Type behaviour) {
-	switch (behaviour) {
+void Enemy::setBehaviour(EnemyBehaviour::Type behaviourType) {
+	switch (behaviourType) {
 
 		case EnemyBehaviour::Type::ClosestPlayer:
+			behaviour.reset(new ClosestPlayerBehaviour());
 			break;
 		case EnemyBehaviour::Type::WeakestPlayer:
+			behaviour.reset(new WeakestPlayerBehaviour());
 			break;
 	}
 
@@ -67,5 +71,9 @@ Enemy::getNextMovements(vector<Movement> &movements, list<shared_ptr<GameCharact
 
 pair<int, int> Enemy::getNextAttack(list<shared_ptr<GameCharacter>>& players, GameMap &map) {
 	return behaviour->decideAttack(this, players, map);
+}
+
+int Enemy::getDetectionRange() const {
+	return Enemy::playerDetectionDistance;
 }
 

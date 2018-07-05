@@ -7,6 +7,7 @@
 
 #include <list>
 #include "../GameMap.h"
+#include "../GameObjectHierarchy/GameCharacter.h"
 
 class Enemy;
 //Class that will implement the strategy pattern for the enemy

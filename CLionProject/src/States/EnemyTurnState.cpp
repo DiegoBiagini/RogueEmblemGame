@@ -4,6 +4,7 @@
 
 #include "EnemyTurnState.h"
 #include "FreeMovementState.h"
+#include "EnemyActionState.h"
 
 EnemyTurnState::EnemyTurnState(const OnMapState &copy) : OnMapState(copy) {
 
@@ -90,8 +91,10 @@ std::unique_ptr<GameState> EnemyTurnState::update() {
 
 		if (currentRectangleWidth >= finalRectangleWidth) {
 			//Reset player actions and go to the tile of the first player
-			for (auto &el : players)
+			for (auto &el : players) {
 				el->resetActions();
+				el->calculateMoves(*map);
+			}
 
 			selectedTile.first = players.front()->getPosX();
 			selectedTile.second = players.front()->getPosY();
@@ -104,8 +107,7 @@ std::unique_ptr<GameState> EnemyTurnState::update() {
 		//Search for the first enemy that still can perform some actions
 		for (auto &el : enemies) {
 			if (el->canPerformAction())
-				//Go to enemyActionState
-				std::cout << "a" << std::endl;
+				return unique_ptr<EnemyActionState>(new EnemyActionState(*this, dynamic_pointer_cast<Enemy>(el)));
 
 		}
 	}

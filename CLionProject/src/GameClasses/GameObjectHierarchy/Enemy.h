@@ -24,7 +24,7 @@ public:
 	int traverseCost(Tile::Type type) override;
 
 	//Sets the behaviour of this enemy
-	void setBehaviour(EnemyBehaviour::Type behaviour);
+	void setBehaviour(EnemyBehaviour::Type behaviourType);
 
 	//Uses the strategy pattern to decide the movement/attack that the enemy will perform, returns the final cell on
 	// which the enemy will be and adds to the movement vector the movements necessary to arrive there
@@ -33,10 +33,14 @@ public:
 
 	pair<int,int> getNextAttack(list<shared_ptr<GameCharacter>>& players, GameMap &map);
 
+	int getDetectionRange() const;
+
 private:
 	//Pointer to the correct strategy
 	unique_ptr<EnemyBehaviour> behaviour;
 
+	//From how many tiles the enemy can detect a player
+	int playerDetectionDistance{10};
 
 };
 

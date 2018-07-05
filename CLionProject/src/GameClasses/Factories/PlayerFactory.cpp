@@ -135,7 +135,6 @@ shared_ptr<GameCharacter> PlayerFactory::createCharacterOnMapCell(GameCharacter:
 		player->setPosition(cell.first, cell.second);
 
 		map.setObjectInCell(player);
-		player->attach(&map);
 		return player;
 	} else {
 		stringstream errorMessage("Error instantiating player in cell");

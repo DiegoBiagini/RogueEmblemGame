@@ -23,7 +23,7 @@ void EnterLevelState::enterState() {
 	pair<int, int> posChar1 = make_pair(1, 1);
 	auto char1 = playerFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Knight, *map.get(), posChar1);
 
-	auto posChar2 = make_pair<int, int>(3, 3);
+	auto posChar2 = make_pair<int, int>(10, 10);
 	auto char2 = enemyFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Orc, *map.get(), posChar2);
 
 	auto posChar3 = make_pair<int, int>(2, 2);
@@ -35,6 +35,9 @@ void EnterLevelState::enterState() {
 	//Add it to the object and character list
 	players.push_back(char1);
 	players.push_back(char3);
+
+	dynamic_pointer_cast<Enemy>(char2)->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
+	dynamic_pointer_cast<Enemy>(char4)->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
 
 	enemies.push_back(char2);
 	enemies.push_back(char4);

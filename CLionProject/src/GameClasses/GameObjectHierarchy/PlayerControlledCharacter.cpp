@@ -53,7 +53,7 @@ int PlayerControlledCharacter::damageCalculation(GameCharacter &foe) {
 
 
 int PlayerControlledCharacter::traverseCost(Tile::Type type) {
-	return 0;
+	return 1;
 }
 
 
