@@ -5,6 +5,7 @@
 #include "FightState.h"
 #include "FreeMovementState.h"
 #include "EnemyTurnState.h"
+#include "EndGameState.h"
 
 FightState::FightState(OnMapState &previous, shared_ptr<PlayerControlledCharacter> player, shared_ptr<Enemy> enemy,
 					   bool playerTurn) :
@@ -93,6 +94,17 @@ unique_ptr<GameState> FightState::update() {
 				removeDeadCharacter(player);
 			if (enemyDead)
 				removeDeadCharacter(enemy);
+
+			//Check if the player list or the enemy list is empty
+			if (players.empty()) {
+				string endString("YOU LOST");
+				return unique_ptr<EndGameState>{new EndGameState(*this, endString)};
+			}
+
+			if (enemies.empty()) {
+				string endString("YOU WON");
+				return unique_ptr<EndGameState>{new EndGameState(*this, endString)};
+			}
 
 			if (playerTurn) {
 				selectedTile.first = player->getPosX();

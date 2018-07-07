@@ -50,8 +50,10 @@ void EnemyTurnState::enterState() {
 			enemyTurnFinished = false;
 	}
 
-	if (enemyTurnFinished)
+	if (enemyTurnFinished) {
+		centerCameraOn(enemies.back()->getPosition());
 		animationClock.restart();
+	}
 
 }
 

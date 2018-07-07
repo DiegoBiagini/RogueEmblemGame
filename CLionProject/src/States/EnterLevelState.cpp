@@ -19,8 +19,8 @@ void EnterLevelState::enterState() {
 	createPlayerAt(GameCharacter::CharacterType::Knight, pair<int, int>(1, 1));
 	createPlayerAt(GameCharacter::CharacterType::Skeleton, pair<int, int>(2, 2));
 
-	createEnemyAt(GameCharacter::CharacterType::Orc, pair<int, int>(10, 10));
-	createEnemyAt(GameCharacter::CharacterType::Skeleton, pair<int, int>(1, 3));
+	createEnemyAt(GameCharacter::CharacterType::Orc, pair<int, int>(3, 3));
+	createEnemyAt(GameCharacter::CharacterType::OpCharacter, pair<int, int>(1, 3));
 
 	selectedTile.first = players.front()->getPosX();
 	selectedTile.second = players.front()->getPosY();
@@ -49,7 +49,7 @@ void EnterLevelState::createEnemyAt(GameCharacter::CharacterType type, pair<int,
 	auto enemy = enemyFactory.createCharacterOnMapCell(type, *map, position);
 
 	//Add it to the object and enemy list
-	players.push_back(enemy);
+	enemies.push_back(enemy);
 	objectList.push_back(enemy);
 }
 

@@ -91,8 +91,14 @@ void OnMapState::removeDeadCharacter(shared_ptr<GameCharacter> character) {
 			players.erase(playerIt);
 
 		deadCharacter = deadPlayer;
-	} else if (deadEnemy != nullptr)
+	} else if (deadEnemy != nullptr) {
+		//Remove enemy from enemy list
+		auto enemyIt = find(enemies.begin(), enemies.end(), character);
+		if (enemyIt != players.end())
+			enemies.erase(enemyIt);
+
 		deadCharacter = deadEnemy;
+	}
 
 	if (deadCharacter != nullptr) {
 		//Remove it from the GameObjects

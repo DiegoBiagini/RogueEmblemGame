@@ -125,9 +125,9 @@ void FreeMovementState::render() {
 }
 
 std::unique_ptr<GameState> FreeMovementState::update() {
-	for (auto &el : objectList) {
+	for (auto &el : objectList)
 		el->update();
-	}
+
 	if (playerTurnFinished && animationClock.getElapsedTime().asMilliseconds() >= animationLenghtMs / animationSteps) {
 		//Increase size of rect
 		animationClock.restart();
