@@ -28,6 +28,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 
 			enemy->setMobility(2);
 			enemy->setAttackRange(1);
+			enemy->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
 
 			string animationPath("orc.png");
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 4, TILE_SIZE, TILE_SIZE, 4);
@@ -52,6 +53,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 
 			enemy->setAttackRange(1);
 			enemy->setMobility(3);
+			enemy->setBehaviour(EnemyBehaviour::Type::WeakestPlayer);
 
 			string animationPath("skeleton.png");
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 4, 128, 128, 4);
@@ -75,6 +77,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 
 			enemy->setAttackRange(1);
 			enemy->setMobility(2);
+			enemy->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
 
 			string animationPath("playerSheet.png");
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);
@@ -98,6 +101,7 @@ shared_ptr<GameCharacter> EnemyFactory::createCharacter(GameCharacter::Character
 
 			enemy->setAttackRange(10);
 			enemy->setMobility(10);
+			enemy->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
 
 			string animationPath("playerSheet.png");
 			int animId = GameManager::getInstance().sendLoadAnimationRequest(animationPath, 8, TILE_SIZE, TILE_SIZE, 4);

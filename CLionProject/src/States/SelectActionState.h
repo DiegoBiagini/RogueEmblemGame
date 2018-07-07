@@ -13,7 +13,7 @@ class SelectActionState : public OnMapState {
 public:
 	explicit SelectActionState(OnMapState &previousState);
 
-	unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

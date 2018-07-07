@@ -8,33 +8,33 @@
 
 FightState::FightState(OnMapState &previous, shared_ptr<PlayerControlledCharacter> player, shared_ptr<Enemy> enemy,
 					   bool playerTurn) :
-		OnMapState{previous}, player{player}, enemy{enemy}, playerTurn{playerTurn}, currentOffset{0}, enemyDamage{0},
+		OnMapState{previous}, player{move(player)}, enemy{move(enemy)}, playerTurn{playerTurn}, currentOffset{0},
+		enemyDamage{0},
 		offSetPerStep{0}, playerDamage{0}, enemyDead{false}, playerDead{false}, currentTransparency{255},
 		transparencyPerStep{0} {
 }
 
-unique_ptr<GameState> FightState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed)
-		switch (key) {
+unique_ptr<GameState> FightState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			case VirtualKey::UP:
-				break;
-			case VirtualKey::DOWN:
-				break;
-			case VirtualKey::LEFT:
-				break;
-			case VirtualKey::RIGHT:
-				break;
-			case VirtualKey::CONFIRM:
-				break;
-			case VirtualKey::BACK:
-				break;
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
-		}
-	return nullptr;
+		case VirtualKey::UP:
+			break;
+		case VirtualKey::DOWN:
+			break;
+		case VirtualKey::LEFT:
+			break;
+		case VirtualKey::RIGHT:
+			break;
+		case VirtualKey::CONFIRM:
+			break;
+		case VirtualKey::BACK:
+			break;
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
+			return nullptr;
+	}
 }
 
 void FightState::enterState() {

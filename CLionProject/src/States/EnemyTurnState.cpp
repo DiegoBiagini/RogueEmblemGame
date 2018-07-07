@@ -6,31 +6,30 @@
 #include "FreeMovementState.h"
 #include "EnemyActionState.h"
 
-EnemyTurnState::EnemyTurnState(const OnMapState &copy) : OnMapState(copy) {
+EnemyTurnState::EnemyTurnState(const OnMapState &copy) : OnMapState(copy), currentRectangleWidth{0},
+														 enemyTurnFinished{false}, rectangleWidthPerStep{0} {
 
 }
 
-std::unique_ptr<GameState> EnemyTurnState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
-		switch (key) {
+std::unique_ptr<GameState> EnemyTurnState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			case VirtualKey::UP:
-				break;
-			case VirtualKey::DOWN:
-				break;
-			case VirtualKey::LEFT:
-				break;
-			case VirtualKey::RIGHT:
-				break;
-			case VirtualKey::CONFIRM:
-				break;
-			case VirtualKey::BACK:
-				break;
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
-		}
+		case VirtualKey::UP:
+			break;
+		case VirtualKey::DOWN:
+			break;
+		case VirtualKey::LEFT:
+			break;
+		case VirtualKey::RIGHT:
+			break;
+		case VirtualKey::CONFIRM:
+			break;
+		case VirtualKey::BACK:
+			break;
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
 	return nullptr;
 }
@@ -61,13 +60,13 @@ void EnemyTurnState::render() {
 	map->render(camera);
 
 	//Then the objects
-	for (auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
 	if (enemyTurnFinished) {
 
-		string playerTurnString("");
+		string playerTurnString;
 		if (currentRectangleWidth >= FONTSIZE_BIG)
 			playerTurnString = "PLAYER TURN";
 

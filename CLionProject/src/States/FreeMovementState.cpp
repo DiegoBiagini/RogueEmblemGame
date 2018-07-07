@@ -7,60 +7,59 @@
 #include "SelectActionState.h"
 #include "EnemyTurnState.h"
 
-FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, exhaustedPlayerOnTile{false} {
-
+FreeMovementState::FreeMovementState(const OnMapState &copy) : OnMapState{copy}, exhaustedPlayerOnTile{false},
+															   currentRectangleWidth{0}, rectangleWidthPerStep{0},
+															   playerTurnFinished{false} {
 }
 
-std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
-		switch (key) {
+std::unique_ptr<GameState> FreeMovementState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			case VirtualKey::UP: {
-				std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
-				moveSelection(newTile);
-				break;
-			}
-
-			case VirtualKey::DOWN: {
-				std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
-				moveSelection(newTile);
-				break;
-			}
-
-			case VirtualKey::LEFT: {
-				std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
-				moveSelection(newTile);
-				break;
-			}
-
-			case VirtualKey::RIGHT: {
-				std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
-				moveSelection(newTile);
-				break;
-			}
-
-
-			case VirtualKey::CONFIRM: {
-				auto selectedChar = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(selectedTile));
-
-				//Check if it is in the list of players
-				for (auto &el : players) {
-					if (el.get() == selectedChar)
-						//Check if it can perform an action
-						if (selectedChar->canPerformAction()) {
-							//Go to SelectAction state
-							return std::unique_ptr<GameState>{new SelectActionState(*this)};
-						}
-				}
-				break;
-			}
-			case VirtualKey::BACK:
-				break;
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
+		case VirtualKey::UP: {
+			std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
+			moveSelection(newTile);
+			break;
 		}
+
+		case VirtualKey::DOWN: {
+			std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
+			moveSelection(newTile);
+			break;
+		}
+
+		case VirtualKey::LEFT: {
+			std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
+			moveSelection(newTile);
+			break;
+		}
+
+		case VirtualKey::RIGHT: {
+			std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
+			moveSelection(newTile);
+			break;
+		}
+
+
+		case VirtualKey::CONFIRM: {
+			auto selectedChar = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(selectedTile));
+
+			//Check if it is in the list of players
+			for (auto &el : players) {
+				if (el.get() == selectedChar)
+					//Check if it can perform an action
+					if (selectedChar->canPerformAction()) {
+						//Go to SelectAction state
+						return std::unique_ptr<GameState>{new SelectActionState(*this)};
+					}
+			}
+			break;
+		}
+		case VirtualKey::BACK:
+			break;
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
 	return nullptr;
 }
@@ -97,13 +96,13 @@ void FreeMovementState::render() {
 	map->render(camera);
 
 	//Then the objects
-	for(auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
 	if (playerTurnFinished) {
 
-		string enemyTurnString("");
+		string enemyTurnString;
 		if (currentRectangleWidth >= FONTSIZE_BIG)
 			enemyTurnString = "ENEMY TURN";
 

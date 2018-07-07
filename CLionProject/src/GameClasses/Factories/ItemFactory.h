@@ -16,7 +16,6 @@ public:
 		BasicSword, LeatherArmor
 	};
 
-	ItemFactory() = default;
 
 	//Returns an item
 	shared_ptr<Item> createItem(ItemType type);

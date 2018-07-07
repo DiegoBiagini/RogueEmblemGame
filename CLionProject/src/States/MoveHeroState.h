@@ -10,9 +10,9 @@
 
 class MoveHeroState : public OnMapState {
 public:
-	MoveHeroState(OnMapState &previous);
+	explicit MoveHeroState(OnMapState &previous);
 
-	std::unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	std::unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

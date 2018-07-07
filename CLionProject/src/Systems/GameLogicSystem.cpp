@@ -13,7 +13,7 @@ void GameLogicSystem::handleMsg(std::shared_ptr<Message> message) {
 
 	//Handle input and go to the according state
 	if(currentState != nullptr) {
-		std::unique_ptr<GameState> nextState = currentState->handleInput(actualMsg->key, actualMsg->pressed);
+		std::unique_ptr<GameState> nextState = currentState->handleInput(actualMsg->key);
 		if (nextState != nullptr) {
 
 			currentState = std::move(nextState);

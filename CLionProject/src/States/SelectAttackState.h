@@ -13,7 +13,7 @@ class SelectAttackState : public OnMapState {
 public:
 	SelectAttackState(OnMapState &previousState, vector<shared_ptr<Enemy>> &attackableEnemies);
 
-	unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

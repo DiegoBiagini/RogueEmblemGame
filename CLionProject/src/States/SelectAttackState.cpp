@@ -12,63 +12,61 @@ SelectAttackState::SelectAttackState(OnMapState &previousState, vector<shared_pt
 		expectedDamagerReceived{0} {
 }
 
-unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
+unique_ptr<GameState> SelectAttackState::handleInput(VirtualKey key) {
 
-		switch (key) {
+	switch (key) {
 
-			case VirtualKey::UP:
-				break;
-			case VirtualKey::DOWN:
-				break;
+		case VirtualKey::UP:
+			break;
+		case VirtualKey::DOWN:
+			break;
 
-			case VirtualKey::LEFT: {
-				//Go to the next enemy
-				selectedEnemyIndex = selectedEnemyIndex - 1 < 0 ? attackableEnemies.size() - 1 : selectedEnemyIndex - 1;
+		case VirtualKey::LEFT: {
+			//Go to the next enemy
+			selectedEnemyIndex = selectedEnemyIndex - 1 < 0 ? attackableEnemies.size() - 1 : selectedEnemyIndex - 1;
 
-				//Update the selected tile and the damage info
-				auto selectedEnemy = attackableEnemies.at(selectedEnemyIndex);
+			//Update the selected tile and the damage info
+			auto selectedEnemy = attackableEnemies.at(selectedEnemyIndex);
 
-				selectedTile.first = selectedEnemy->getPosition().first;
-				selectedTile.second = selectedEnemy->getPosition().second;
+			selectedTile.first = selectedEnemy->getPosition().first;
+			selectedTile.second = selectedEnemy->getPosition().second;
 
-				expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
-				expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
+			expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
+			expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
 
-				break;
-			}
-			case VirtualKey::RIGHT: {
-				//Go to the next enemy
-				selectedEnemyIndex = selectedEnemyIndex + 1 == attackableEnemies.size() ? 0 : selectedEnemyIndex + 1;
-
-				//Update the selected tile and the damage info
-				auto selectedEnemy = attackableEnemies.at(selectedEnemyIndex);
-
-				selectedTile.first = selectedEnemy->getPosition().first;
-				selectedTile.second = selectedEnemy->getPosition().second;
-
-				expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
-				expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
-
-				break;
-			}
-			case VirtualKey::CONFIRM: {
-				selectedPlayer->finishTurn();
-
-				return unique_ptr<FightState>{
-						new FightState(*this, selectedPlayer, attackableEnemies.at(selectedEnemyIndex), true)};
-			}
-			case VirtualKey::BACK:
-				selectedTile.first = selectedPlayer->getPosX();
-				selectedTile.second = selectedPlayer->getPosY();
-
-				return unique_ptr<SelectActionState>{new SelectActionState(*this)};
-
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
+			break;
 		}
+		case VirtualKey::RIGHT: {
+			//Go to the next enemy
+			selectedEnemyIndex = selectedEnemyIndex + 1 == attackableEnemies.size() ? 0 : selectedEnemyIndex + 1;
+
+			//Update the selected tile and the damage info
+			auto selectedEnemy = attackableEnemies.at(selectedEnemyIndex);
+
+			selectedTile.first = selectedEnemy->getPosition().first;
+			selectedTile.second = selectedEnemy->getPosition().second;
+
+			expectedDamageDealt = selectedPlayer->damageCalculation(*selectedEnemy.get());
+			expectedDamagerReceived = selectedEnemy->damageCalculation(*selectedPlayer.get());
+
+			break;
+		}
+		case VirtualKey::CONFIRM: {
+			selectedPlayer->finishTurn();
+
+			return unique_ptr<FightState>{
+					new FightState(*this, selectedPlayer, attackableEnemies.at(selectedEnemyIndex), true)};
+		}
+		case VirtualKey::BACK:
+			selectedTile.first = selectedPlayer->getPosX();
+			selectedTile.second = selectedPlayer->getPosY();
+
+			return unique_ptr<SelectActionState>{new SelectActionState(*this)};
+
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
 	return nullptr;
 }
@@ -97,7 +95,7 @@ void SelectAttackState::render() {
 	map->render(camera);
 
 	//Then the objects
-	for (auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui

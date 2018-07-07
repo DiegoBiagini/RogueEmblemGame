@@ -7,32 +7,29 @@
 #include "FightState.h"
 
 
-EnemyActionState::EnemyActionState(OnMapState &previous, shared_ptr<Enemy> selectedEnemy) : OnMapState{previous},
-	selectedEnemy{selectedEnemy}
-{
+EnemyActionState::EnemyActionState(OnMapState &previous, shared_ptr<Enemy> selectedEnemy) :
+		OnMapState{previous}, selectedEnemy{selectedEnemy}, finishedMoving{false}, startedMoving{false} {
 }
 
-unique_ptr<GameState> EnemyActionState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
-		switch (key) {
+unique_ptr<GameState> EnemyActionState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			case VirtualKey::UP:
-				break;
-			case VirtualKey::DOWN:
-				break;
-			case VirtualKey::LEFT:
-				break;
-			case VirtualKey::RIGHT:
-				break;
-			case VirtualKey::CONFIRM:
-				break;
-			case VirtualKey::BACK:
-				break;
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
-		}
+		case VirtualKey::UP:
+			break;
+		case VirtualKey::DOWN:
+			break;
+		case VirtualKey::LEFT:
+			break;
+		case VirtualKey::RIGHT:
+			break;
+		case VirtualKey::CONFIRM:
+			break;
+		case VirtualKey::BACK:
+			break;
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
 	return nullptr;
 }
@@ -43,7 +40,7 @@ void EnemyActionState::enterState() {
 	selectedTile.second = selectedEnemy->getPosY();
 
 	//Get the final tile and how to get there
-	pair<int,int> finalTile = selectedEnemy->getNextMovements(movements, players, *map);
+	pair<int, int> finalTile = selectedEnemy->getNextMovements(movements, players, *map);
 
 	//Center view
 	centerCameraOn(selectedTile);
@@ -63,23 +60,22 @@ void EnemyActionState::render() {
 	if (!startedMoving) {
 		hudHelper.drawTileInfo(selectedTile, *map, camera);
 		hudHelper.drawHighlightTile(selectedTile, *map);
-	}
-	else{
+	} else {
 		pair<int, int> pixelCoordinates = selectedEnemy->getActualCoordinates(*map);
-		centerCameraOn(pixelCoordinates.first + map->getTileSize() / 2, pixelCoordinates.second + map->getTileSize() / 2);
+		centerCameraOn(pixelCoordinates.first + map->getTileSize() / 2,
+					   pixelCoordinates.second + map->getTileSize() / 2);
 	}
 
 	//Then the objects
-	for(auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
-
 
 
 }
 
 unique_ptr<GameState> EnemyActionState::update() {
 	//if the destination is (-1,-1) it means there is no movement
-	if(destinationTile == make_pair<int,int>(-1,-1))
+	if (destinationTile == make_pair<int, int>(-1, -1))
 		return unique_ptr<EnemyTurnState>(new EnemyTurnState(*this));
 
 	for (auto &el : objectList) {
@@ -91,16 +87,18 @@ unique_ptr<GameState> EnemyActionState::update() {
 		selectedEnemy->move(movements);
 	}
 
-	if(startedMoving && !selectedEnemy->isMoving()){
+	if (startedMoving && !selectedEnemy->isMoving()) {
 		//Get attack
-		pair<int,int> attackTile = selectedEnemy->getNextAttack(players, *map);
-		if(attackTile != make_pair<int,int>(-1,-1)){
+		pair<int, int> attackTile = selectedEnemy->getNextAttack(players, *map);
+		if (attackTile != make_pair<int, int>(-1, -1)) {
 			//Get player on attack tile
-			auto playerAttacked = dynamic_cast<PlayerControlledCharacter*>(map->getObjectAt(attackTile));
+			auto playerAttacked = dynamic_cast<PlayerControlledCharacter *>(map->getObjectAt(attackTile));
 
 			//Go to fight state
-			if(playerAttacked != nullptr)
-				return unique_ptr<FightState>(new FightState(*this, shared_ptr<PlayerControlledCharacter>(playerAttacked), selectedEnemy, false));
+			if (playerAttacked != nullptr)
+				return unique_ptr<FightState>(
+						new FightState(*this, shared_ptr<PlayerControlledCharacter>(playerAttacked), selectedEnemy,
+									   false));
 
 		}
 		return unique_ptr<EnemyTurnState>(new EnemyTurnState(*this));

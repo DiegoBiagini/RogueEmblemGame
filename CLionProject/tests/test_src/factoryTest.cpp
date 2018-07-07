@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "../../src/GameClasses/Factories/PlayerFactory.h"
 #include "../../src/GameClasses/Factories/EnemyFactory.h"
+#include "../../src/GameClasses/GameObjectHierarchy/PlayerControlledCharacter.h"
 
 class FactoryTest : public ::testing::Test {
 
@@ -32,8 +33,8 @@ TEST_F(FactoryTest, CreatePlayerTest) {
 	ASSERT_GT(character->getHp(), 0);
 	ASSERT_EQ(character->getHp(), character->getMaxHp());
 
-	ASSERT_NE(dynamic_cast<PlayerControlledCharacter *>(character.get())->getEquippedWeapon(), nullptr);
-	ASSERT_NE(dynamic_cast<PlayerControlledCharacter *>(character.get())->getEquipment(), nullptr);
+	ASSERT_NE(dynamic_pointer_cast<PlayerControlledCharacter>(character)->getEquippedWeapon(), nullptr);
+	ASSERT_NE(dynamic_pointer_cast<PlayerControlledCharacter>(character)->getEquipment(), nullptr);
 
 	pair<int, int> pos{1, 1};
 	auto character2 = playerFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Knight, map, pos);

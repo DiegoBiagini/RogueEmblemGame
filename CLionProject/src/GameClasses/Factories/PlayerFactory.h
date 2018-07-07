@@ -10,7 +10,6 @@
 //Concrete factory that creates players
 class PlayerFactory : public CharacterFactory {
 public:
-	PlayerFactory() = default;
 
 	shared_ptr<GameCharacter> createCharacter(GameCharacter::CharacterType type) override;
 

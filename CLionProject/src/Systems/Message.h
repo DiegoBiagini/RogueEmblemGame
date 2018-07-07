@@ -34,7 +34,6 @@ struct GameLogicMessage : public Message {
 
 	//Key that was pressed/released
 	VirtualKey key {VirtualKey::NOACTION};
-	bool pressed {false};
 };
 
 

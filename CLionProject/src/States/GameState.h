@@ -13,7 +13,7 @@ class GameState {
 public:
 
 	//Will handle a key press to change state, returns the next state(or nullptr if it stays in the same state)
-	virtual std::unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) = 0;
+	virtual std::unique_ptr<GameState> handleInput(VirtualKey key) = 0;
 
 	//What will be done when you enter this state
 	virtual void enterState() = 0;

@@ -14,7 +14,7 @@ public:
 	FightState(OnMapState &previous, shared_ptr<PlayerControlledCharacter> player, shared_ptr<Enemy> enemy,
 			   bool playerTurn);
 
-	unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

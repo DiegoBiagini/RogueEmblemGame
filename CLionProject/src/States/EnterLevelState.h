@@ -17,13 +17,20 @@ class EnterLevelState : public OnMapState{
 public:
 	explicit EnterLevelState(int currentLevel);
 
-	std::unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	std::unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 
 	void render() override;
 
 	std::unique_ptr<GameState> update() override;
+
+private:
+	//Create an enemy or player on a cell and add it to the lists of enemies/players/objects
+	void createEnemyAt(GameCharacter::CharacterType type, pair<int, int> position);
+
+	void createPlayerAt(GameCharacter::CharacterType type, pair<int, int> position);
+
 
 
 

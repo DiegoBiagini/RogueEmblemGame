@@ -16,7 +16,7 @@ public:
 
 	EnemyActionState(OnMapState& previous, shared_ptr<Enemy> selectedEnemy);
 
-	unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

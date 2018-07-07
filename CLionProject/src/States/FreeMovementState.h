@@ -15,7 +15,7 @@ public:
 	//"Copy" constuctor from base class
 	explicit FreeMovementState(const OnMapState& copy);
 
-	std::unique_ptr<GameState> handleInput(VirtualKey key, bool pressed) override;
+	std::unique_ptr<GameState> handleInput(VirtualKey key) override;
 
 	void enterState() override;
 

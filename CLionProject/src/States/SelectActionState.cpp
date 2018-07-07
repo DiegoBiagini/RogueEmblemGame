@@ -8,72 +8,71 @@
 #include "../GameClasses/GameObjectHierarchy/Enemy.h"
 #include "SelectAttackState.h"
 
-unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
-		switch (key) {
+unique_ptr<GameState> SelectActionState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			case VirtualKey::UP:
-				selectedOption = selectedOption - 1 >= 0 ? selectedOption - 1 : possibleOptions.size() - 1;
-				break;
-			case VirtualKey::DOWN:
-				selectedOption = selectedOption + 1 != possibleOptions.size() ? selectedOption + 1 : 0;
+		case VirtualKey::UP:
+			selectedOption = selectedOption - 1 >= 0 ? selectedOption - 1 : possibleOptions.size() - 1;
+			break;
+		case VirtualKey::DOWN:
+			selectedOption = selectedOption + 1 != possibleOptions.size() ? selectedOption + 1 : 0;
 
-				break;
-			case VirtualKey::LEFT:
-				break;
-			case VirtualKey::RIGHT:
-				break;
+			break;
+		case VirtualKey::LEFT:
+			break;
+		case VirtualKey::RIGHT:
+			break;
 
-			case VirtualKey::CONFIRM: {
-				Option confirmedOption = possibleOptions.at(selectedOption);
-				switch (confirmedOption) {
+		case VirtualKey::CONFIRM: {
+			Option confirmedOption = possibleOptions.at(selectedOption);
+			switch (confirmedOption) {
 
-					//Go to moveHeroState
-					case Option::Move:
-						return unique_ptr<MoveHeroState>(new MoveHeroState(*this));
+				//Go to moveHeroState
+				case Option::Move:
+					return unique_ptr<MoveHeroState>(new MoveHeroState(*this));
 
-					case Option::Fight: {
-						//Check if there is an available attack
-						auto attacks = selectedPlayer->getPossibleAttacks(*map);
-						vector<shared_ptr<Enemy>> attackableEnemies;
+				case Option::Fight: {
+					//Check if there is an available attack
+					auto attacks = selectedPlayer->getPossibleAttacks(*map);
+					vector<shared_ptr<Enemy>> attackableEnemies;
 
-						//Iterate through all the cell he can attack to
-						for (auto &el : attacks) {
-							auto enemy = dynamic_cast<Enemy *>(map->getObjectAt(el));
-							//If there is an enemy he can attack add it to a vector
-							if (enemy != nullptr)
-								attackableEnemies.push_back(shared_ptr<Enemy>(enemy));
+					//Iterate through all the cell he can attack to
+					for (auto &el : attacks) {
+						auto enemy = dynamic_cast<Enemy *>(map->getObjectAt(el));
+						//If there is an enemy he can attack add it to a vector
+						if (enemy != nullptr)
+							attackableEnemies.push_back(shared_ptr<Enemy>(enemy));
 
-						}
-						if (!attackableEnemies.empty())
-							return unique_ptr<SelectAttackState>(new SelectAttackState(*this, attackableEnemies));
-						break;
 					}
-					case Option::UseItem:
-						break;
-					case Option::Equip:
-						break;
-					case Option::EndTurn: {
-						//Finish the turns of the players
-						for (auto &el : players)
-							el->finishTurn();
-
-						return unique_ptr<FreeMovementState>(new FreeMovementState(*this));
-					}
+					if (!attackableEnemies.empty())
+						return unique_ptr<SelectAttackState>(new SelectAttackState(*this, attackableEnemies));
+					break;
 				}
-				break;
-			}
+				case Option::UseItem:
+					break;
+				case Option::Equip:
+					break;
+				case Option::EndTurn: {
+					//Finish the turns of the players
+					for (auto &el : players)
+						el->finishTurn();
 
-			case VirtualKey::BACK: {
-				return std::unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+					return unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+				}
 			}
-
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
+			break;
 		}
+
+		case VirtualKey::BACK: {
+			return std::unique_ptr<FreeMovementState>(new FreeMovementState(*this));
+		}
+
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
+
 	return nullptr;
 }
 
@@ -102,7 +101,7 @@ void SelectActionState::render() {
 	map->render(camera);
 
 	//Then the objects
-	for (auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui

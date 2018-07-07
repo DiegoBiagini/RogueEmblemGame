@@ -5,7 +5,7 @@
 #include "EnterLevelState.h"
 #include "FreeMovementState.h"
 
-std::unique_ptr<GameState> EnterLevelState::handleInput(VirtualKey key, bool pressed) {
+std::unique_ptr<GameState> EnterLevelState::handleInput(VirtualKey key) {
 	return nullptr;
 }
 
@@ -16,40 +16,14 @@ void EnterLevelState::enterState() {
 
 	camera = {0, 0, CAMERA_DEFAULT_WIDTH, CAMERA_DEFAULT_HEIGHT};
 
-	//Create factories
-	PlayerFactory playerFactory;
-	EnemyFactory enemyFactory;
-	//Create player, put it in map
-	pair<int, int> posChar1 = make_pair(1, 1);
-	auto char1 = playerFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Knight, *map.get(), posChar1);
+	createPlayerAt(GameCharacter::CharacterType::Knight, pair<int, int>(1, 1));
+	createPlayerAt(GameCharacter::CharacterType::Skeleton, pair<int, int>(2, 2));
 
-	auto posChar2 = make_pair<int, int>(10, 10);
-	auto char2 = enemyFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Orc, *map.get(), posChar2);
+	createEnemyAt(GameCharacter::CharacterType::Orc, pair<int, int>(10, 10));
+	createEnemyAt(GameCharacter::CharacterType::Skeleton, pair<int, int>(1, 3));
 
-	auto posChar3 = make_pair<int, int>(2, 2);
-	auto char3 = playerFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Skeleton, *map.get(), posChar3);
-
-	auto posChar4 = make_pair<int, int>(1, 3);
-	auto char4 = enemyFactory.createCharacterOnMapCell(GameCharacter::CharacterType::Orc, *map.get(), posChar4);
-
-	//Add it to the object and character list
-	players.push_back(char1);
-	players.push_back(char3);
-
-	dynamic_pointer_cast<Enemy>(char2)->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
-	dynamic_pointer_cast<Enemy>(char4)->setBehaviour(EnemyBehaviour::Type::ClosestPlayer);
-
-	enemies.push_back(char2);
-	enemies.push_back(char4);
-
-	objectList.push_back(char3);
-	objectList.push_back(char1);
-	objectList.push_back(char2);
-	objectList.push_back(char4);
-
-
-	selectedTile.first = char1->getPosX();
-	selectedTile.second = char1->getPosY();
+	selectedTile.first = players.front()->getPosX();
+	selectedTile.second = players.front()->getPosY();
 
 	//Initialize all the available movements for the players
 	for (auto &player : players)
@@ -68,4 +42,22 @@ std::unique_ptr<GameState> EnterLevelState::update() {
 }
 
 EnterLevelState::EnterLevelState(int currentLevel) : OnMapState(currentLevel) {
+}
+
+void EnterLevelState::createEnemyAt(GameCharacter::CharacterType type, pair<int, int> position) {
+	EnemyFactory enemyFactory;
+	auto enemy = enemyFactory.createCharacterOnMapCell(type, *map, position);
+
+	//Add it to the object and enemy list
+	players.push_back(enemy);
+	objectList.push_back(enemy);
+}
+
+void EnterLevelState::createPlayerAt(GameCharacter::CharacterType type, pair<int, int> position) {
+	PlayerFactory playerFactory;
+	auto player = playerFactory.createCharacterOnMapCell(type, *map, position);
+
+	//Add it to the object and character list
+	players.push_back(player);
+	objectList.push_back(player);
 }

@@ -75,7 +75,7 @@ void InputHelper::sendKeyMessage(sf::Event event) {
 	VirtualKey vkPressed = getVirtualKey(event.key.code);
 
 	//Check for actual key presses
-	if(vkPressed != VirtualKey::NOACTION) {
+	if (vkPressed != VirtualKey::NOACTION && event.type == sf::Event::KeyPressed) {
 		//Send message to game logic system
 		std::unique_ptr<GameLogicMessage> message{new GameLogicMessage};
 		message->key = vkPressed;
@@ -83,14 +83,7 @@ void InputHelper::sendKeyMessage(sf::Event event) {
 
 		std::stringstream msgString;
 
-		if (event.type == sf::Event::KeyPressed) {
-			message->pressed = true;
-			msgString << "Pressed: ";
-		} else {
-			message->pressed = false;
-			msgString << "Released: ";
-		}
-		msgString << utility::getStringFromVKey(vkPressed).c_str();
+		msgString << "Pressed" << utility::getStringFromVKey(vkPressed).c_str();
 		message->content = msgString.str();
 
 		GameManager::getInstance().sendMsg(std::move(message));

@@ -11,66 +11,64 @@ MoveHeroState::MoveHeroState(OnMapState &previous) : OnMapState(previous) {
 }
 
 
-unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key, bool pressed) {
-	if (pressed) {
-		switch (key) {
+unique_ptr<GameState> MoveHeroState::handleInput(VirtualKey key) {
+	switch (key) {
 
-			//Move the selection if the input is valid
+		//Move the selection if the input is valid
 
-			case VirtualKey::UP: {
-				std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
-				moveSelection(newTile);
+		case VirtualKey::UP: {
+			std::pair<int, int> newTile{selectedTile.first, selectedTile.second - 1};
+			moveSelection(newTile);
 
-				break;
-			}
-
-			case VirtualKey::DOWN: {
-				std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
-
-				moveSelection(newTile);
-				break;
-			}
-
-			case VirtualKey::LEFT: {
-				std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
-
-				moveSelection(newTile);
-				break;
-			}
-
-			case VirtualKey::RIGHT: {
-				std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
-
-				moveSelection(newTile);
-				break;
-			}
-
-
-			case VirtualKey::CONFIRM: {
-				//Go to the selected tile with the shortest path
-				if (selectedTile != selectedPlayer->getPosition()) {
-					AStar aStar(*map);
-					auto shortestPath = aStar.getShortestPath(selectedPlayer->getPosition(), selectedTile);
-					selectedPlayer->move(shortestPath);
-
-					selectedPlayer->setMoved(true);
-
-					movementChosen = true;
-				}
-				break;
-			}
-			case VirtualKey::BACK:
-				//Recenter the selected tile on the player
-				selectedTile.first = selectedPlayer->getPosX();
-				selectedTile.second = selectedPlayer->getPosY();
-
-				return std::unique_ptr<SelectActionState>(new SelectActionState(*this));
-
-			case VirtualKey::PAUSE:
-				break;
-			case VirtualKey::NOACTION:
-				break;
+			break;
 		}
+
+		case VirtualKey::DOWN: {
+			std::pair<int, int> newTile{selectedTile.first, selectedTile.second + 1};
+
+			moveSelection(newTile);
+			break;
+		}
+
+		case VirtualKey::LEFT: {
+			std::pair<int, int> newTile{selectedTile.first - 1, selectedTile.second};
+
+			moveSelection(newTile);
+			break;
+		}
+
+		case VirtualKey::RIGHT: {
+			std::pair<int, int> newTile{selectedTile.first + 1, selectedTile.second};
+
+			moveSelection(newTile);
+			break;
+		}
+
+
+		case VirtualKey::CONFIRM: {
+			//Go to the selected tile with the shortest path
+			if (selectedTile != selectedPlayer->getPosition()) {
+				AStar aStar(*map);
+				auto shortestPath = aStar.getShortestPath(selectedPlayer->getPosition(), selectedTile);
+				selectedPlayer->move(shortestPath);
+
+				selectedPlayer->setMoved(true);
+
+				movementChosen = true;
+			}
+			break;
+		}
+		case VirtualKey::BACK:
+			//Recenter the selected tile on the player
+			selectedTile.first = selectedPlayer->getPosX();
+			selectedTile.second = selectedPlayer->getPosY();
+
+			return std::unique_ptr<SelectActionState>(new SelectActionState(*this));
+
+		case VirtualKey::PAUSE:
+			break;
+		case VirtualKey::NOACTION:
+			break;
 	}
 	return nullptr;
 }
@@ -95,7 +93,7 @@ void MoveHeroState::render() {
 	}
 
 	//Then the objects
-	for (auto element : objectList)
+	for (const auto &element : objectList)
 		element.get()->render(camera, *map);
 
 	//Then the hud/gui
